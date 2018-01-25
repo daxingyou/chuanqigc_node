@@ -1,0 +1,42 @@
+<% include ../layout/header.ejs %>
+<div class="usercenter_bg">
+    <div class="usercenter_bg2"></div>
+</div>
+
+<!--Begin 我的项目-->
+<div class="usercenter_bgs">
+<div class="usercontent clearfix">
+    <% include left.ejs %>
+    <div class="right_bar f_fr publishedProject_right_bar">
+        <div class="user_title_box clearfix">
+            <div class="user_title f_fl">我的项目</div>
+        </div>
+        <!--Begin 展示信息-->
+        <ul class="myProject_list">
+            <li>
+                <ul class="myProject_list1 clearfix">
+                    <li class="myProject_name">认购的项目-投资方</li>
+                    <li>1.我投资的项目详情</li>
+                    <li>2.我出力的项目详情</li>
+                    <li>3.我购买老板卡的项目详情</li>
+                    <li class="myProject_look"><a href="/usercenter/projectBuy" class="btn_style btn_size">查看详情</a></li>
+                </ul>
+            </li>
+            <li>
+                <ul class="myProject_list1 clearfix">
+                    <li class="myProject_name">发布的项目-品牌方</li>
+                    <li>1.项目的融资详情</li>
+                    <li>2.项目的融智详情 </li>
+                    <li>3.项目的老板卡出售详情</li>
+                    <li class="myProject_look"><a href="/usercenter/releaseproject" class="btn_style btn_size">查看详情</a></li>
+                </ul>
+            </li>
+        </ul>
+        <!--End 展示信息-->
+    </div>
+</div>
+</div>
+<!--End 我的项目-->
+<% include ../layout/footer.ejs %>
+
+

@@ -1,0 +1,434 @@
+<!--Begin footer-->
+<div class="footer">
+    <div class="footer_wrap">
+        <img src="/images/logo_03.png">
+        <ul class="friend_links clearfix">
+            <li><a href="javascript:location.href=encodeURI('/about/00000003001?maptype=INFODETAIL&TitleName=传奇简介')">了解我们</a><span></span></li>
+            <li><a href="/singlepage/newknow">新手指引</a><span></span></li>
+            <li><a href="javascript:location.href=encodeURI('/about/00000005001?maptype=INFODETAIL&TitleName=用户服务协议')">用户协议</a><span></span></li>
+            <li><a href="javascript:location.href=encodeURI('/about/00000007001?maptype=INFODETAIL&TitleName=常见问题')">常见问题</a><span></span></li>
+            <li><a href="javascript:location.href=encodeURI('/about/00000008001?maptype=INFODETAIL&TitleName=加入我们')">加入我们</a><span></span></li>
+            <li><a href="javascript:location.href=encodeURI('/about/00000006001?maptype=INFODETAIL&TitleName=政策法规')">政策法规</a></li>
+        </ul>
+        <ul class="footer_icon_group clearfix">
+            <li>
+                <div class="wx_tips">
+                    <div class="tips_hd clearfix">
+                        <em class="ico_weixin f_fl"></em>
+                        <span class="txt f_fl">微信公众号</span>
+                    </div>
+                    <div class="tips_bd">
+                        <em class="arrow"></em>
+                        <img alt="" src="/images/weixin.jpg">
+                        <p class="wx_txt">微信公众平台</p>
+                    </div>
+                </div>
+            </li>
+            <li class="sina_li">
+                <a href="http://weibo.com/p/1006065662698039" class=""><em class="ico_weixin ico_sina f_fl"></em><span class="txt f_fl">新浪微博</span></a>
+            </li>
+            <li class="txwb_li">
+                <a href="http://t.qq.com/chuanqigongchang" class=""><em class="ico_weixin ico_txwb f_fl"></em><span class="txt f_fl">腾讯微博</span></a>
+            </li>
+            <li class="qq_li">
+                <a href="tencent://message/?uin=2646108252" class=""><em class="ico_weixin ico_qq f_fl"></em><span class="txt f_fl">QQ客服</span></a>
+            </li>
+            <li class="tel_li">
+                <em class="ico_weixin ico_tel f_fl"></em><span class="txt f_fl">400-666-5412</span>
+            </li>
+        </ul>
+        <p class="copyright">Copyright@2014 传奇工场-金融综合服务平台 版权所有&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;京ICP备 15027527号&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;投资有风险，理财需谨慎</p>
+    </div>
+</div>
+<!--End footer-->
+<% if(locals.success){ %>
+<div class="error_momblack" style="display: block"></div>
+<div class="module_dialog" id="flash_dialog" style="display: block">
+    <div class="module_header">
+        <button class="module_close f_fr">×</button>
+        <h4 class="module_title reminder">温馨提示</h4>
+    </div>
+    <div class="module_body register_txt">
+        <%= locals.success %>
+    </div>
+</div>
+<% } %>
+<% if(locals.error){ %>
+<div class="error_momblack" style="display: block"></div>
+<div class="module_dialog" id="error_dialog" style="display: block">
+    <div class="module_header">
+        <button class="module_close f_fr">×</button>
+        <h4 class="module_title reminder">温馨提示</h4>
+    </div>
+    <div class="module_body register_txt">
+        <%= locals.error %>
+    </div>
+</div>
+<% } %>
+<style type="text/css">
+    #error_dialog{
+        width:470px;
+        margin-left:-235px;
+    }
+    #error_dialog .module_body{
+        font-size:18px;
+        color:#646464;
+        text-align:center;
+    }
+    /*黑色透明层*/
+    .error_momblack{
+        background-color:#000;
+        opacity:0.4;
+        filter:alpha(opacity=40);
+        display:none;
+        width:100%;
+        height:100%;
+        position:absolute;
+        z-index:102;
+        left:0;
+        top:0;
+    }
+    label.error{
+        color:#ff0000;
+        display: block;
+        text-align: center;
+    }
+    #register_form label.error,#login_form label.error{
+        margin-bottom: -20px;
+    }
+    #tips_dialog_load{
+        width:470px;
+        margin-left:-235px;
+    }
+    #tips_dialog_load .module_body{
+        font-size:18px;
+        color:#646464;
+        text-align:center;
+    }
+</style>
+
+
+
+<!--Begin 弹框-->
+<!--Begin 登录、注册对话框-->
+<div class="module_dialog login_dialog" id="register_box">
+    <div class="module_header">
+        <button class="module_close f_fr">×</button>
+        <div class="login_title">
+            <h4 class="module_title f_fl title_register">注册</h4>
+            <span class="f_fl"></span>
+            <h4 class="module_title f_fl title_login">登录</h4>
+        </div>
+    </div>
+    <div class="module_body">
+        <!--Begin 注册对话框-->
+        <div class="dialog_form" id="register_form">
+            <form  id="regForm">
+                <div class="item new_item"><span>手机号：</span><input type="text" name="telphone" id="regtelphone" placeholder="请输入您的11位手机号码"></div>
+                <div class="item new_item clearfix">
+                    <span class="f_fl">验证码：</span>
+
+                    <input type="text" class="yzm_input f_fl validate[ajax[ajaxVericode]]" name="vericcap" id="vericcap" placeholder="请输入图形码">
+                    <div style="display: inline-block; margin-bottom: -15px"><div class="img_yzm f_fl"><img src="/login/getcaptcha" id="ccapImg"></div>
+                        <a href="javascript:void(0);" onclick="$('#ccapImg').attr('src','/login/getcaptcha?'+Date.parse(new Date()))" class="refresh f_fl"><img src="/images/update_icon_03.png"></a></div>
+                </div>
+                <div class="item new_item clearfix">
+                    <span class="f_fl">&nbsp;</span>
+                    <input type="text" class="yzm_input f_fl" placeholder="请输入验证码" name="veriCode" id="veriCode">
+                    <button type="button"  class="btn_style getYzm_btn" id="rsendCode">获取验证码</button>
+                </div>
+                <div class="item new_item"><span>密码：</span><input type="password" id="regpassword" name="regpassword"></div>
+                <div class="agree"><input type="checkbox" name="checkbox" checked="checked">我已阅读并同意<a href="/agreement/注册时-传奇工场网站服务协议.docx">《传奇工场服务协议》</a></div>
+                <input type="submit" name="button" value="注册" class="btn_style btn_wh ml_100">
+            </form>
+        </div>
+        <!--End 注册对话框-->
+        <!--Begin 登录对话框-->
+        <div class="dialog_form  hide" id="login_form">
+            <form id="loginFrom" method="post">
+                <div class="item new_item"><span>手机号：</span><input type="text" name="telephone" placeholder="请输入您的手机号码" id="telephone"></div>
+                <div class="item new_item"><span>密码：</span><input type="password" name="password" id="password" placeholder="请输入您的密码"></div>
+                <div class="agree forget_div" ><input type="checkbox" id="isPwd"><span>记住密码</span><a href="/updatepassword" class="f_fr">忘记密码?</a></div>
+                <input type="submit" name="button" value="登录" class="btn_style btn_wh ml_100">
+            </form>
+        </div>
+        <!--End 登录对话框-->
+
+    </div>
+</div>
+<!--End 登录、注册对话框-->
+
+
+
+
+
+<!--End 弹框-->
+<!--Begin 温馨提示弹框-->
+<div class="module_dialog" id="tips_dialog">
+    <div class="module_header">
+        <button class="module_close f_fr">×</button>
+        <h4 class="module_title reminder">温馨提示</h4>
+    </div>
+    <div class="module_body register_txt">
+
+    </div>
+</div>
+<!--End 温馨提示弹框-->
+<!--Begin 温馨提示弹框-->
+<div class="module_dialog" id="tips_dialog_load">
+    <div class="module_header">
+        <button class="module_close f_fr">×</button>
+        <h4 class="module_title reminder">温馨提示</h4>
+    </div>
+    <div class="module_body register_txt">
+
+    </div>
+</div>
+<!--End 温馨提示弹框-->
+<div class="momblack"></div>
+
+
+
+<script>
+    $(document).ready(function() {
+        //定时关闭错误提示弹出框
+        var error=$("#error_dialog");
+        var momblack=$(".error_momblack")
+        var errorcon=$("#error_dialog .module_body")
+        momblack.css("height",$(document).height());
+        if(errorcon.html()!=""){
+            var time=2;
+            var t=setInterval(function(){
+                time--;
+                if(time==0){
+                    error.hide();
+                    momblack.hide();
+                    errorcon.html("");
+                    clearInterval(t);
+                }
+            },1000)
+        }
+
+        $("#tips_dialog_load .module_close").click(function(){
+            window.location.reload();
+        })
+        //登录验证
+        $("#loginFrom").validate({
+            rules: {
+                telephone:{
+                    required:true,
+                    isMobile:true
+                }
+                ,password:{
+                    required:true,
+                    minlength:6
+                }
+            }
+            ,messages:{
+                telephone:{
+                    required:"* 手机号不能为空，请填写您注册时的手机号！",
+                    isMobile:"* 请填写正确的手机号！"
+                }
+                ,password:{
+                    required:"* 请填写密码！",
+                    minlength:"* 密码长度不能少于6位！"
+                }
+            }
+            ,errorPlacement: function( error, element ) {
+                error.appendTo( element.parent() );
+            }
+        })
+        //注册验证
+
+        var validator=$("#regForm").validate({
+            rules: {
+                telphone:{
+                    required:true
+                    ,isMobile:true
+                    ,remote: {
+                        url: "/register/verifyPhoneExist"     //后台处理程序
+                        ,type: "post"               //数据发送方式
+                        ,dataType: "json"           //接受数据格式
+                        ,data: {
+                            phone: function() {
+                                return $("#regtelphone").val();
+                            }
+                        }
+                        ,dataFilter: function (data) {            //判断控制器返回的内容
+                            if (data == "true") {
+                                return true;
+                            }
+                            else {
+                                return false;
+                            }
+                        }
+                    }
+                }
+                ,vericcap:{
+                    required:true,
+                    minlength:4
+                    ,remote: {
+                        url: "/login/checkccapimg"     //后台处理程序
+                        ,type: "get"               //数据发送方式
+                        ,dataType: "json"           //接受数据格式
+                        ,data: {
+                            vericcap: function() {
+                                return $("#vericcap").val().toLocaleString().toLowerCase()
+                            }
+                        }
+                        ,dataFilter: function (data) {            //判断控制器返回的内容
+                            if (data == "true") {
+                                return true;
+                            }
+                            else {
+                                 $('#ccapImg').attr('src', '/login/getcaptcha?' + Date.parse(new Date()))
+                                return false;
+                            }
+                        }
+                    }
+                }
+                ,veriCode:{
+                    required:true
+                    ,remote: {
+                        url: "/register/veriCodeCheck"     //后台处理程序
+                        ,type: "post"               //数据发送方式
+                        ,dataType: "json"           //接受数据格式
+                        ,data: {
+                            veriCode: function() {
+                                return $("#veriCode").val();
+                            }
+                        }
+                        ,dataFilter: function (data) {            //判断控制器返回的内容
+                            if (data == "true") {
+                                return true;
+                            }
+                            else {
+                                return false;
+                            }
+                        }
+                    }
+                }
+                ,regpassword:{
+                    required:true,
+                    minlength:6
+                }
+                ,checkbox:{
+                    required:true
+                }
+            }
+            ,messages:{
+                telphone:{
+                    required:"* 请填写您要注册的手机号！",
+                    isMobile:"* 请填写正确的手机号！",
+                    remote:"* 手机号已被注册！"
+                }
+                ,vericcap:{
+                    required:"* 请填写图形验证码！"
+                    ,remote:"* 验证码输入错误！"
+                    ,minlength:"* 验证码输入错误！"
+                }
+                ,veriCode:{
+                    required:"* 请填写您手机号接收到的验证码！"
+                    ,remote:"* 验证码输入错误！"
+                }
+                ,regpassword:{
+                    required:"* 为了保障您的资金安全，请设立您的专属密码！",
+                    minlength:"* 密码长度不能少于6位！"
+                }
+                ,checkbox:{
+                    required:"* 注册前请先阅读传奇工场服务协议并同意！"
+                }
+            }
+            ,errorPlacement: function( error, element ) {
+                error.appendTo( element.parent() );
+            }
+        })
+
+        if (GetQueryString("click") == "isLogin") {
+            $('.click_login').click();
+        }
+
+
+        $("#rsendCode").click(function(){
+            if(!validator.element($("#regtelphone"))){
+                dialog("请输入正确手机号获取验证码！")
+                return false;
+            }else if (!validator.element($("#vericcap"))) {
+                dialog("请输入正确的图形验证码！")
+                return false;
+            }
+            var phone = $("#regtelphone").val();
+            var data = {
+                "phone": phone
+            }
+            var url = '/register/telcheck';
+            ajaxFunc(data, url, function(data) {
+                if (data.success) {
+                    djs(".getYzm_btn", "yzmys", 60);
+                    dialog("验证码已发到到您的手机，请查收");
+                } else {
+                    dialog("您已经注册");
+                }
+            })
+        });
+        $("#regForm").submit(function(e) {
+            e.preventDefault();
+            var phone = $("#regtelphone").val()
+            var password = $("#regpassword").val();
+            var veriCode=$("#veriCode").val();
+            if (!$(this).valid()) {
+                return false;
+            }
+            var data = {
+                "phone": phone,
+                "password": password,
+                "veriCode":veriCode
+            };
+            ajaxFunc(data, '/register', function(data) {
+                if (data.success) {
+                    window.location.reload();
+                } else {
+                    dialog(data.msg)
+                }
+            })
+        })
+        //用户登录
+        $('#loginFrom').submit(function(e) {
+            e.preventDefault();
+            var data = {
+                phone: $("input[name='telephone']").val(),
+                password: $("input[name='password']").val()
+            }
+            if ($("#isPwd").is(':checked')) {
+                data["isCheck"] = 'true';
+            } else {
+                data["isCheck"] = 'false';
+            }
+            if (!$(this).valid()) {
+                return false;
+            }
+            ajaxFunc(data, '/login', function ajaxBack(data) {
+                if (data.success) {
+                    var url = window.location.href;
+                    window.location.reload();
+                } else {
+                    dialog(data.msg)
+                }
+            });
+        });
+    });
+
+
+
+    var _hmt = _hmt || [];
+    (function() {
+        var hm = document.createElement("script");
+        hm.src = "//hm.baidu.com/hm.js?e940a3223a834dd5639df3dc08c6d0e4";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+
+
+</script>
+</body>
+</html>

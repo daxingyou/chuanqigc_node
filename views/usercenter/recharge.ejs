@@ -1,0 +1,145 @@
+<% include ../layout/header.ejs %>
+<%if(userInfo!=null){%>
+<!--Begin 快捷支付-->
+<div class="rengou_bg">
+    <div class="quick_content">
+        <!--Begin ie8支持透明-->
+        <div class="ie_touming">
+        <div class="divh30"></div>
+        <div class="t-zone tapestry-zone" id="bankCardZone">
+            <form class="t-prevent-submission" method="post" id="bankCardForm">
+                <div class="quick_current">
+                    <div class="client_infor">
+                        <span>真实姓名：</span>
+                        <font class="account"><%=userInfo.realName%> </font>
+                    </div>
+                    <div class="client_infor">
+                        <span>身份证号码：</span>
+                        <font class="account"><%=userInfo.identityNum2%> </font>
+                    </div>
+                    <div class="divh10"></div>
+                </div>
+                <div style="width:500px; margin:20px auto; color:#979797;" class="divh50">目前仅支持以下银行快捷支付：<br clear="none">工商银行、农业银行、中国银行、建设银行、邮储银行、中信银行、光大银行、民生银行、平安银行、兴业银行</div>
+                <div class="card_infor">
+                    <div class="client_infor">
+                        <span>银行卡号：</span>
+                        <input aid="bankCardNum" class="validate[required,custom[bank]]" id="bankCardNum" name="bankCardNum" type="text">
+                    </div>
+                    <div class="client_infor">
+                        <span>充值金额：</span>
+                        <input aid="chargeAmount" class="validate[custom[number],min[2],required]" id="chargeAmount" name="chargeAmount" type="text">
+                    </div>
+                    <div class="client_infor">
+                        <span>手机号码：</span>
+                        <input  value="<%=userInfo.phone2%> " readonly="readonly"  id="phoneNumber" name="phoneNumber" type="text">
+                    </div>
+                    <div class="client_infor">
+                        <span>手机支付码：</span>
+                        <button shape="rect" class="get_yzm_txt" onclick="getCode()" id="bcdaoji">获取支付码</button>
+<!--                         <a shape="rect" class="get_yzm_txt" style="display:none; background-color:#EBEBEB;" id="bcdaojishijian"><font id="bcmiao">60</font>秒后重新获取</a> -->
+                        <input style="width:140px;" class="get_yzm validate[required]" aid="bcvalicode" id="bcvalicode" name="bcvalicode" type="text">
+                        <b style="color:red;">获取支付码后本次金额将不可修改</b>
+                    </div>
+                    <input id="bcorderNum" value="" name="hidden" type="hidden">
+                    <input id="isSubmit" value="0" name="hidden_0" type="hidden">
+                    <div class="client_infor">
+                        <span></span>
+                        <input onclick="return yanzheng()" class="pay_btn" value="确认支付" placeholder="" name="quick" type="submit">
+                    </div>
+                    <!-- <div class="client_infor"><span></span><b>我同意<a>《传奇工场快捷支付服务协议》</a></b></div> -->
+                    <div class="error"></div>
+                </div>
+            </form>
+        </div>
+        </div>
+        <!--End ie8支持透明-->
+    </div>
+</div>
+<!--End 快捷支付-->
+<%}else{%>
+<div class="rengou_bg">
+    <div class="quick_content">
+        <!--Begin ie8支持透明-->
+        <div class="ie_touming">
+        <div class="divh30"></div>
+        <div class="client_infor" style="width:500px; margin:180px auto;">
+            <b style="font-size:18px; color:red; font-weight:900;">您需要进行实名认证才可进行快捷支付.<a style="font-size:16px; " class="get_yzm_txt" shape="rect" href="/usercenter/safeset?click=realName">点击认证</a></b>
+        </div>
+        </div>
+    </div>
+</div>
+<%}%>
+<script type="text/javascript">
+ function getCodeAjaxNoCard(data){
+        if(data.success){
+            $('.error').html("支付码已发送到您的手机，请查收！")
+            $("input[name='bcvalicode']").attr("orderNum",data.attributes.orderNum)
+
+        }else{
+            $('.error').html(data.msg)
+        }
+    }
+    function getCode(){
+        //var bnId=$("#frpqbc").find("option:selected").attr("bind_id");
+        var ca=$("#chargeAmount").val();
+        var bnCardNo=$('#bankCardNum').val();
+        var phone='<%=userInfo.phone%>';
+        var data={
+            ca:ca,
+            bnCardNo:bnCardNo,
+            phone:phone
+        };
+        djs(".get_yzm_txt","yzmys",60);
+        ajaxFunc(data,'/usercenter/recharge/getCode',getCodeAjaxNoCard)
+    }
+ $(function(){
+    $('#bankCardForm').validationEngine();
+    $("#bankCardForm").submit(function(e){
+            e.preventDefault();
+            var chargeAmount=$("#chargeAmount").val();
+            var orderNum=$("input[name='bcvalicode']").attr("orderNum");
+            var bcValicode=$('#bcvalicode').val();
+            var data={
+                chargeAmount:chargeAmount,
+                bcValicode:bcValicode,
+                orderNum:orderNum
+            };
+            if (!$(this).validationEngine("validate")) {
+                return false;
+            }
+            ajaxFunc(data,'/usercenter/recharge/',function(data){
+                    if(data.success){
+                        var url="/usercenter/recharge/success/"+chargeAmount
+                        ycrediect(0,url);
+                    }else{
+                        //errorhtml(data.msg)
+                        ycrediect(2,"/usercenter/recharge/error");
+                    }
+
+            });
+        // var bnId=$("#frpqbc").find("option:selected").attr("bind_id");
+        //     var ca=$("input[name='chargeAmount']").val();
+        //     var payCode=$("input[name='bcvalicode']").val();
+        //     var orderNum=$("input[name='bcvalicode']").attr("orderNum");
+        //     if(ca==""||ca<2){
+        //         errorhtml("请输入充值金额且不少于2元！")
+        //         return false;
+        //     }else if(payCode==""){
+        //         errorhtml("请输入支付码！")
+        //         return false;
+        //     }else{
+        //         var dataNoCard={'bnId':bnId,'bcValicode':payCode,'chargeAmount':ca,'orderNum':orderNum}
+        //         ajaxFunc(dataNoCard,'/recharge',rechargeAjax);
+        //         return true;
+        //     }
+        // });
+
+        // $(".bank_type").delegate($("#frpqbc"),"change",function(){
+        //     $(".ylphone").hide();
+        //     var index=$(this).find("option:selected").index()
+        //     $(".ylphone").eq(index).show();
+        // });
+    });
+});
+</script>
+<% include ../layout/footer.ejs %>

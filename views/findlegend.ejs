@@ -1,0 +1,289 @@
+<% include layout/header_o.ejs %>
+<div class="nav_box_bg">
+    <div class="nav_box">
+        <ul class="fxchq_list">
+            <li><a href="/projectwarmup">预热项目</a></li>
+            <li><a href="/projectfinance">融资项目</a></li>
+            <li class="disable_li"><a>运营项目</a></li>
+        </ul>
+    </div>
+</div>
+<!--Begin 预热项目-->
+<div class="project_title">
+	<div class="pro_name f_fl">预热项目</div>
+    <div class="pro_num f_fl">项目数：<strong><%-preHotCount%></strong></div>
+    <a href="/projectwarmup" class="f_fr">查看全部&nbsp;&nbsp;></a>
+</div>
+<!--End 预热项目-->
+
+<!--Begin 预热项目1-->
+<%preHotProjects.forEach(function(item,index){%>
+<div class="hot_items">
+    <div class="hot_items_content">
+        <a href="/proInfo/<%-item.id%>">
+        <div class="hot_items_cont_left f_fl">
+            <img src="<%-picpath%><%-item.bgImage%>">
+            <div class="financintItems_icon prehotItems_icon"></div>
+            <ul class="hot_items_b clearfix">
+                <li class="f_fl">
+                    <div>项目方出资比例：<em><%-item.projectInvestScale%>%</em></div>
+                   <div>投资人出资比例：<em><%-item.investorScale%>%</em></div>
+                </li>
+                <li class="f_fr">
+                    <div>项目方收益比例：<em><%-item.projectRate%>%</em></div>
+                    <div>投资人收益比例：<em><%-item.investorRate%>%</em></div>
+                </li>
+            </ul>
+        </div>
+        </a>
+        <div class="hot_items_cont_right f_fr">
+            <div class="items_title"><%-item.projectName%><em class="f_fr">倒计时：<span class="timeDJS" timeCha="<%-new Date(item.preheatEndTime).getTime()/1000-locals.nowTime%>"></span></em></div>
+            <div class="items_describe"><%-item.shortIntroduce%></div>
+            <div class="items_infor_box">
+                <ul class="items_infor clearfix">
+                    <li class="f_fl">
+                        <div>
+                            <h6><%-(item.preheatStartTime!=null?item.preheatStartTime:"").substring(0,10)%></h6>上线时间
+                        </div>
+                    </li>
+                    <li class="f_fl">
+                        <span class="f_fl"></span>
+                        <div class="f_fl center_div">
+                            <h6>￥<%-item.lowAmount%></h6>单笔投资
+                        </div>
+                        <span class="f_fr"></span>
+                    </li>
+                    <li class="f_fl">
+                    <div>
+                        <h6>￥<%-Math.round(item.investorAmount)%></h6>融资金额
+                    </div>
+                    </li>
+                </ul>
+                <div class="project_row4 clearfix">
+                    <div class="progress f_fl">
+                        <div class="progress_title f_fl">预热进度：<span><%= Math.round(item.buyProcess*100) %>%</span></div>
+                        <div class="gray_progress f_fl">
+                            <div class="progressing" style="width: <%= item.buyProcess*100 %>%"></div>
+                        </div>
+                    </div>
+                    <a href="/proInfo/<%-item.id%>" class="btn_style look_itemsDetail f_fr">查看详情</a>
+                </div>
+            </div>
+           
+        </div>
+    </div>
+</div>
+<%})%>
+<!--End 预热项目1-->
+<!--Begin 平台推荐-->
+<div class="project_title">
+	<div class="pro_name f_fl">平台推荐</div>
+</div>
+<%hotProjects.forEach(function(item,index){%>
+<div class="hot_items">
+    <div class="hot_items_content">
+        <a href="/proInfo/<%-item.id%>">
+        <div class="hot_items_cont_left f_fl">
+            <img src="<%-picpath%><%-item.bgImage%>">
+            <% if(item.projectStatus == 1){ %>
+            <div class="financintItems_icon prehotItems_icon"></div>
+            <%}else if(item.projectStatus == 2){%>
+            <div class="financintItems_icon"></div>
+            <%}%>
+            <ul class="hot_items_b clearfix">
+                <!--Begin ie8支持透明-->
+                <div class="ie_touming">
+                    <li class="f_fl">
+                        <div>项目方出资比例：<em><%-item.projectInvestScale%>%</em></div>
+                        <div>投资人出资比例：<em><%-item.investorScale%>%</em></div>
+                    </li>
+                    <li class="f_fr">
+                        <div>项目方收益比例：<em><%-item.projectRate%>%</em></div>
+                        <div>投资人收益比例：<em><%-item.investorRate%>%</em></div>
+                    </li>
+                </div>
+                <!--End ie8支持透明-->
+            </ul>
+        </div>
+        </a>
+        <div class="hot_items_cont_right f_fr">
+            <div class="items_title"><%-item.projectName%>
+             <% if(item.projectStatus == 1){ %>
+                <em class="f_fr">倒计时：<span class="timeDJS" timeCha="<%-new Date(item.preheatEndTime).getTime()/1000-locals.nowTime%>"></span></em>
+            <%}%>
+            </div>
+            <div class="items_describe"><%-item.shortIntroduce%></div>
+            <div class="items_infor_box">
+                <ul class="items_infor clearfix">
+                    <% if(item.projectStatus == 1){ %>
+                        <li class="f_fl">
+                            <div>
+                                <h6><%-item.preStartTime%></h6>上线时间：
+                            </div>
+                        </li>
+                        <li class="f_fl">
+                            <span class="f_fl"></span>
+                            <div class="f_fl center_div">
+                                <h6>￥<%-item.lowAmount%></h6>单笔投资
+                            </div>
+                            <span class="f_fr"></span>
+                        </li>
+                        <li class="f_fl">
+                            <div>
+                                <h6>￥<%-item.investorAmount%></h6>融资金额
+                            </div>
+                        </li>
+                    <%}else if(item.projectStatus == 2){%>
+                        <li class="f_fl">
+                            <div>
+                                <h6><%-item.remainDay%>天</h6>剩余时间
+                            </div>
+                        </li>
+                        <li class="f_fl">
+                            <span class="f_fl"></span>
+                            <div class="f_fl center_div">
+                                <h6>￥<%-item.lowAmount%></h6>单笔投资
+                            </div>
+                            <span class="f_fr"></span>
+                        </li>
+                        <li class="f_fl">
+                            <div>
+                                <h6>￥<%-item.investorAmount%></h6>融资金额
+                            </div>
+                        </li>
+                    <%}%>
+                </ul>
+                <div class="project_row4 clearfix">
+                    <div class="progress f_fl">
+                     <% if(item.projectStatus == 1){ %>
+                      <div class="progress_title f_fl">预热进度：<span><%= Math.round(item.buyProcess*100) %>%</span></div>
+                    <%}else if(item.projectStatus == 2){%>
+                        <div class="progress_title f_fl">融资进度：<span><%= Math.round(item.buyProcess*100) %>%</span></div>
+                    <%}%>
+                        <div class="gray_progress f_fl">
+                            <div class="progressing" style="width: <%= item.buyProcess*100 %>%"></div>
+                        </div>
+                    </div>
+                    <a href="/proInfo/<%-item.id%>" class="btn_style look_itemsDetail f_fr">查看详情</a>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</div>
+<%})%>
+<!--End 平台推荐-->
+<div class="hide"> 
+    <!--Begin 项目分红-->
+    <div class="project_title">
+        <div class="pro_name f_fl">项目分红</div>
+        <div class="pro_num f_fl">项目数：<strong>2</strong></div>
+        <a href="#" class="f_fr">查看全部&nbsp;&nbsp;></a>
+    </div>
+    <!--Begin 项目分红1-->
+    <div class="hot_items">
+        <div class="hot_items_content">
+            <div class="hot_items_cont_left f_fl">
+                <img src="images/opIeam_img1_03.png">
+                <div class="financintItems_icon opreateItems_icon"></div>
+                <ul class="hot_items_b clearfix">
+                    <!--Begin ie8支持透明-->
+                    <div class="ie_touming">
+                        <li class="f_fl">
+                            <div>项目方出资比例：<em>20.00%</em></div>
+                            <div>投资人出资比例：<em>80.00%</em></div>
+                        </li>
+                        <li class="f_fr">
+                            <div>项目方收益比例：<em>30.00%</em></div>
+                            <div>投资人收益比例：<em>70.00%</em></div>
+                        </li>
+                    </div>
+                    <!--End ie8支持透明-->
+                </ul>
+            </div>
+            <div class="hot_items_cont_right f_fr">
+                <div class="items_title">直订网</div>
+                <div class="items_describe">直订网是国内首家在帮助消费预订酒店...</div>
+                <div class="items_infor_box">
+                    <ul class="items_infor clearfix">
+                        <li class="f_fl">
+                            <div>
+                                <h6>2015-09-08</h6>完成时间
+                            </div>
+                        </li>
+                        <li class="f_fl">
+                            <span class="f_fl"></span>
+                            <div class="f_fl center_div">
+                                <h6>￥200000000.00</h6>单笔投资
+                            </div>
+                            <span class="f_fr"></span>
+                        </li>
+                        <li class="f_fl">
+                        <div>
+                            <h6>￥30000000.00</h6>已筹金额
+                        </div>
+                        </li>
+                    </ul>
+                    <div class="project_row4 clearfix">
+                        <div class="progress f_fl">
+                            <div class="progress_title f_fl">融资进度：<span>80%</span></div>
+                            <div class="gray_progress f_fl">
+                                <div class="progressing"></div>
+                            </div>
+                        </div>
+                        <a href="融资项目—详情页.html" class="btn_style look_itemsDetail f_fr">查看详情</a>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+    <!--End 项目分红1-->
+
+    <!--End 项目分红-->
+
+    <!--Begin 项目分红表格-->
+    <div class="opreateIteam">
+        <table class="opreate_table">
+            <thead>
+                <tr class="table_fff_bg">
+                    <th width="25%">用户名</th>
+                    <th width="25%">投资额(￥/元)</th>
+                    <th width="25%">占股比例</th>
+                    <th width="25%">分红金额</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="table_gray_bg">
+                    <td>张**</td>
+                    <td>5,000000.00</td>
+                    <td>5.200%</td>
+                    <td>1024.25</td>
+                </tr>
+                <tr class="table_fff_bg">
+                    <td>张**</td>
+                    <td>5,000000.00</td>
+                    <td>5.200%</td>
+                    <td>1024.25</td>
+                </tr>
+                <tr class="table_gray_bg">
+                    <td>张**</td>
+                    <td>5,000000.00</td>
+                    <td>5.200%</td>
+                    <td>1024.25</td>
+                </tr>
+                <tr class="table_fff_bg">
+                    <td>张**</td>
+                    <td>5,000000.00</td>
+                    <td>5.200%</td>
+                    <td>1024.25</td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="pages">这里是分页</div>
+        <div class="h_30"></div>
+    </div>
+    <!--End 项目分红表格-->
+</div>
+
+<% include layout/footer.ejs %>

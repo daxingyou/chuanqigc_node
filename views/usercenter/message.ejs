@@ -1,0 +1,65 @@
+<% include ../layout/header.ejs %>
+<div class="usercenter_bg">
+    <div class="usercenter_bg2"></div>
+</div>
+
+<!--Begin 消息动态-->
+<div class="usercenter_bgs">
+<div class="usercontent clearfix">
+    <% include left.ejs %>
+        <div class="right_bar f_fr">
+            <div class="user_title_box clearfix">
+                <div class="user_title f_fl">消息动态</div>
+            </div>
+            <ul class="message_list" id="ToList">
+                <%if(messageList.attributes.noticeList.length!=0){%>
+                    <%messageList.attributes.noticeList.forEach(function(item,index){%>
+                        <li>
+                            <a href="<%=item.noticeContext%>" title="<%=item.noticeContext%>">
+                                <%=item.title%><em><%=item.createTime%></em></a>
+                        </li>
+                <%})%>
+                <%}else{%>
+                <div class="nomsg">
+                    <font>暂无数据！</font>
+                </div>
+                <%}%>
+            </ul>
+            <!--分页div-->
+            <div class="pages" id="paging">这里是分页</div>
+            <div class="h_300"></div>
+        </div>
+</div>
+</div>
+<!--End 消息动态-->
+<% include ../layout/footer.ejs %>
+<link rel="stylesheet" type="text/css" href="/css/fenye.css">
+<script type="text/javascript" src="/js/fenye.js"></script>
+<script type="text/javascript">
+// $("#paging").pagination({
+//     items: 100,
+//     itemsOnPage: 10,
+//     cssStyle: 'light-theme'
+// });
+var totalRecords = '<%= totalRecords %>'; // 总共条数
+var rowPerPage = 10; // 每页显示多少条
+$("#paging").pagination({
+    items: totalRecords,
+    itemsOnPage: rowPerPage,
+    cssStyle: 'light-theme',
+    onPageClick: function(pageNumber) {
+        ajaxFunc({pageNo: pageNumber}, '/usercenter/message/conPage', function(data) {
+            if (data) {
+                var str = "";
+                $.each(data.attributes.noticeList, function(index, item) {
+                    str += '<li>'                         
+                    str +=  '<a href="'+item.noticeContext+'" title="'+item.noticeContext+'">'
+                    str +=  item.title+'<em>'+item.createTime+'</em></a>'
+                    str += '</li>';
+                });
+                $("#ToList").html(str);
+            }
+        });
+    }
+});
+</script>

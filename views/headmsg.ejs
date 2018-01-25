@@ -1,0 +1,60 @@
+<% include layout/header_o.ejs %>
+<!--Begin 首页——新闻列表页-->
+<div class="listDetail_bg">
+<div class="list_page">
+    <div class="news_list_box">
+        <div class="list_title"><span></span><%=headtitle%></div>
+        <div class="list_content">
+            <ul class="message_list news_list_txt" id="uMsg">
+             <%if (zcdyList.moreInfo.length!=0) {%>
+                 <%zcdyList.moreInfo.forEach(function(item,index){%>
+                   <li><a href="/index/msgdefail?id=<%=item.id%>"><%-item.title%><em><%-item.createTime%></em></a></li>
+            <%})}%>
+            </ul>
+        </div>
+    </div>
+    <div class="pages" id="pages">这里是分页</div>
+</div>
+</div>
+<!--End 首页——新闻列表页-->
+<% include layout/footer.ejs %>
+<script type="text/javascript" src="/js/fenye.js"></script>
+<link rel="stylesheet" type="text/css" href="/css/fenye.css">
+<script type="text/javascript">
+            var totalRecords = '<%=zcdyList.count%>'; // 总共条数
+            var rowPerPage ='<%=zcdyList.pageNum%>'; // 每页显示多少条
+            var sortId='<%=sortId%>';
+             $("#pages").pagination({
+                 items: totalRecords,
+                 itemsOnPage: rowPerPage,
+                 cssStyle: 'light-theme',
+                 onPageClick: function(pageNumber){
+                     $.ajax({
+                        url: "/index/conPage",
+                        type: "post",
+                        dataType: "json",
+                        data: {pageNo:pageNumber, sortId:sortId},
+                        success: function (json) {                          
+                            if(json){
+                                $("#uMsg").html("");
+                                console.log(json);
+                                var str="";
+                                $.each(json.attributes.moreInfo,function(index,item){
+                                    console.log(item.id);
+                                    str+='<li><a href="/index/msgdefail?id='+item.id+'">'+item.title
+                                    str+='<em>'+item.createTime+'</em></a></li>' 
+                                });
+                                console.log(str);
+                                $("#uMsg").html(str);
+                             
+                            }else{
+                                alert("传递格式有误")
+                            }
+                        },
+                        error:function(){
+                            alert("加载失败");
+                        }
+                    });
+                 }
+             });
+</script>

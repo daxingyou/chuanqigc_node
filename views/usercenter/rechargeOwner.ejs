@@ -1,0 +1,140 @@
+<% include ../layout/header_o.ejs %>
+<div class="nav_box_bg usercenter_bg22">
+    <div class="nav_box help_title">
+        快捷支付
+    </div>
+</div>
+<!--End header-->
+<%if(userInfo!=null){%>
+<!--Begin 快捷支付-->
+<div class="rengou_bg">
+    <div style="min-height:600px;" class="quick_content">
+        <!--Begin ie8支持透明-->
+        <div class="ie_touming">
+        <div class="divh30"></div>
+        <div style="height:450px; width:898px;" class="recharge_tab">
+            <div style="padding:40px 60px; width:898px;" class="recharge_box">
+                <div class="quick_charge">
+                    <div class="recharge_infor">
+                        <div class="saving_card clearfix client_infor">
+                            <span style="line-height:50px; float:left;" class="xw">选择银行卡：</span>
+                            <div class="bank_infor">
+                                <div class="bank_type">
+                                    <select id="frpqbc" class="bank_type">
+                                      <% cardInfo.forEach(function(item,index){ %>
+                                      <option value="6192" bind_id="<%=item.bind_id%>">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%=item.bank_name%>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;尾号&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%=item.card_last%>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</option>
+                                    <% })%>
+                                       
+                                    </select>
+                                </div>
+                            </div>
+                            <a shape="rect" target="_blank" href="/usercenter/recharge/newrecg">
+                                <div class="add_quick">新卡支付</div>
+                            </a>
+                        </div>
+                        <div class="client_infor">
+                            <span class="xw">银行预留手机：</span><font id="phone"><%=userInfo.phone2%> </font>
+                        </div>
+                    </div>
+                    <div class="t-zone tapestry-zone" id="bankCardZone">
+                        <form class="t-prevent-submission"  method="post" id="bankCardForm">
+                            <div style="display: none;" class="">
+                                <input value="$N/$N/$N" name="t:ac" type="hidden">
+                                <input value="" name="t:formdata" type="hidden">
+                            </div>
+                            <input id="bind_id" value="72957" name="hidden" type="hidden">
+                            <div class="card_infor recharge_infor">
+                                <div class="client_infor">
+                                    <span>充值金额：</span>
+                                    <input aid="chargeAmount" class="validate[custom[number],min[2],required]" id="chargeAmount" name="chargeAmount" type="text">
+                                </div>
+                                <div class="client_infor">
+                                    <span>手机支付码：</span>
+                                    <button shape="rect" class="get_yzm_txt" onclick="getCode()">获取支付码</button>
+                                   <!--  <a shape="rect" class="get_yzm_txts" style="display:none; background-color:#EBEBEB;" id="bcdaojishijian"><font id="bcmiao">60</font>秒后重新获取</a> -->
+
+                                    <input style="width:140px;" class="get_yzm validate[required]" aid="bcvalicode" id="bcvalicode" name="bcvalicode" type="text">
+                                    <b style="color:red;">获取支付码后本次金额将不可修改</b>
+                                </div>
+                                <input id="bcorderNum" value="" name="hidden_0" type="hidden">
+                                <input id="isSubmit" value="0" name="hidden_1" type="hidden">
+                                <div class="client_infor ">
+                                    <span></span>
+                                    <input class="pay_btn" value="确认充值" placeholder="" name="quick" type="submit">
+                                </div>
+                                <div class="error"></div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+        <!--End ie8支持透明-->
+    </div>
+</div>
+<!--End 快捷支付-->
+<%}else{%>
+<div class="rengou_bg">
+    <div class="quick_content">
+        <div class="divh30"></div>
+        <div class="client_infor" style="width:500px; margin:180px auto;">
+            <b style="font-size:18px; color:red; font-weight:900;">您需要进行实名认证才可进行快捷支付.<a style="font-size:16px; " class="get_yzm_txt" shape="rect" href="/usercenter/safeset?click=realName">点击认证</a></b>
+        </div>
+    </div>
+</div>
+<%}%>
+
+<script type="text/javascript">
+  function getCodeAjaxNoCard(data){
+        if(data.success){
+            $('.error').html("支付码已发送到您的手机，请查收！")
+            $("input[name='bcvalicode']").attr("orderNum",data.attributes.orderNum)
+        }else{
+           $('.error').html(data.msg)
+        }
+    }
+    //获取支付码
+    function getCode(){
+        var ca=$("#chargeAmount").val();
+        var bnId=$("#frpqbc").find("option:selected").attr("bind_id");
+        var phone='<%=userInfo.phone%>';
+
+        var data={
+            ca:ca,
+            bnId:bnId,
+            phone:phone
+        };
+        djs(".get_yzm_txt","yzmys",60);
+        ajaxFunc(data,'/usercenter/recharge/getCode',getCodeAjaxNoCard);
+    }
+    $(function () {
+        $('#bankCardForm').validationEngine();
+        $("#bankCardForm").submit(function(e){
+            e.preventDefault();
+            var chargeAmount=$("#chargeAmount").val();
+            var orderNum=$("input[name='bcvalicode']").attr("orderNum");
+            var bcValicode=$('#bcvalicode').val();
+            var data={
+                chargeAmount:chargeAmount,
+                bcValicode:bcValicode,
+                orderNum:orderNum
+            };
+            if (!$(this).validationEngine("validate")) {
+                return false;
+            }
+            ajaxFunc(data,'/usercenter/recharge/',function(data){
+                    if(data.success){
+                        var url="/usercenter/recharge/success/"+chargeAmount
+                        ycrediect(0,url);
+                    }else{
+                        //errorhtml(data.msg)
+                        ycrediect(2,"/usercenter/recharge/error");
+                    }
+
+            });
+        })
+    })
+</script>
+
+<% include ../layout/footer.ejs %>

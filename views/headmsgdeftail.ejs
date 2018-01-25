@@ -1,0 +1,56 @@
+<% include layout/header_o.ejs %>
+
+<!--Begin 首页——新闻详情页-->
+<div class="listDetail_bg">
+    <div class="listDetail clearfix">
+        <div class="listDetail_left_nav f_fl">
+            <div class="list_title left_nav_tit"><span></span>政策动态</div>
+            <div class="left_nav_list_box">
+                <ul class="message_list left_nav_list">
+                   <%if (zcdt.length!=0) {%>
+                 	<%zcdt.forEach(function(item,index){%>
+                    <li><a href="/index/msgdefail?id=<%-item.id%>"><%=item.title%></a></li>
+                  <%})}%>
+                </ul>
+            </div>
+            <div class="list_title left_nav_tit"><span></span>投资讲堂</div>
+            <div class="left_nav_list_box">
+                <ul class="message_list left_nav_list">
+                     <%if (tzjt.length!=0) {%>
+                 	<%tzjt.forEach(function(item,index){%>
+                    <li><a href="/index/msgdefail?id=<%-item.id%>"><%=item.title%></a></li>
+                  <%})}%>
+                </ul>
+            </div>
+        </div>
+        <div class="listDetail_right f_fr">
+            <!--Begin ie8支持透明-->
+            <div class="ie_touming">
+            <div class="detail_title"><%-msgdefail.title%></div>
+            <div class="detail_row2 clearfix">
+                <ul class="f_fl detail_time">
+                    <li>发布时间：<%-msgdefail.createTime%></li>
+                    <li>来源：<%-msgdefail.source%></li>
+					<!--                     <li>172次阅读</li> -->
+                </ul>
+                <div class="jiathis_style_24x24 f_fr">
+                	<span>分享到:</span>
+                    <a class="jiathis_button_weixin"></a>
+                    <a class="jiathis_button_cqq"></a>
+                    <a class="jiathis_button_tqq"></a>
+                    <a class="jiathis_button_tsina"></a>
+                </div>
+                <script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+                <!-- JiaThis Button END -->
+              
+            </div>
+            <div class="detail_main">
+            	<%-msgdefail.content%>
+            </div>
+            </div>
+        </div>
+    
+    </div>
+</div>
+<!--End 首页——新闻详情页-->
+<% include layout/footer.ejs %>

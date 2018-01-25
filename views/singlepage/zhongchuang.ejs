@@ -1,0 +1,119 @@
+<% include ../layout/header_o.ejs %>
+<!--Begin 众创大背景-->
+<div class="zhch_bigBg">
+<!--Begin banner-->
+<div class="zhch_banner">
+    <img src="/images/banner_word_03.png">
+</div>
+<!--End banner-->
+
+<!--Begin 投品牌-->
+<div class="zhch_pad clearfix" id="touBrand">
+    <div class="f_fl"><img src="/images/touBrand_img_03.png"></div>
+    <div class="zhch_touBrand_right f_fr">
+        <div class="zhch_top">
+            <div class="zhch_touBrandTitle helpBrand_color">传奇加速器Ⅰ：<em>筹钱</em></div>
+            <p class="brand_word helpBrand_color">帮助项目迅速完成投融进程</p>
+        </div>
+        <div class="brand_wrap">
+            <div class="brand_content">
+                <div class="tou_introduce">15天内达成合作意向，20天内解决融资问题</div>
+                <p class="clearfix">
+                    <em class="helpBrand_color">资金来源：</em>传奇工场领投、投资人定向众投、大众众筹，传奇工场根据项目需求选择特定投资方和目标受众，进行定向整合和定向众投。
+                </p>
+            </div>
+            <div class="clearfix btn_wrap">
+                <a href="/findlegend" class="zhch_btn f_fl zhch_btn_orangeBg">我要投品牌</a>
+                <% if(!locals.user){ %>
+                <a href="javascript:void(0)" class="zhch_btn f_fr zhch_btn_orangeBg click_login">我要品牌融资</a>
+                <%}else{%>
+                <a href="/usercenter/publishProject" class="zhch_btn f_fr zhch_btn_orangeBg">我要品牌融资</a>
+                <%}%>
+            </div>
+        </div>
+    </div>
+</div>
+<!--End 投品牌-->
+
+<!--Begin 帮品牌-->
+<div class="zhch_pad help_pad clearfix" id="helpBrand">
+    <div class="f_fr"><img src="/images/helpBrand_img_03.png"></div>
+    <div class="zhch_touBrand_right f_fl">
+        <div class="zhch_top">
+            <div class="zhch_touBrandTitle">传奇加速器Ⅱ：<em>筹智</em></div>
+            <p class="brand_word">帮助项目品牌迅速成长溢价</p>
+        </div>
+        <div class="brand_wrap">
+            <div class="brand_content">
+                <div class="tou_introduce">缺资源、缺战将、缺合伙人，传奇工场一站解决</div>
+                <p class="clearfix">
+                    <em class="zhl_blue">智力来源：</em>行业专家资源库，营销咨询专家团、众创智库传奇工场根据项目需求匹配营销资源和专家咨询，进行沟通对接和资源价值重构。
+                </p>
+            </div>
+            <div class="clearfix btn_wrap">
+                <a href="/findlegend" class="zhch_btn f_fl">我要帮品牌</a>
+                <% if(!locals.user){ %>
+                <a href="javascript:void(0)" class="zhch_btn f_fr click_login">我要品牌筹人</a>
+                <%}else{%>
+                <a href="/usercenter/publishProject" class="zhch_btn f_fr">我要品牌筹人</a>
+                <%}%>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!--End 帮品牌-->
+
+<!--Begin 如何参与传奇工场的众创之旅-->
+<div class="zhch_animate">
+    <div class="zhch_pad">
+        <div class="howJoin_title">如何参与传奇工场的众创之旅？</div>
+        <div class="join_brand">
+            <ul class="circle_list circle_active zhch_circle clearfix">
+                <li class="zhchLi_orangeBg">
+                        <u class="cl orange_circle cl_hover"></u>
+                        <u class="cr orange_circle cr_hover"></u>
+                        <strong class="f_f29_orange strong_hover">获取收益</strong>
+                        <div class="square_bg zhch_div profit_div profitDiv_hover">
+                            1. 收益可能：您将有机会获得如下权利和福利：
+                            <p>您所帮助的企业的——免费股权、优先投资权、可能投资年化收益8%-100%、   品牌店铺经营参与权…</p>
+                            <p>您所帮助的企业的——赠送样品、免费体验、优先试用、SVIP会员、终生折扣…</p>
+                            2. 获取途径：定期返还股本红利、参与即得多项福利
+                        </div>
+                    </li>
+                <li class="ml">
+                    <u class="cl"></u>
+                    <u class="cr"></u>
+                    <strong>合作推进</strong>
+                    <div class="square_bg zhch_div corperate_div">合作确定  >>  协议签署   >>  资源进入  >>   项目运营   >>   融后跟进</div>
+                </li>
+                <li class="mtl">
+                    <u class="cl"></u>
+                    <u class="cr"></u>
+                    <strong>选择项目</strong>
+                    <div class="square_bg zhch_div select_div"> 浏览项目  >>>>   了解项目    >>>>   投融洽谈   >>>>    投资决策</div>
+                </li>
+                <li class="right_li">
+                    <u class="cl"></u>
+                    <u class="cr"></u>
+                    <strong>参与众创</strong>
+                    <div class="square_bg zhch_div join_div">
+                        1. 众创者条件：
+                        <p>如果你拥有：资金和实力、资源和人脉、经验和专长</p>
+                        <p>如果你愿意：助力品牌企业成长，促生个人资源的价值转化</p>
+                        2. 成为众创者： 注册信息（基本信息）  >>>>  完善资料（资源可能、预投方式）
+                    </div>
+                </li>
+               
+                
+                
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!--End 如何参与传奇工场的众创之旅-->
+
+</div>
+<!--End 众创大背景-->
+<% include ../layout/footer.ejs %>

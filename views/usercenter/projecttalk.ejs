@@ -1,0 +1,51 @@
+<% include ../layout/header.ejs %>
+<div class="usercenter_bg">
+    <div class="usercenter_bg2"></div>
+</div>
+
+
+<!--Begin 发布项目——项目老板-->
+<div class="usercenter_bgs">
+<div class="usercontent clearfix ">
+    <% include left.ejs %>
+    <div class="right_bar f_fr">
+    	<div class="publish_box">
+            <div class="publish_step">
+                <ul class="publish_list publish_fourth">
+                    <li>基本资料</li>
+                    <li>股权设置</li>
+                    <li>草稿状态项目编辑</li>
+                    <li>相关协议</li>
+                    <li class="publish_list_last">传奇工场审核</li>
+                </ul>
+            </div>
+            <h3>相关协议</h3>
+            <p>融资后，我们建议融资方和融资店铺的投资人一起成立有限合作伙伴来管理融资后将要新开设的新店铺。由项目方充当该合伙企业的普通合伙 人，其他投资人为有限合伙人。同时项目方独立负责新开店铺的经营管理。 </p>
+            <p>将来的融后管理中，需要有《合伙协议》来约束有限合伙企业中您与投资人的权利和义务。在此，您可以下载《合伙协议》模板，详细阅读认真填写，填写后可以在后期上传至传奇工场。</p>
+            <div class="h_80"></div>
+            <a href="/agreement/用户中心-合伙协议.docx" class="btn_style dz_protocolDownload">合伙协议下载</a>
+            <div class="step_btns clearfix">
+                <a href="javascript:history.back(-1);" class="step_btn f_fl">上一步</a>
+                <a href="javascript:void(0)" onclick="submitCheck()" class="step_btn f_fl">提交审核</a>
+            </div>
+        </div>
+        <div class="h_300"></div>
+    </div>
+</div>
+</div>
+<!--End 发布项目——项目老板-->
+
+<% include ../layout/footer.ejs %>
+
+<script type="text/javascript">
+    function submitCheck(){
+         ajaxFunc({projectId:'<%=projectId%>'}, '/usercenter/publishProject/submitCheck', function(msg) {
+            if (msg.success) {
+                console.log(msg.msg);
+                location.href='/usercenter/publishProject/success/<%=projectId%>?type=true'                 
+                } else {
+                   console.log(msg.msg);
+            }
+        });
+    }
+</script>

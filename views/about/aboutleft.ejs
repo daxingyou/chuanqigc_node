@@ -1,0 +1,38 @@
+
+<ul class="f_fl helpCenter_leftBar active_square" id="ucLeft">
+    <%for(var item in bottomMenus){%>
+    <%if (bottomMenus[item].length>1) {%>
+    <li class="help_change_li" title="<%=item%>">
+        <u class="square_lb"></u>
+        <u class="square_rt"></u>
+        <a href="javascript:;"><%=item%></a>
+        <ul class="helpCenter_leftSubBar">
+            <%bottomMenus[item].forEach(function(items,index){%>
+            <li><a href="/about/<%-items.id%>?maptype=INFODETAIL&TitleName=<%= items.title %>" id="<%=items.id%>" title="<%=items.title%>" ><%=items.title%></a></li>
+            <%})%>
+        </ul>
+        <em class="help_arrow"></em>
+    </li>
+    <%}else if(bottomMenus[item].length==1){%>
+    <li class="help_change_li">
+        <u class="square_lb"></u>
+        <u class="square_rt"></u>
+        <%bottomMenus[item].forEach(function(items,index){%>
+            <a href="/about/<%-items.id%>?maptype=INFODETAIL&TitleName=<%= items.title %>" id="<%=items.id%>"><%=item%></a>
+        <%})%>
+        <em class="help_arrow help_blue_bg"></em>
+    </li>
+    <%}%>
+    <%}%>
+</ul>
+<script>
+    $(function(){
+        //帮助中心，用户中心显示下拉子菜单，调用JS
+        $('#ucLeft').hoverAccordion({
+            //activateItem:1,	     //默认下设置第4个滑动门展开
+            //onClickOnly:false,   //点击或悬停触发"false"、"true"
+            speed:'fast'         //滑动门切换过渡效果"fast"、"slow"、"normal"
+        });
+    })
+
+</script>

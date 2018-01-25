@@ -1,0 +1,192 @@
+<% include layout/header_o.ejs %>
+
+<div class="nav_box_bg">
+    <div class="nav_box">
+        <ul class="fxchq_list">
+            <li><a href="/projectwarmup">预热项目</a></li>
+            <li><a href="/projectfinance" class="light_pro">融资项目</a></li>
+            <li class="disable_li"><a>运营项目</a></li>
+        </ul>
+    </div>
+</div>
+
+<!--Begin 融资项目-->
+<div class="project_title sub_project_title">融资项目</div>
+<div id="pageZone">
+    <% projectList.forEach (function(item,index){ %>
+    <div class="hot_items">
+        <div class="hot_items_content">
+            <a href="/proInfo/<%-item.id%>">
+            <div class="hot_items_cont_left f_fl">
+                <img src="<%-picpath%><%-item.bgImage%>">
+                <div class="financintItems_icon"></div>
+                <ul class="hot_items_b clearfix">
+                    <!--Begin ie8支持透明-->
+                    <div class="ie_touming">
+                        <li class="f_fl">
+                            <div>项目方出资比例：<em><%-item.projectInvestScale%>%</em></div>
+                            <div>投资人出资比例：<em><%-item.investorScale%>%</em></div>
+                        </li>
+                        <li class="f_fr">
+                            <div>项目方收益比例：<em><%-item.projectRate%>%</em></div>
+                            <div>投资人收益比例：<em><%-item.investorRate%>%</em></div>
+                        </li>
+                    </div>
+                    <!--End ie8支持透明-->
+                </ul>
+            </div>
+            </a>
+            <div class="hot_items_cont_right f_fr">
+                <div class="items_title"><%-item.projectName%></div>
+                <div class="items_describe"><%-item.shortIntroduce!=null?item.shortIntroduce:""%></div>
+                <div class="items_infor_box">
+                    <ul class="items_infor clearfix">
+                        <li class="f_fl">
+                            <div>
+                                <h6><%=item.remainDay%>天</h6>剩余时间
+                            </div>
+                        </li>
+                        <li class="f_fl">
+                            <span class="f_fl"></span>
+                            <div class="f_fl center_div">
+                                <h6>￥<%-item.lowAmount%></h6>单笔投资
+                            </div>
+                            <span class="f_fr"></span>
+                        </li>
+                        <li class="f_fl">
+                            <div>
+                                <h6>￥<%-item.investorAmount%></h6>融资金额
+                            </div>
+                        </li>
+                    </ul>
+                    <div class="project_row4 clearfix">
+                        <div class="progress f_fl">
+                            <div class="progress_title f_fl">融资进度：<span><%= Math.round(item.buyProcess*100) %>%</span></div>
+                            <div class="gray_progress f_fl">
+                                <div class="progressing" style="width: <%= item.buyProcess*100 %>%"></div>
+                            </div>
+                        </div>
+                        <a href="/proInfo/<%-item.id%>" class="btn_style look_itemsDetail f_fr">查看详情</a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!--End 预热项目1-->
+    <%})%>
+</div>
+<div class="project_pages ">
+    <div style="display: inline-block">
+        <div id="paging"></div>
+    </div>
+</div>
+<!--End 预热项目-->
+<link rel="stylesheet" type="text/css" href="/css/fenye.css">
+<script type="text/javascript" src="/js/fenye.js"></script>
+<script type="text/javascript">
+    var totalRecords = '<%- count %>'; // 总共条数
+    var rowPerPage = '<%- pageNum %>'; // 每页显示多少条
+    var nowDate='<%-locals.nowDate%>'
+    $("#paging").pagination({
+        items: totalRecords,
+        itemsOnPage: rowPerPage,
+        cssStyle: 'light-theme',
+        onPageClick: function(pageNumber){
+            $.ajax({
+                url: "/projectfinance/conPage",
+                type: "post",
+                dataType: "json",
+                data: {pageNo:pageNumber},
+                success: function (json) {
+                    if(json){
+                        var str="",remainDay,shortIntroduce;
+                        $.each(json.attributes.projects,function(index,item){
+                            if (item.remainDay==undefined) {
+                                remainDay=0;
+                            }
+                            else{
+                                remainDay=item.remainDay;
+                            }
+                            if (item.shortIntroduce==null) {
+                                shortIntroduce="";
+                            }
+                            else{
+                                 shortIntroduce=item.shortIntroduce
+                            }
+                            str += '<div class="hot_items">' +
+                            '<div class="hot_items_content">' +
+                            '<a href="/proInfo/'+item.id+'">' +
+                            '<div class="hot_items_cont_left f_fl">' +
+                            '<img src="<%-picpath%>'+item.bgImage+'">' +
+                            '<div class="financintItems_icon"></div>' +
+                            '<ul class="hot_items_b clearfix">' +
+                            '<div class="ie_touming">' +
+                            '<li class="f_fl">' +
+                            '<div>项目方出资比例：<em>'+item.projectInvestScale+'%</em></div>' +
+                            '<div>投资人出资比例：<em>'+item.investorScale+'%</em></div>' +
+                            '</li>' +
+                            '<li class="f_fr">' +
+                            '<div>项目方收益比例：<em>'+item.projectRate+'%</em></div>' +
+                            '<div>投资人收益比例：<em>'+item.investorRate+'%</em></div>' +
+                            '</li>' +
+                            '</div>' +
+                            '</ul>' +
+                            '</div>' +
+                            '</a>' +
+                            '<div class="hot_items_cont_right f_fr">' +
+                            '<div class="items_title">'+item.projectName+'</div>' +
+                            '<div class="items_describe">'+shortIntroduce+'</div>' +
+                            '<div class="items_infor_box">'+
+                            '<ul class="items_infor clearfix">'+
+                            '<li class="f_fl">'+
+                            '<div>'+
+                            '<h6>'+remainDay+'天</h6>剩余时间'+
+                            '</div>'+
+                            '</li>'+
+                            '<li class="f_fl">'+
+                            '<span class="f_fl"></span>'+
+                            '<div class="f_fl center_div">'+
+                            '<h6>￥'+item.lowAmount+'</h6>单笔投资'+
+                            '</div>'+
+                            '<span class="f_fr"></span>'+
+                            '</li>'+
+                            '<li class="f_fl">'+
+                            '<div>'+
+                            '<h6>￥'+item.investorAmount+'</h6>融资金额'+
+                            '</div>'+
+                            '</li>'+
+                            '</ul>'+
+                            '<div class="project_row4 clearfix">'+
+                            '<div class="progress f_fl">'+
+                            '<div class="progress_title f_fl">融资进度：<span>'+ Math.round(item.buyProcess*100) +'%</span></div>'+
+                            '<div class="gray_progress f_fl">'+
+                            '<div class="progressing" style="width: '+ item.buyProcess*100 +'%"></div>'+
+                            '</div>'+
+                            '</div>'+
+                            '<a href="/proInfo/'+item.id+'" class="btn_style look_itemsDetail f_fr">查看详情</a>'+
+                            '</div>'+
+                            '</div>'+
+                            '</div>'+
+                            '</div>'+
+                            '</div>';
+
+                            console.log(item.projectName);
+                        });
+
+                        $("#pageZone").html(str);
+
+                    }else{
+                        alert("传递格式有误")
+                    }
+                },
+                error:function(){
+                    alert("加载失败");
+                }
+            });
+        }
+    });
+
+
+</script>
+<% include layout/footer.ejs %>

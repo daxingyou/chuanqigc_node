@@ -1,0 +1,1358 @@
+﻿<% include layout/header_o.ejs %>
+<div class="usercenter_bg">
+    <div class="usercenter_bg1 login_bg1"></div>
+</div>
+<input type="text" value="<%- projectId %>" class="hide" id="projectId">
+
+<!--Begin banner-->
+<div class="banner_bg">
+    <!--Begin 融资项目1-->
+    <div class="hot_items">
+        <div class="hot_items_content">
+            <div class="hot_items_cont_left f_fl">
+                <img src="<%- picpath+proIndustry.bgImage %>">
+                <% if(proIndustry.projectStatus == 1){ %>
+                <div class="financintItems_icon prehotItems_icon"></div>
+                <% }else if(proIndustry.projectStatus == 2){ %>
+                <div class="financintItems_icon"></div>
+                <% } %>
+                <ul class="hot_items_b clearfix">
+                    <!--Begin ie8支持透明-->
+                    <div class="ie_touming">
+                        <li class="f_fl">
+                            <div>项目方出资比例：<em><%- proIndustry.projectInvestScale %>%</em></div>
+                            <div>投资人出资比例：<em><%- proIndustry.investorScale %>%</em></div>
+                        </li>
+                        <li class="f_fr">
+                            <div>项目方收益比例：<em><%- proIndustry.projectRate %>%</em></div>
+                            <div>投资人收益比例：<em><%- proIndustry.investorRate %>%</em></div>
+                        </li>
+                    </div>
+                </ul>
+            </div>
+            <div class="hot_items_cont_right itemsDetail_cont_right f_fr">
+                <div class="items_title"><%- projectBrand.projectname %></div>
+                <ul class="iD_cont_r_list">
+                    <li class="iD_cont_r_list1 clearfix"><em title="<%- projectBrand.toubrand %>"><%- projectBrand.toubrand1 %></em>
+                        <span class="btn_style"><a href="#proBuy">投品牌</a></span>
+                    </li>
+                    <li class="iD_cont_r_list2 clearfix"><em title="<%- projectBrand.bangbrand %>"><%- projectBrand.bangbrand1 %></em>
+                        <% if(locals.user){ %>
+                        <span class="btn_style help_brand">帮品牌</span>
+                        <%}else{%>
+                        <span class="btn_style click_login">帮品牌</span>
+                        <%}%>
+                    </li>
+                    <li class="iD_cont_r_list3 clearfix"><em title="<%- projectBrand.aibrand %>"><%- projectBrand.aibrand1 %></em>
+                        <% if(locals.user){ %>
+                        <span class="btn_style like_brand">爱品牌</span>
+                        <%}else{%>
+                        <span class="btn_style click_login">爱品牌</span>
+                        <%}%>
+                    </li>
+                </ul>
+                <!-- JiaThis Button BEGIN -->
+                <div class="jiathis_style_24x24">
+                    <span>分享到：</span>
+                    <a class="jiathis_button_weixin"></a>
+                    <a class="jiathis_button_cqq"></a>
+                    <a class="jiathis_button_tqq"></a>
+                    <a class="jiathis_button_tsina"></a>
+                </div>
+                <script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+                <!-- JiaThis Button END -->
+            </div>
+        </div>
+
+    </div>
+    <!--End 融资项目1-->
+
+    <div class="product_detail clearfix">
+        <!--Begin ie8支持透明-->
+        <div class="ie_touming">
+            <!--左侧内容-->
+            <div class="product_left pull_left">
+                <div class="row1 clearfix">
+                    <div class="user_pic f_fl ml_50 mt_20">
+                        <div class="user_border"></div>
+                        <%if(industry.projectUser.imageUrl!=null){%>
+                        <img src="<%- picpath+industry.projectUser.imageUrl %>" class="f_fl">
+                        <%}else{%>
+                        <img src="/images/default.png" class="f_fl">
+                        <%}%>
+                    </div>
+                    <div class="row1_txt f_fl">
+                        <div class="project_originator f_fl">发起人：<span><%- proIndustry.creater %></span></div>
+                        <div class="project_introduce f_fl">
+                            <div>项目地点：<span><%- province %>&nbsp;<%- city %>&nbsp;<%- county %></span></div>
+                            <div>一句话介绍：<span title="<%- proIndustry.shortIntroduce %>"><%- shortIntroduce %></span></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!--Begin第2行-->
+                <% if(proIndustry.projectStatus == 1){ %>
+                <div class="row2">
+                    <div class="items_infor_box">
+                        <ul class="items_infor clearfix">
+                            <li class="f_fl">
+                                <div>
+                                    <h6>￥<%- proIndustry.investorAmount %></h6>融资总额
+                                </div>
+                            </li>
+                            <li class="f_fl">
+                                <div class="f_fl">
+                                    <h6>￥<%- proIndustry.projectAmount %></h6>项目方出资
+                                </div>
+                            </li>
+                            <li class="f_fl">
+                                <div>
+                                    <h6>￥<%- proIndustry.totalPurchase %></h6>已预约认购资金
+                                </div>
+                            </li>
+                            <li class="f_fl">
+                                <div>
+                                    <h6><%- peopleNum %></h6>已预约认购投资人
+                                </div>
+                            </li>
+                        </ul>
+                        <div class="project_row4 clearfix">
+                            <div class="progress f_fl">
+                                <div class="progress_title f_fl">预热进度：<span><%- Math.round((proIndustry.buyProcess!=null?proIndustry.buyProcess:0)*100) %>%</span></div>
+                                <div class="gray_progress f_fl">
+                                    <div class="progressing" style="width: <%= proIndustry.buyProcess*100 %>%"></div>
+                                </div>
+                            </div>
+                            <div class="f_fr rz_djsh">倒计时：<em><span class="timeDJS" timeCha="<%-new Date(proIndustry.preheatEndTime).getTime()/1000-locals.nowTime%>"></span></em></div>
+                        </div>
+                    </div>
+                </div>
+                <% }else if(proIndustry.projectStatus == 2){ %>
+                <div class="row2">
+                    <div class="items_infor_box">
+                        <ul class="items_infor clearfix">
+                            <li class="f_fl">
+                                <div>
+                                    <h6>￥<%- proIndustry.investorAmount %></h6>融资总额
+                                </div>
+                            </li>
+                            <li class="f_fl">
+                                <div class="f_fl">
+                                    <h6>￥<%- proIndustry.projectAmount %></h6>项目方出资
+                                </div>
+                            </li>
+                            <li class="f_fl">
+                                <div>
+                                    <h6>￥<%- proIndustry.totalPurchase %></h6>已认购资金
+                                </div>
+                            </li>
+                            <li class="f_fl">
+                                <div>
+                                    <h6><%- peopleNum %></h6>已认购投资人
+                                </div>
+                            </li>
+                        </ul>
+                        <div class="project_row4 clearfix">
+                            <div class="progress f_fl">
+                                <div class="progress_title f_fl">融资进度：<span><%- Math.round((proIndustry.buyProcess!=null?proIndustry.buyProcess:0)*100) %>%</span></div>
+                                <div class="gray_progress f_fl">
+                                    <div class="progressing" style="width: <%= proIndustry.buyProcess*100 %>%"></div>
+                                </div>
+                            </div>
+                            <div class="f_fr rz_djsh"><em><span class="timeDJS" timeCha="<%-new Date(proIndustry.financeEndTime).getTime()/1000-locals.nowTime%>"></span></em></div>
+                        </div>
+                    </div>
+                </div>
+                <% } %>
+
+                <!--End第2行-->
+
+            </div>
+            <!--右侧内容-->
+            <div class="product_right pull_right">
+                <!--Begin ie8支持透明-->
+                <div class="ie_touming">
+                    <a name="proBuy"></a>
+
+                    <div class="row1 clearfix">
+                        账户金额：
+                        <% if(!locals.user){ %>
+                        <!--Begin登录前-->
+                        <div class="login_off pull_right ">
+                            <a href="javaScript:viod(0)" class="click_login">登录</a>后显示
+                        </div>
+                        <!--End登录前-->
+                        <% }else{ %>
+                        <!--Begin登录后-->
+                        <div class="login_on pull_right">
+                            <span><em class="formdatamoney"><%- accountInfo.activeBalance %></em>元</span>
+                            <a href="/usercenter/accountMoney?click=recharge" class="btn_style">充&nbsp;&nbsp;值</a>
+                        </div>
+                        <!--End登录后-->
+                        <% } %>
+                    </div>
+
+                    <% if(proIndustry.projectStatus == 1){ %>
+                    <div class="row2">
+                        <p>投资份数：</p>
+                        <%if(datePre>0){%>
+                        <% if(!locals.user){ %>
+                        <div class="clearfix" align="center">
+                            <input type="text" name="money" value="1" id="inp-num" class="validate[custom[integer]]"/>
+                        </div>
+                        <h6>每份金额：￥<em class="formdatamoney"><%- proIndustry.lowAmount %></em></h6>
+                        <div class="login_on_buy">
+                            <h4>登录后才可预约购买产品</h4>
+                            <h1 class="btn_style"><a href="javaScript:viod(0)" class="click_login">点击登录</a></h1>
+                        </div>
+                        <% }else{ %>
+                        <div class="clearfix">
+                            <div class="reduce_btn pull_left" onclick="jianshaoshu('1');"></div>
+                            <input type="text" name="money" value="1" id="inp-num" class="validate[custom[integer]]"/>
+                            <div class="add_btn pull_right" onclick="zengjiashuyr();"></div>
+                        </div>
+                        <h6>每份金额：￥<em class="formdatamoney"><%- proIndustry.lowAmount %></em></h6>
+                        <%if(locals.user.isCertified==1){%>
+                        <h1 class="btn_style certified_success">等待审核</h1>
+                        <%}else if(locals.user.isCertified==0 ||locals.user.isCertified==3){%>
+                        <div class="login_on_buy">
+                            <h4>实名认证后才可预约购买产品</h4>
+                            <h1 class="btn_style"><a href="/usercenter/safeset?click=realName">点击认证</a></h1>
+                        </div>
+                        <%}else if(locals.user.isCertified==2){%>
+                        <h1 class="btn_style yuy_buy">预约认购</h1>
+                        <%}%>
+                        <% } %>
+                        <% }else{ %>
+                        <div class="clearfix" style="text-align: center">
+                            <input type="text" name="money" value="0"/>
+                        </div>
+                        <h6>每份金额：￥<em class="formdatamoney"><%- proIndustry.lowAmount %></em></h6>
+                        <h1 class="btn_style btn_disable">已结束</h1>
+                        <% } %>
+                    </div>
+                    <% }else if(proIndustry.projectStatus == 2){ %>
+                    <div class="row1">可投份数：<span><%- bigPart %> 份</span></div>
+                    <div class="row2">
+                        <p>投资份数：</p>
+                        <% if(bigPart > 0&&dateFin>0){ %>
+
+                        <% if(!locals.user){ %>
+                        <div class="clearfix" align="center">
+                            <input type="text" name="money" value="1" id="inp-num" class="validate[custom[integer]]"/>
+                        </div>
+                        <h6>每份金额：￥<em class="formdatamoney"><%- proIndustry.lowAmount %></em></h6>
+                        <div class="login_on_buy">
+                            <h4>登录后才可预约购买产品</h4>
+                            <h1 class="btn_style"><a href="javaScript:viod(0)" class="click_login">点击登录</a></h1>
+                        </div>
+                        <% }else{ %>
+                        <div class="clearfix">
+                            <div class="reduce_btn pull_left" onclick="jianshaoshu('1');"></div>
+                            <input type="text" name="money" value="1" id="inp-num" class="validate[custom[integer]]"/>
+                            <div class="add_btn pull_right" onclick="zengjiashu('<%- bigPart %>');"></div>
+                        </div>
+                        <h6>每份金额：￥<em class="formdatamoney"><%- proIndustry.lowAmount %></em></h6>
+                        <% if(locals.user.isCertified != 2){ %>
+                        <div class="login_on_buy">
+                            <h4>实名认证后才可预约购买产品</h4>
+                            <h1 class="btn_style"><a href="/usercenter/safeset?click=realName">点击认证</a></h1>
+                        </div>
+                        <% }else{ %>
+                        <h1 class="btn_style" onclick="order()">确认认购</h1>
+                        <% } %>
+                        <% } %>
+                        <% }else if(bigPart < 0){ %>
+                        <div class="clearfix" style="text-align: center">
+                            <input type="text" name="money" value="0"/>
+                        </div>
+                        <h6>每份金额：￥<em class="formdatamoney"><%- proIndustry.lowAmount %></em></h6>
+                        <h1 class="btn_style btn_disable">已售罄</h1>
+                        <% }else{ %>
+                        <div class="clearfix" style="text-align: center">
+                            <input type="text" name="money" value="0"/>
+                        </div>
+                        <h6>每份金额：￥<em class="formdatamoney"><%- proIndustry.lowAmount %></em></h6>
+                        <h1 class="btn_style btn_disable">已结束</h1>
+                        <% } %>
+                    </div>
+                    <% } %>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="product_progress_bg">
+        <ul class="progress_infor">
+            <li class="frist">
+                <%var progressWidth=0;%>
+                <%if(proIndustry.projectStatus>=1){progressWidth=10%>
+                <a class="current_step">1</a>
+                <%}else{%>
+                <a>1</a>
+                <%}%>
+                <p>开始预热</p>
+                <h5><%-(proIndustry.preheatStartTime!=null?proIndustry.preheatStartTime:"").substring(0,10)%></h5>
+            </li>
+            <li>
+                <%if(proIndustry.projectStatus>=2){progressWidth=30%>
+                <a class="current_step">2</a>
+                <%}else{%>
+                <a>2</a>
+                <%}%>
+                <p>正式融资</p>
+                <h5><%-(proIndustry.financeStartTime!=null?proIndustry.financeStartTime:"").substring(0,10)%></h5>
+            </li>
+            <li>
+                <%if(proIndustry.projectStatus>=2&&proIndustry.operationStatus==3){progressWidth=50%>
+                <a class="current_step">3</a>
+                <%}else{%>
+                <a>3</a>
+                <%}%>
+                <p>融资成功</p>
+                <h5><%-(proIndustry.financeEndTime!=null?proIndustry.financeEndTime:"").substring(0,10)%></h5>
+            </li>
+            <li>
+                <a>4</a>
+                <p>项目运营</p>
+            </li>
+            <li>
+                <a>5</a>
+                <p>预计分红</p>
+            </li>
+        </ul>
+        <div class="progress">
+            <div class="progress_bar financial_progerssBar" style="width:<%-progressWidth%>%">
+            </div>
+        </div>
+    </div>
+
+</div>
+<!--End banner-->
+<!--Begin主体信息内容-->
+<div class="tab_box">
+    <ul class="tab_menu clearfix">
+        <li class="frist current">项目介绍</li>
+        <li>项目预算</li>
+        <li>风控审核</li>
+        <li class="last">项目交流</li>
+    </ul>
+    <div class="tab_content">
+        <!--Begin项目信息-->
+        <div class="tab1">
+            <%if(proIndustry.videoUrl!=null){%>
+            <h3><span></span>视频介绍</h3>
+            <div class="video_box">
+                <embed src="<%-proIndustry.videoUrl%>" allowFullScreen="true"
+                       quality="high" width="1000" height="500" align="middle" allowScriptAccess="always"
+                       type="application/x-shockwave-flash" wmode="transparent"></embed>
+            </div>
+            <%}%>
+
+            <%if(proIndustry.shortIntroduce!=null){%>
+            <h3><span></span>项目介绍</h3>
+             <p><%-proIndustry.projectIntroduce%></p>
+            <%}%>
+            <!-->
+            <div class="hide">
+            <h3><span></span>项目图片</h3>
+
+            <div class="img_box" id="project_img">
+                <div class="box">
+                    <ul class="list">
+                        <li><a href="javascript:;"><img src="/images/items_img1_03.png"/></a></li>
+                        <li><a href="javascript:;"><img src="/images/prehot_img2_03.png"/></a></li>
+                        <li><a href="javascript:;"><img src="/images/recommend_img1_03.png"/></a></li>
+                        <li><a href="javascript:;"><img src="/images/recommend_img2_03.png"/></a></li>
+                        <li><a href="javascript:;"><img src="/images/prehot_img2_03.png"/></a></li>
+                        <li><a href="javascript:;"><img src="/images/recommend_img1_03.png"/></a></li>
+                    </ul>
+                </div>
+                <div class="plus"></div>
+                <div class="minus"></div>
+            </div>
+            </div>
+            <!-->
+            <div class="h_30"></div>
+        </div>
+        <!--End项目信息-->
+
+        <!--Begin项目预算-->
+        <div class="tab1 hide">
+            <h3><span></span>风险提示</h3>
+
+            <p>
+                请您认购前下载此项目电子协议，请您下载后认真阅读， 确认并知晓私募股权融资（无保本）投资风险，认购即认同本协议内容。认购后您将不能更改投资人姓名，也不能代他人认购和转让他人 ，只以您在传奇工场平台上身份认证时提交的身份证为准进行投资合同文本签署和工商注册办理.如认购后申请退出，需支付相应反悔金．请勿相信任何非传奇工场官方对外公布的承诺或非官方发布的协议。<br>对此，传奇工场将不承担任何法律责任，如需核实信息请拨打官方客服电话：400-666-5412。</p>
+            <%if(industry.projectShops.length!=0){%>
+            <h3><span></span>现有店铺概括</h3>
+            <%industry.projectShops.forEach(function(item,index){%>
+            <ul class="shop_infor">
+                <li class="clearfix">
+                    <div class="f_fl">店铺名称：<span><%-item.shopname%></span></div>
+                    <div class="f_fl">店铺地址：<span><%-item.shopaddress%></span></div>
+                </li>
+                <li class="clearfix">
+                    <div class="f_fl">店铺筹备总投资(元)：<span class="formdatamoney"><%-item.totalInvestment%></span></div>
+                    <div class="f_fl">从筹备到运营周期(天)：<span><%-item.sumDays%></span></div>
+                </li>
+                <li class="clearfix">
+                    <div class="f_fl">店铺营业面积(平米)：<span><%-item.businessArea%></span></div>
+                        <div class="f_fl">客流量(人/日)：<span><%-item.clientFlow%></span></div>
+                </li>
+                <li class="clearfix">
+                    <div class="f_fl">人均消费(元)：<span><%-item.averageSpend%></span></div>
+                </li>
+                <li class="clearfix">
+                    <div class="f_fl">上季度营业收入(元)：<span><%-item.lastquarterIncome%></span></div>
+                    <div class="f_fl">上季度净利润(元)：<span><%-item.lastquarterProfit%></span></div>
+                </li>
+                <li class="clearfix last_li">
+                    <div class="f_fl">上年度营业收入(元)：<span><%-item.lastyearIncome%></span></div>
+                    <div class="f_fl">上季度净利润(元)：<span><%-item.lastyearProfit%></span></div>
+                </li>
+            </ul>
+            <%})}%>
+            <%if(industry.projectShopsPlan){%>
+            <h3><span></span>开店计划</h3>
+            <ul class="shop_infor">
+                <li class="clearfix">
+                    <div class="f_fl">预期融资开店数量：<span><%if(industry.projectShopsPlan.expectShops!=null){%><%-industry.projectShopsPlan.expectShops%>家<%}%></span></div>
+                    <div class="f_fl">开店时间预备周期：<span><%if(industry.projectShopsPlan.prepareDays!=null){%><%-industry.projectShopsPlan.prepareDays%>天<%}%></span></div>
+                </li>
+                <li class="clearfix">
+                    <div class="f_fl">预期店面地址：<span><%if(industry.projectShopsPlan.prepareAddr!=null){%><%-industry.projectShopsPlan.prepareAddr%><%}%></span></div>
+                    <div class="f_fl">预期开业时间：<span><%if(industry.projectShopsPlan.setupDays!=null){%><%-industry.projectShopsPlan.setupDays%>天（融资成功后）<%}%></span></div>
+                </li>
+                <li class="clearfix">
+                    <div class="f_fl">预计分红时间：<span><%if(industry.projectShopsPlan.bonusDays!=null){%><%-industry.projectShopsPlan.bonusDays%>天（融资成功后）<%}%></span></div>
+                    <div class="f_fl">第一年预计盈利：<span><%if(industry.projectShopsPlan.profitFirstyear!=null){%><font class="formdatamoney"><%-industry.projectShopsPlan.profitFirstyear%></font>元<%}%></span></div>
+                </li>
+                <li class="clearfix last_li">
+                    <div class="other_plan">其他计划：<span><%-industry.projectShopsPlan.otherPlan%></span>
+                    </div>
+                </li>
+            </ul>
+            <%}%>
+            <h3><span></span>融资需求</h3>
+            <ul class="shop_infor">
+                <li class="clearfix">
+                    <div class="f_fl">开店融资金额：<span>￥<font class="formdatamoney"><%-proIndustry.financialAmount%></font></span></div>
+                    <div class="f_fl">个人最低投资金额：<span>￥<font class="formdatamoney"><%-proIndustry.lowAmount%></font></span></div>
+                </li>
+                <li class="clearfix">
+                    <div class="f_fl blue_f">项目方出资所占比例：<span class="blue_f"><%-proIndustry.projectInvestScale%>%</span></div>
+                    <div class="f_fl orange_f">投资人出资比例：<span class="orange_f"><%-proIndustry.investorScale%>%</span></div>
+                </li>
+                <li class="clearfix">
+                    <div class="f_fl blue_f">项目方收益所占比例：<span class="blue_f"><%-proIndustry.projectRate%>%</span></div>
+                    <div class="f_fl orange_f">投资人收益比例：<span class="orange_f"><%-proIndustry.investorRate%>%</span></div>
+                </li>
+                <li class="clearfix">
+                    <div class="f_fl blue_f">项目方出资金额：<span class="blue_f">￥<font class="formdatamoney"><%-proIndustry.projectAmount%></font></span></div>
+                    <div class="f_fl orange_f">投资人出资金额：<span class="orange_f">￥<font class="formdatamoney"><%-proIndustry.financialAmount-proIndustry.projectAmount%></font></span></div>
+                </li>
+            </ul>
+
+        </div>
+        <!--Begin项目预算-->
+
+        <!--Begin风控审核-->
+        <div class="tab1  shh_infor shh_infor_padding hide">
+            <div class="shh_infor_txt">
+                <h3><span></span>审核信息</h3>
+            </div>
+            <table>
+                <thead>
+                <tr>
+                    <th width="400" class="noborder_l">审核信息</th>
+                    <th width="400">审核结果</th>
+                    <th width="400">审核照片</th>
+                </tr>
+                </thead>
+                <tbody>
+                <%if(industry.auditList.length>0){%>
+                <%industry.auditList.forEach(function(item,index){%>
+                <tr>
+                    <td class="noborder_l"><%=item.information%></td>
+                    <td class="shh_result_img"></td>
+                    <td class="img_cell noborder_r">
+                        <div class="img_box" id="tr<%=index+1%>">
+                            <div class="box">
+                                <ul class="list clearfix">
+                                    <%for(var i=0;i<item.pictures.length;i++){%>
+                                    <li><a href="javascript:;"><img src="<%-picpath+item.pictures[i]%>"/></a></li>
+                                    <%}%>
+                                </ul>
+                            </div>
+                            <div class="plus"></div>
+                            <div class="minus"></div>
+                        </div>
+                    </td>
+                </tr>
+                <%})}%>
+                </tbody>
+            </table>
+            <div class="h_30"></div>
+            <!--<div class="shh_infor_txt">-->
+                <!--<h3><span></span>风控措施</h3>-->
+            <!--</div>-->
+            <div><%-industry.riskContorl.riskControlDescription%></div>
+        </div>
+        <!--End审核信息-->
+
+        <!--Begin项目交流-->
+        <div class="tab1 hide">
+            <h3><span></span>风险提示</h3>
+            <p>请您认购前下载此项目《合伙协议》，本协议内容为最终签约版，协议中条款、数值、比例均已确定(不予修改)，请您下载后认真阅读， 确认并知晓并知晓私募股权融资（无保本）投资风险，认购即认同本协议内容。认购后您将不能更改投资人姓名，也不能代他人认购和转让他人 ...<a href="#" class="look_dz_protocol">查看电子协议</a></p>
+            <a href="/agreement/购买前-投资人服务协议.docx" class="btn_style dz_protocolDownload">电子协议下载</a>
+
+            <!--Begin 项目交流内容-->
+            <h3><span></span>项目交流</h3>
+            <div class="comment_wrap">
+                <!--Begin 评论文本框-->
+                <div class="comment_txt">
+                    <div class="textarea_box"><textarea id="commentTextarea"></textarea></div>
+                    <div class="submit_btn"><button class="btn_style" id="commentBtn">提交</button></div>
+                </div>
+                <!--End 评论文本框-->
+
+                <!--Begin 评论具体信息-->
+                <div class="comment_box" id="pageZone">
+                    <%postList.projectPostList.forEach(function(item,index){%>
+                    <dl class="comment_list">
+                        <dt>
+                        <div class="user_pic mr_50 user_pic60">
+                            <div class="user_border"></div>
+                            <img src="<%=picpath+item.imageUrl%>">
+                        </div>
+                        <span><%=item.creater%></span>
+                        </dt>
+                        <dd>
+                            <p><%=item.content%></p>
+                            <div class="comment_div">
+                                <span><%=item.createtime%></span>
+                                <em class="reply look" postId="<%=item.id%>">查看回复(<font class="replyNumO"><%=item.replyNum%></font>)</em>
+                                <em class="reply reply_btn" postId="<%=item.id%>">回复</em>
+                                <!--点击上方回复，出现编辑文本框-->
+                                <div class="replydiv">
+                                </div>
+
+                                <!--点击上方回复，出现编辑文本框-->
+                            </div>
+                            <!--Begin 回复框-->
+                            <div class="respond_div">
+
+                            </div>
+
+                            <!--End 回复框-->
+                        </dd>
+                    </dl>
+                    <%})%>
+
+                </div>
+                <div class="pages">
+                    <div id="paging"></div>
+                </div>
+                <!--Begin 评论具体信息-->
+
+            </div>
+            <!--End 项目交流内容-->
+
+            <div class="h_50"></div>
+
+        </div>
+        <!--Begin项目交流-->
+    </div>
+</div>
+
+<div class="div40"></div>
+<div class="div40"></div>
+<div class="div40"></div>
+<!--End主体信息内容-->
+
+<div class="detail_img">
+    <!--Begin 预热项目-->
+    <div class="project_title">
+        <div class="pro_name f_fl">热门项目</div>
+    </div>
+    <div class="hot_items">
+    <% if(industry.hotProject.length>0){%>
+    <% industry.hotProject.forEach(function(item,index){%>
+    <div class="hot_items_content">
+        <a href="/proInfo/<%-item.id%>">
+        <div class="hot_items_cont_left f_fl">
+            <img src="<%-picpath%><%-item.bgImage%>">
+            <% if(item.projectStatus == 1){ %>
+            <div class="financintItems_icon prehotItems_icon"></div>
+            <%}else if(item.projectStatus == 2){%>
+            <div class="financintItems_icon"></div>
+            <%}%>
+            <ul class="hot_items_b clearfix">
+                <!--Begin ie8支持透明-->
+                <div class="ie_touming">
+                    <li class="f_fl">
+                        <div>项目方出资比例：<em><%-item.projectInvestScale%>%</em></div>
+                        <div>投资人出资比例：<em><%-item.investorScale%>%</em></div>
+                    </li>
+                    <li class="f_fr">
+                        <div>项目方收益比例：<em><%-item.projectRate%>%</em></div>
+                        <div>投资人收益比例：<em><%-item.investorRate%>%</em></div>
+                    </li>
+                </div>
+                <!--End ie8支持透明-->
+            </ul>
+        </div>
+        </a>
+        <div class="hot_items_cont_right f_fr">
+
+            <div class="items_title">
+                <%-item.projectName%>
+                <% if(item.projectStatus == 1){ %>
+                <em class="f_fr"><span class="timeDJS" timeCha="<%-new Date(item.preheatEndTime).getTime()/1000-locals.nowTime%>"></span></em>
+                <%}%>
+            </div>
+            <div class="items_describe"><%-item.shortIntroduce%>...</div>
+            <div class="items_infor_box">
+                <ul class="items_infor clearfix">
+                    <% if(item.projectStatus == 1){ %>
+                    <li class="f_fl">
+                        <div>
+                            <h6><%-(item.preheatStartTime!=null?item.preheatStartTime:"").substring(0,10)%></h6>上线时间
+                        </div>
+                    </li>
+                    <li class="f_fl">
+                        <span class="f_fl"></span>
+                        <div class="f_fl center_div">
+                            <h6 class="formdatamoney"><%-item.lowAmount%></h6>单笔投资
+                        </div>
+                        <span class="f_fr"></span>
+                    </li>
+                    <li class="f_fl">
+                        <div>
+                            <h6 class="formdatamoney"><%-item.investorAmount%></h6>融资金额
+                        </div>
+                    </li>
+                    <%}else if(item.projectStatus == 2){%>
+                    <li class="f_fl">
+                        <div>
+                            <h6><%-item.remainDay%>天</h6>剩余时间
+                        </div>
+                    </li>
+                    <li class="f_fl">
+                        <span class="f_fl"></span>
+                        <div class="f_fl center_div">
+                            <h6 class="formdatamoney"><%-item.lowAmount%></h6>单笔投资
+                        </div>
+                        <span class="f_fr"></span>
+                    </li>
+                    <li class="f_fl">
+                        <div>
+                            <h6 class="formdatamoney"><%-item.investorAmount%></h6>融资金额
+                        </div>
+                    </li>
+                    <%}%>
+                </ul>
+                <div class="project_row4 clearfix">
+                    <div class="progress f_fl">
+                        <% if(item.projectStatus == 1){ %>
+                        <div class="progress_title f_fl">预热进度：<span><%= Math.round(item.buyProcess*100) %>%</span></div>
+                        <%}else if(item.projectStatus == 2){%>
+                        <div class="progress_title f_fl">融资进度：<span><%= Math.round(item.buyProcess*100) %>%</span></div>
+                        <%}%>
+                        <div class="gray_progress f_fl">
+                            <div class="progressing" style="width: <%= item.buyProcess*100 %>%"></div>
+                        </div>
+                    </div>
+                    <a href="/proInfo/<%-item.id%>" class="btn_style look_itemsDetail f_fr">查看详情</a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!--End 融资项目1-->
+    <div class="h_80"></div>
+    <%})}%>
+    </div>
+</div>
+<!--Begin弹框-->
+
+<!--Begin 帮品牌-->
+<div class="module_dialog helpBrand_dialog" id="bang_brand">
+    <div class="module_header">
+        <button class="module_close f_fr">×</button>
+        <h4 class="module_title">帮品牌</h4>
+    </div>
+    <div class="module_body helpBrand_body">
+        <div class="dialog_form helpBrand_form">
+            <form id="helpBrandForm">
+                <div class="helpBrand_row1">
+                    <div>1.您是否为项目提供资金支持？（单位：元）</div>
+                    <ul class="tab_list clearfix brand_radio_tab" id="moneyUl">
+                        <%projectBrand.moneyHelpName.forEach(function(item,index){%>
+                        <li><%=item%></li>
+                        <%})%>
+                    </ul>
+                </div>
+                <div class="helpBrand_row1">
+                    <div>2.您能为项目提供什么个人能力支持？（可多选）</div>
+                    <ul class="tab_list clearfix brand_check_tab" id="humanUl">
+                        <%projectBrand.humanHelpName.forEach(function(item,index){%>
+                        <li><%=item%></li>
+                        <%})%>
+                    </ul>
+                </div>
+                <div class="helpBrand_row1">
+                    <div>3.您能为项目提供什么资源支持？（可多选）</div>
+                    <ul class="tab_list clearfix brand_check_tab" id="resourceUl">
+                        <%projectBrand.resourceHelpName.forEach(function(item,index){%>
+                        <li><%=item%></li>
+                        <%})%>
+                    </ul>
+                </div>
+                <textarea id="otherBang" placeholder="如果可选太少，请在此补充（不超过120字）" onkeyup="checkLength(this,120)"></textarea>
+                <div class="error"></div>
+                <div class="dia_btns yuy_btns">
+                    <button class="dia_submit" name="check_ok" type="submit">提交</button>
+                    <button class="cancel account_gray_btn" type="button">取消</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!--End 帮品牌-->
+<!--Begin 爱品牌-->
+<div class="module_dialog helpBrand_dialog" id="love_brand">
+    <div class="module_header">
+        <button class="module_close f_fr">×</button>
+        <h4 class="module_title">爱品牌</h4>
+    </div>
+    <div class="module_body loveBrand_body">
+        <div class="dialog_form helpBrand_form">
+            <form id="loveBrandForm">
+                <div class="helpBrand_row1">
+                    <div class="bossCard_txt clearfix">
+                        <em class="f_fl mt_3">购买老板卡，您将会获得：</em>
+                        <em class="bossCard_txt_red f_fl">股权分红+消费金+老板特权</em>
+                        <span class="f_fl love_trangle"></span>
+                    </div>
+                    <ul class="bossCard_content hide">
+                        <li>1：等值消费卡</li>
+                        <li>2：店铺月营业额达到30万以上，将有股权分红收益</li>
+                        <li>3：进店消费，您将享受全方位老板身份待遇</li>
+                        <li>4：店内活动，邀您参加，丰厚奖品等着您</li>
+                        <li>5：其他待遇...</li>
+                    </ul>
+                </div>
+                <div class="helpBrand_row1 nob_border">
+                    <div class="love_brand_biaoyu"><em class="bossCard_txt_red">您的关注，是我们成功的原动力，感谢您的支持！</em></div>
+                    <ul class="tab_list clearfix brand_radio_tab" id="funUl">
+                        <%projectBrand.fundCard.forEach(function(item,index){%>
+                        <li><%=item%></li>
+                        <%})%>
+                    </ul>
+                </div>
+                <div class="error"></div>
+                <div class="dia_btns yuy_btns">
+                    <button class="dia_submit" type="submit" name="check_ok">购买</button>
+                    <button class="cancel account_gray_btn" type="button">取消</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!--End 爱品牌-->
+<!--Begin 预约认购弹框-->
+<div class="module_dialog helpBrand_dialog" id="buy_dialog">
+    <div class="module_header">
+        <button class="module_close f_fr">×</button>
+        <h4 class="module_title">预约认购弹框</h4>
+    </div>
+    <div class="module_body">
+        <div class="dialog_form helpBrand_form">
+            <form id="prebuy_form" method="post">
+                <div class="yuy_buy_txt">预约认购为您的认购意向，并非正式认购，传奇工场平台的项目是按份数来认购的</div>
+                <ul class="yuy_buy_infor clearfix">
+                    <li class="f_fl">项目融资目标：<span><font class="formdatamoney"><%-proIndustry.financialAmount%></font>元</span></li>
+                    <li class="f_fl ml_80">总份数：<span><%-parseInt(totalPart)%>份</span></li>
+                    <li class="f_fr">单份金额：<span><font class="formdatamoney"><%-proIndustry.lowAmount%></font>元/份</span></li>
+                </ul>
+                <div class="yuy_buy_infor2 clearfix">
+                    <div class="f_fl">预约认购份数：<span><em id="buyPart">1</em>份</span></div>
+                    <div class="f_fr">预约认购总金额：<span><font class="formdatamoney" id="totalMoney"></font>元</span></div>
+                </div>
+                <div class="error"></div>
+                <div class="dia_btns yuy_btns">
+                    <button class="dia_submit" id="prebuy_btn" name="check_ok" type="submit">提交</button>
+                    <button class="cancel account_gray_btn">取消</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!--End 预约认购弹框-->
+<!--Begin 查看评论-->
+<div class="module_dialog look_dialog" id="lookComment_dialog">
+    <div class="module_header">
+        <button class="module_close f_fr">×</button>
+        <h4 class="module_title">查看评论</h4>
+    </div>
+    <div class="module_body look_body">
+        <div class="dialog_form look_form">
+            <form action="">
+                <!--Begin 回复框-->
+                <ul class="respond_box">
+
+                </ul>
+                <!--End 回复框-->
+            </form>
+        </div>
+    </div>
+</div>
+<!--End 查看评论-->
+
+
+<!--End弹框-->
+<script src="/js/albumshow.js" type="text/javascript"></script>
+<script src="/js/scroll.js" type="text/javascript"></script>
+<link rel="stylesheet" type="text/css" href="/css/fenye.css">
+<script type="text/javascript" src="/js/fenye.js"></script>
+<script type="text/javascript">
+    $(function () {
+
+        $("#inp-num").validationEngine();
+        //点击“查看”，弹出“查看评论”对话框
+        box_dialog(".look","#lookComment_dialog");
+
+
+        //点击”帮品牌“按钮，出现弹框
+        box_dialog(".help_brand", "#bang_brand");
+        //点击“帮品牌”弹框里的"单选项"，此项背景为红色，字体为白色
+        $(".brand_radio_tab li").click(function(){
+            $(this).addClass("brand_selected_tab").siblings().removeClass("brand_selected_tab");
+        })
+        //点击“帮品牌”弹框里的"多选项"，多项背景为红色，字体为白色
+        $(".brand_check_tab li").click(function(){
+            if($(this).hasClass("brand_selected_tab")){
+                $(this).removeClass("brand_selected_tab");
+            }else{
+                $(this).addClass("brand_selected_tab");
+            }
+        })
+
+        //点击“爱品牌”按钮，出现弹框
+        box_dialog(".like_brand","#love_brand");
+        //点击“爱品牌”，顶部介绍“小三角”，老板卡内容展开
+        $(".love_trangle").click(function(){
+            if($(".love_trangle").hasClass("up_trangle")){
+                $(".bossCard_content").slideUp();
+                $(this).removeClass("up_trangle");
+            }else{
+                $(".bossCard_content").slideDown();
+                $(this).addClass("up_trangle");
+            }
+        });
+        //项目信息---项目图片左右切换
+        wind_control("#project_img");
+        for(var i=1;i<'<%=industry.auditList.length%>'+1;i++){
+            shh_infor("#tr"+i);
+            enlarge("tr"+i);
+        }
+        //项目信息页---点击缩略图，图片放大；点击大图，图片变小
+        enlarge1("project_img");
+
+    })
+    //预约认购
+    $(".yuy_buy").click(function(){
+        if(!$("#inp-num").validationEngine("validate")){
+            return false;
+        }
+        if($("#inp-num").val()<1){
+            dialog("请填写大于0的份数");
+        }else{
+            $(".momblack").show();
+            $("#buy_dialog").show();
+            $("#buyPart").html(parseInt($("#inp-num").val()));
+            var totalMoney=(Math.round(($("#buyPart").text()*'<%-proIndustry.lowAmount%>')*100)/100);
+            $("#totalMoney").html(totalMoney.toFixed(2));
+        }
+    })
+
+    //帮品牌
+    $("#helpBrandForm").submit(function (e) {
+        e.preventDefault();
+        var financialSupport = "";//资金支持
+        var capabilitySupport="";//能力支持
+        var myResources="";//资源支持
+
+        $("#moneyUl li").each(function(){
+            <%projectBrand.moneyHelp.forEach(function(item,index){%>
+                if($(this).index()=="<%=index%>") {
+                    $(this).attr("lid", "<%=item%>")
+                }
+            <%})%>
+            if($(this).hasClass("brand_selected_tab")){
+                var str=$(this).attr("lid");
+                financialSupport=str.substring(0, str.length) + ",";
+            }
+        })
+        $("#humanUl li").each(function(){
+            <%projectBrand.humanHelp.forEach(function(item,index){%>
+            if($(this).index()=="<%=index%>") {
+                $(this).attr("lid", "<%=item%>")
+            }
+            <%})%>
+            if($(this).hasClass("brand_selected_tab")) {
+                var str = $(this).attr("lid");
+                capabilitySupport += str.substring(0, str.length) + ",";
+            }
+        })
+        $("#resourceUl li").each(function(){
+            <%projectBrand.resourceHelp.forEach(function(item,index){%>
+            if($(this).index()=="<%=index%>") {
+                $(this).attr("lid", "<%=item%>")
+            }
+            <%})%>
+            if($(this).hasClass("brand_selected_tab")) {
+                var str = $(this).attr("lid");
+                myResources += str.substring(0, str.length) + ",";
+            }
+        })
+        financialSupport=financialSupport.substring(0,financialSupport.length-1);
+        capabilitySupport=capabilitySupport.substring(0,capabilitySupport.length-1);
+        myResources=myResources.substring(0,myResources.length-1);
+
+        var data = {
+            "projectId": $("#projectId").val(),
+            "financialSupport": financialSupport,
+            "capabilitySupport": capabilitySupport,
+            "myResources": myResources,
+            "content": $("#otherBang").val()//对项目的帮助内容
+        }
+        ajaxFunc(data, '/proInfo/saveOrUpdateProjectBangBrand', function ajaxBack(data) {
+            if (data.success) {
+                dialog("感谢您对我们的支持，您的帮品牌信息已经收到，我们会认真的审核，若通过，我们会尽快以短信或电话的形式与您联系，查看帮品牌进度，请进入个人中心-认购的项目-帮品牌，找到本项目即可查看！");
+                $("#bang_brand").find(".module_close").click();
+            } else {
+                $('.error').html("<font color='red'>" + data.msg + "</font>");
+            }
+        });
+    })
+    $("#loveBrandForm").submit(function (e) {
+        e.preventDefault();
+        var cardNum="";//老板卡额度
+        $("#funUl li").each(function(){
+            if($(this).hasClass("brand_selected_tab")){
+                var str= $.trim($(this).text());
+                cardNum=str;
+            }
+        })
+        if(cardNum==""){
+            $('.error').html("<font color='red'>请选择老板卡额度</font>");
+            return false;
+        }
+        var data = {
+            "projectId": $("#projectId").val(),
+            "cardNum": cardNum
+        }
+        ajaxFunc(data, '/proInfo/buyBossCard', function ajaxBack(data) {
+            if (data.success) {
+                dialog("<div style='line-height: 30px; text-align: left;'>　　老板卡购买成功，您可以在<a href='/usercenter/likebrand' style='color:#dd0000;'>用户中心</a>查看，另外，请核实您的收货地址，老板卡会在一周内寄送到您个人信息中的收货地址，请注意查收！</div>");
+                $("#love_brand").find(".module_close").click();
+            } else {
+                $('.error').html("<font color='red'>" + data.msg + "</font>");
+            }
+        });
+    })
+    //预约购买
+    $("#prebuy_btn").click(function () {
+        if(!$("#inp-num").validationEngine("validate")){
+            return false;
+        }
+        var data = {
+            "projectId": $("#projectId").val(),
+            count:$("#inp-num").val()
+        }
+        ajaxFunc(data, '/proInfo/saveOrder', function ajaxBack(data) {
+            if (data.success) {
+                $("#buy_dialog").find(".module_close").click();
+                dialogLoad("预约购买成功！");
+                var time=2;
+                var t=setInterval(function(){
+                    time--;
+                    if(time==0){
+                        $("#tips_dialog_load .module_close").click();
+                        clearInterval(t);
+                    }
+                },1000)
+            } else {
+                dialog(data.msg)
+            }
+        });
+    })
+
+    //选项卡切换
+    $(".tab_menu li").click(function () {
+        $(".tab_menu li").attr("class", "");
+        $(this).attr("class", "current");
+        if($(this).index()==0){
+            $(".tab_content .tab1").hide();
+            $(".tab_content .tab1").eq(0).removeClass("hide");
+            $(".tab_content .tab1").eq(0).show();
+        }else{
+            if('<%=locals.user%>'){
+                $(".tab_content .tab1").hide();
+                $(".tab_content .tab1").eq($(this).index()).removeClass("hide");
+                $(".tab_content .tab1").eq($(this).index()).show();
+            }else{
+                $(".click_login").click();
+            }
+        }
+    })
+
+    function getCheckBoxValue(name){
+        obj = document.getElementsByName(name);
+        check_val = "";
+        for(k in obj){
+            if(obj[k].checked)
+                check_val += obj[k].value +",";
+        }
+        return check_val;
+    }
+
+    //项目信息页、风控措施页图片左右无缝切换
+    function wind_control(wind_dome) {
+        var wind_lisum = $(wind_dome).find("li").length;
+        if (wind_lisum > 4) {
+            $(wind_dome).find(".plus").show();
+            $(wind_dome).find(".minus").show();
+            $(wind_dome).cxScroll({auto: false});
+        } else {
+            $(wind_dome).find(".plus").hide();
+            $(wind_dome).find(".minus").hide();
+        }
+    }
+    //审核信息----图片左右切换
+    function shh_infor(shh_dome) {
+        var shh_lisum = $(shh_dome).find("li").length;  //获取到每个list中，li的长度
+        if (shh_lisum > 2) {   //如果li>2
+            $(shh_dome).find(".plus").show();   //左右箭头显示
+            $(shh_dome).find(".minus").show();
+            $(shh_dome).cxScroll({auto: false});   //调用左右切换函数
+        } else {
+            $(shh_dome).find(".plus").hide();   //左右箭头隐藏
+            $(shh_dome).find(".minus").hide();
+        }
+    }
+
+
+    //点击小图，图片放大，再点击，图片缩小
+    function enlarge(element) {
+        var oDivs = document.getElementById(element);
+        var oImgs = document.getElementById(element).getElementsByTagName("img");
+        if (oImgs.length > 2) {
+            var l = oImgs.length / 2, urlArr = [];
+            for (var i = 0; i < l; i++) {
+                urlArr.push(oImgs[i].src.replace("s256", "s512"));
+                oImgs[i].onclick = function (i) {
+                    return function () {
+                        fnPicShow(urlArr, i);
+                    }
+                }(i);
+            }
+        }
+        else {
+            var l = oImgs.length, urlArr = [];
+            for (var i = 0; i < l; i++) {
+                urlArr.push(oImgs[i].src.replace("s256", "s512"));
+                oImgs[i].onclick = function (i) {
+                    return function () {
+                        fnPicShow(urlArr, i);
+                    }
+                }(i);
+            }
+        }
+    }
+
+    //点击小图，图片放大，再点击，图片缩小
+    function enlarge1(element) {
+        var oDivs = document.getElementById(element);
+
+        var oImgs = document.getElementById(element).getElementsByTagName("img");
+
+        if (oImgs.length > 4) {
+            var l = oImgs.length / 2, urlArr = [];
+            for (var i = 0; i < l; i++) {
+                urlArr.push(oImgs[i].src.replace("s256", "s512"));
+                oImgs[i].onclick = function (i) {
+                    return function () {
+                        fnPicShow(urlArr, i);
+                    }
+                }(i);
+            }
+        }
+        else {
+            var l = oImgs.length, urlArr = [];
+            for (var i = 0; i < l; i++) {
+                urlArr.push(oImgs[i].src.replace("s256", "s512"));
+                oImgs[i].onclick = function (i) {
+                    return function () {
+                        fnPicShow(urlArr, i);
+                    }
+                }(i);
+            }
+        }
+    }
+
+    function jianshaoshu(minNum) {
+        var shu = document.getElementById('inp-num').value;
+        var zengjiashu = parseInt(shu);
+        if (zengjiashu > minNum) {
+            zengjiashu = zengjiashu - 1;
+        }
+        document.getElementById('inp-num').value = zengjiashu;
+//        minBuyPortionNum();
+    }
+    function zengjiashu(remainingShu) {
+        var shu = document.getElementById('inp-num').value;
+        var zengjiashu = parseInt(shu);
+        if (zengjiashu < remainingShu) {
+            zengjiashu = zengjiashu + 1;
+        }
+        document.getElementById('inp-num').value = zengjiashu;
+    }
+    function zengjiashuyr() {
+        var shu = document.getElementById('inp-num').value;
+        var zengjiashu = parseInt(shu);
+        zengjiashu = zengjiashu + 1;
+        document.getElementById('inp-num').value = zengjiashu;
+    }
+
+    function order(){
+        if(!$("#inp-num").validationEngine("validate")){
+            return false;
+        }
+        if(parseInt($("#inp-num").val())<1){
+            dialog("请填写大于0的份数");
+        }else if(parseInt($("#inp-num").val())>parseInt("<%- bigPart %>")){
+            dialog("您输入的份数不在您可投份数内！");
+        }else {
+            var tzcount = document.getElementById("inp-num").value;
+            var callbackUrl = "/paycenter/<%-projectId%>/" + '<%=proIndustry.projectName%>/' + tzcount;
+            location.href = callbackUrl;
+        }
+    }
+
+    $("#commentBtn").click(function(){
+        var content=$("#commentTextarea").val();
+        if(content==""){
+            dialog("请填写回复内容！");
+            return false;
+        }
+        var data={
+            "projectId": $("#projectId").val(),
+            "content":content
+        }
+        ajaxFunc(data, '/proInfo/saveProjectPost', function ajaxBack(data) {
+            if (data.success) {
+                $("#commentTextarea").val("");
+                $(".comment_box").prepend('<dl class="comment_list">'+
+                '<dt>'+
+                '<div class="user_pic mr_50 user_pic60">'+
+                '<div class="user_border"></div>'+
+                '<img src="<%=picpath+(!locals.user?"":locals.user.imageUrl)%>">'+
+                '</div>'+
+                '<span><%=!locals.user?"":(locals.user.nickName!=null?locals.user.nickName:locals.user.phoneNumber)%></span>'+
+                '</dt>'+
+                '<dd>'+
+                '<p>'+content+'</p>'+
+                '<div class="comment_div">'+
+                '<span></span>'+
+                '<em class="reply look" postId="'+data.obj+'">查看回复(<font class="replyNumO">0</font>)</em>'+
+                '<em class="reply reply_btn" postId="'+data.obj+'">回复</em>'+
+                '<div class="replydiv">'+
+                '</div>'+
+                '</div>'+
+                '<div class="respond_div">'+
+                '</div>'+
+                '</dd>'+
+                '</dl>');
+
+            } else {
+                dialog(data.msg);
+            }
+        });
+    })
+    //点击回复，弹出回复框
+    $(".comment_box").delegate(".reply_btn","click",function(){
+        var postId=$(this).attr("postId");
+        var replyForm='<textarea></textarea>'+
+                      '<button class="btn_style reply_submit" postId='+postId+'>提交</button><button class="btn_style btn_disable ml_10 reply_cancel">取消</button>'
+        $(this).next(".replydiv").empty().html(replyForm);
+
+    })
+    //点击取消，隐藏回复框
+    $(".comment_box").delegate(".reply_cancel","click",function(){
+        $(this).parents(".replydiv").empty();
+    })
+    //点击提交，回复帖子
+    $(".comment_box").delegate(".reply_submit","click",function(){
+        var thisO=$(this);
+        var content=$(this).prev("textarea").val();
+        if(content==""){
+            dialog("请输入回帖内容！");
+            return false;
+        }
+        var data={
+            "projectId":$("#projectId").val(),
+            "content":content,
+            "postId":$(this).attr("postId")
+        }
+        ajaxFunc(data, '/proInfo/saveProjectReply', function ajaxBack(data) {
+            if (data.success) {
+                thisO.parents(".comment_list").find(".replyNumO").text(data.attributes.replyNum);
+                if(thisO.parents(".comment_list").find(".respond_box").length==0){
+                    thisO.parents(".comment_list").find(".respond_div").append('<ul class="respond_box"></ul>')
+                }
+                thisO.parents(".comment_list").find(".respond_box").prepend('<li class="clearfix">'+
+                '<div class="respond_l">'+
+                '<div class="user_pic user_pic user_pic40">'+
+                '<div class="user_border"></div>'+
+                '<img src="<%=picpath+!locals.user?"":locals.user.imageUrl%>">'+
+                '</div>'+
+                '</div>'+
+                '<div class="respond_r">'+
+                '<i><%=!locals.user?"":(locals.user.nickName!=null?locals.user.nickName:locals.user.phoneNumber)%></i>'+
+                '<em>'+content+'</em>'+
+                '<div class="comment_div comment_div2">'+
+                '<span>刚刚</span>'+
+                '</div>'+
+                '</div>'+
+                '</li>')
+                thisO.next(".reply_cancel").click();
+            } else {
+                dialog(data.msg);
+            }
+        });
+    })
+
+    //点击查看回复
+    $(".comment_box").delegate(".look","click",function(){
+        $(".momblack").css("height",$(document).height()).show();
+        $("#lookComment_dialog").show();
+        var postId=$(this).attr("postId");
+        var pageNo=1;
+        $("#lookComment_dialog").find(".respond_box").html("");
+        replyList(postId,pageNo);
+        //当滚动条滚到底部的事件
+        $("#lookComment_dialog .dialog_form").scroll(function(){
+            var $this =$(this),
+                viewH =$(this).height(),//可见高度
+                contentH =$(this).get(0).scrollHeight,//内容高度
+                scrollTop =$(this).scrollTop();//滚动高度
+            //if(contentH - viewH - scrollTop <= 100) { //到达底部100px时,加载新内容
+            if(scrollTop/(contentH -viewH)>=0.95){ //到达底部100px时,加载新内容
+                pageNo++;
+                replyList(postId,pageNo);
+            }
+        });
+    })
+    function replyList(postId,pageNo){
+        var data={
+            "projectId": $("#projectId").val(),
+            "postId":postId,
+            "pageNo":pageNo
+        }
+        ajaxFunc(data, '/proInfo/getReplyList', function ajaxBack(data) {
+            if (data.success) {
+                data.attributes.projectRelayList.forEach(function(item,index){
+                    $("#lookComment_dialog").find(".respond_box").append('<li class="clearfix">'+
+                    '<div class="respond_l">'+
+                    '<div class="user_pic  user_pic_40 user_pic40_white">'+
+                    '<div class="user_border"></div>'+
+                    '<img src="<%=picpath%>'+item.imageUrl+'">'+
+                    '</div>'+
+                    '</div>'+
+                    '<div class="respond_r">'+
+                    '<i>'+item.creater+'回复：</i>'+
+                    '<em>'+item.content+'</em>'+
+                    '<div class="comment_div comment_div2">'+
+                    '<span>'+item.createtime+'</span>'+
+                    '</div>'+
+                    '</div>'+
+                    '</li>')
+                })
+
+            } else {
+                dialog(data.msg);
+            }
+        });
+    }
+    var totalRecords = '<%=postList.count%>'; // 总共条数
+    var rowPerPage = '<%=postList.pageNum%>'; // 每页显示多少条
+    var picpath='<%=picpath%>';
+    $("#paging").pagination({
+        items: totalRecords,
+        itemsOnPage: rowPerPage,
+        cssStyle: 'light-theme',
+        onPageClick: function(pageNumber){
+            $.ajax({
+                url: "/proInfo/getPostList",
+                type: "post",
+                dataType: "json",
+                data: {"projectId": $("#projectId").val(),"pageNo":pageNumber},
+                success: function (data) {
+                    if(data){
+                        var str="";
+                        $.each(data.attributes.projectPostList,function(index,item){
+                            str+='<dl class="comment_list">'+
+                            '<dt>'+
+                            '<div class="user_pic mr_50 user_pic60">'+
+                            '<div class="user_border"></div>'+
+                            '<img src="'+picpath+item.imageUrl+'">'+
+                            '</div>'+
+                            '<span>'+item.creater+'</span>'+
+                            '</dt>'+
+                            '<dd>'+
+                            '<p>'+item.content+'</p>'+
+                            '<div class="comment_div">'+
+                            '<span>'+item.createtime+'</span>'+
+                            '<em class="reply look" postId="'+item.id+'">查看回复(<font class="replyNumO">'+item.replyNum+'</font>)</em>'+
+                            '<em class="reply reply_btn" postId="'+item.id+'">回复</em>'+
+                            '<div class="replydiv">'+
+                            '</div>'+
+                            '</div>'+
+                            '<div class="respond_div">'+
+                            '</div>'+
+                            '</dd>'+
+                            '</dl>'
+                        });
+
+                        $("#pageZone").html(str);
+
+                    }else{
+                        alert("传递格式有误")
+                    }
+                },
+                error:function(){
+                    alert("加载失败");
+                }
+            });
+        }
+    });
+    function checkLength(which,maxChars) {
+        if (which.value.length > maxChars)
+        {
+            dialog("您输入的字数超出限制!");
+            // 超过限制的字数了就将 文本框中的内容按规定的字数 截取
+            which.value = which.value.substring(0,maxChars);
+            return false;
+        }
+        else
+        {
+            var curr = maxChars - which.value.length; //250 减去 当前输入的
+            document.getElementByIdx_x("sy").innerHTML = curr.toString();
+            return true;
+        }
+    }
+
+</script>
+<% include layout/footer.ejs %>

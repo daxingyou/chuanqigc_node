@@ -1,0 +1,85 @@
+<% include layout/header_o.ejs %>
+<div class="usercenter_bg">
+    <div class="usercenter_bg1 login_bg1"></div>
+</div>
+<!--Begin 确认认购-->
+<div class="rengou_bg">
+
+    <form id="paybuy_form">
+    <div class="rengou_notify">
+        <!--Begin ie8支持透明-->
+        <div class="ie_touming">
+        <div class="notify">
+            <em>风险告知：</em>您好，为维护您的利益，请您认购前仔细阅读此条款，确认并知晓众筹股权（不保本金、不承诺投资回报）投资风险，并且能够完全理解投资初创公司可能会带来的风险，认购后您将不能更改投资人姓名，也不能代他人认购和转让他人，只能以您在传奇工场平台上身份认证时提交的身份证号码为准进行投资合同文本签署。若认购后申请退出，需与项目方协商达成一致意见，并承担相应违约责任，传奇工场对此不承担责任。
+        </div>
+
+        <label><input type="checkbox" class="validate[required]" name="agree_pro" checked>我已经认真阅读<a href="/agreement/购买前-投资人服务协议.docx">《平台-投资人服务协议》，</a>对协议内容无异议，并为投资失败独立负责，认购不可退出。</label>
+        </div>
+    </div>
+    <div class="rengou_infor">
+        <!--Begin ie8支持透明-->
+        <div class="ie_touming">
+        <ul class="rengou_infor_title clearfix">
+            <li class="f_fl sure_rengou">确认认购</li>
+            <li class="f_fr download_dz_protocol">下载<span><a href="/agreement/购买前-投资人服务协议.docx">电子协议</a></span></li>
+        </ul>
+        <div class="rengou_content">
+            <div class="rengou_pro_title">项目名称：<strong><%=projectName%></strong></div>
+            <ul class="rengou_money clearfix">
+                <li class="f_fl">实际付款：<span><%-(Math.round(lowAmount*count*100)/100).toFixed(2)%>元</span></li>
+                <li class="f_fl rengou_num">认购份数：<span><%-count%>份</span></li>
+                <li class="f_fr">当前剩余份数：<span><%-bigPart%>份</span></li>
+            </ul>
+            <button class="btn_style sure_pay" type="submit" id="paysure">确认支付</button>
+            <a class="btn_style sure_pay hide" style="width: 180px" href="/usercenter/accountMoney?click=recharge" id="payrecharge">余额不足，请先充值</a>
+        </div>
+        </div>
+    </div>
+
+    </form>
+</div>
+<!--End 确认认购-->
+<div class="module_dialog" id="tips_dialog">
+    <div class="module_header">
+        <button class="module_close f_fr">×</button>
+        <h4 class="module_title reminder">温馨提示</h4>
+    </div>
+    <div class="module_body register_txt">
+
+    </div>
+</div>
+<script>
+    $(function(){
+        $("#paybuy_form").validationEngine();
+        var actualAmount=parseFloat('<%-lowAmount*count%>');
+        var activeBalance=parseFloat('<%-activeBalance%>');
+        if(activeBalance<actualAmount){
+            $("#paysure").addClass("hide");
+            $("#payrecharge").removeClass("hide");
+        }else{
+            $("#paysure").removeClass("hide");
+            $("#payrecharge").addClass("hide");
+        }
+        //预约购买
+        $("#paybuy_form").submit(function(e){
+            e.preventDefault();
+            if(!$(this).validationEngine("validate")){
+                return false;
+            }
+            var count='<%-count%>';
+            var data = {
+                "projectId": '<%-projectId%>',
+                count:'<%-count%>'
+            }
+            ajaxFunc(data, '/proInfo/saveOrder', function ajaxBack(data) {
+                if (data.success) {
+                    location.href="/proInfo/success/paycentersuccess";
+                } else {
+                    dialog(data.msg)
+                }
+            });
+        })
+    })
+
+</script>
+<% include layout/footer.ejs %>

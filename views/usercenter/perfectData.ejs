@@ -1,0 +1,477 @@
+<% include ../layout/header.ejs %>
+<div class="usercenter_bg">
+    <div class="usercenter_bg2"></div>
+</div>
+
+<!--Begin 用户中心——完善资料-->
+<div class="usercenter_bgs">
+<div class="usercontent clearfix ">
+    <% include left.ejs %>
+    <div class="right_bar f_fr">
+        <div class="user_title_box">
+            <div class="user_title_1">基本信息</div>
+        </div>
+        <div class="user_record">
+                <h3>修改头像</h3>
+                <form  enctype="multipart/form-data" method="post" id="uploadForm" >
+                <dl class="modify_head clearfix">
+                    <dt class="f_fl">
+                    <div class="user_pic mrltb_5">
+                        <div class="user_border"></div>
+                        <%if(userInfo.imageUrl!=null){%>
+                        <img id="uploadTXs" src="<%=picpath+userInfo.imageUrl%>">
+                        <%}else{%>
+                        <img id="uploadTX" src="/images/default.png">
+                        <%}%>
+                    </div>
+                    </dt>
+
+                    <dd class="f_fl">
+                        <div class="btns clearfix">
+                            <span class="browser f_fl" id="uploadify">
+                            </span>
+                        </div>
+                        <b>支持的图片格式：JPG、JPEG、PNG、GIF</b>
+                    </dd>
+                </dl>
+                </form>
+                <h3>个人信息<span><em>（*必填项）</em>为了防止您不必要的数据错误，请您正确填写信息，认证后将无法修改</span></h3>
+                <ul class="personal_infor per_width">
+
+                	<li>
+                        <span>用户名：</span>
+                        <em><%=userInfo.nickName%></em>
+                        <%if(userInfo.nickName==null){%>
+                        <a class="modify">修改</a>
+                        <%}%>
+                    </li>
+                    <li>
+                    	<span>手机：</span>
+                        <em><%=userInfo.phoneNumber%></em>
+                    </li>
+                    <li>
+                    	<span>邮箱：</span>
+                        <%if(userInfo.email!=null){%>
+                        <em><%=userInfo.email%></em>
+                        <%}else{%>
+
+                        <a href="/usercenter/safeSet?click=email" class="ml_52">认证</a>
+                        <%}%>
+                    </li>
+                    <li>
+                    	<span>真实姓名：</span>
+                        <%if(userInfo.realName!=null){%>
+                        <em><%=userInfo.realName%></em>
+                        <%}else{%>
+                         <%if(locals.user.isCertified==0 ||locals.user.isCertified==3){%>
+                            <a href="/usercenter/safeSet?click=realName" class="ml_52">认证</a>
+                         <%}%>
+                        <%}%>
+                    </li>
+                    <li>
+                    	<span>身份证号：</span>
+                        <%if(userInfo.identityNum!=null){%>
+                        <em><%=userInfo.identityNum%></em>
+                        <%}else{%>
+                         <%if(locals.user.isCertified==0 ||locals.user.isCertified==3){%>
+                        <a href="/usercenter/safeSet?click=cardCode" class="ml_52">认证</a>
+                          <%}%>
+                        <%}%>
+                    </li>
+                 </ul>
+                 <h3>收货地址<span><em>（*必填项）</em>请填写正确的收货地址，避免因为收货地址不正确而导致无法及时收到合同，礼物等物品</span></h3>
+                <form id="addressForm">
+                 <ul class="personal_infor receive_box">
+                    <li>
+                        <span>收货联系方式：</span>
+                        <input type="text" name="phone" id="phone" placeholder="请输入手机号或电话号，电话区号用-分割" value="<%=otherInfo.deliveryAddress.contactWay%>"  class="validate[required],custom[telphone]">
+                    </li>
+                    <li>
+                        <span>收货地区选择：</span>
+                        <select id="r_province" onchange=getCity(this.id,"r_city")>
+                            <option value="请选择">请选择省份</option>
+                            <% provinces.forEach(function(item,index){ %>
+                            <option value=<%=item.id%>> <%=item.areaName%> </option>
+                            <% })%>
+                        </select>
+                        <select id="r_city" onchange=getCity(this.id,"r_area")>
+                        	<option value="请选择">请选择城市</option>
+                        </select>
+                        <select id="r_area">
+                        	<option value="请选择">请选择地区</option>
+                        </select>
+                    </li>
+                    <li>
+                        <span>收货地址邮编：</span>
+                        <input type="text" name="postcode" id="postcode" class="zip_code" value="<%=otherInfo.deliveryAddress.postcode%>">
+                    </li>
+                    <li>
+                        <span>收货详细地址：</span>
+                        <input type="text" name="address" id="address" value="<%=otherInfo.deliveryAddress.address%>">
+                    </li>
+                 </ul>
+                <div class="modify_btn"><input type="submit" value="修改" class="btn_style" name="receive_address"></div>
+                </form>
+
+            <!--Begin 个性标签-->
+            <h3>个性标签<span></span></h3>
+            <div class="special_box">
+                <form id="labelsForm">
+                <!--Begin 显示标签组-->
+                <div class="tabs_box">
+                    <div class="special_row1 clearfix">
+                        <span class="f_fl">能力专长：</span>
+                        <ul class="special_labels f_fl" id="show_label">
+                            <% if(personaLables.length!=0){
+                                    for(item in personaLables){
+                            %>
+                            <li><%=personaLables[item]%><a style="display: none;">×</a></li>
+                            <%}}%>
+                            <li class="dashed_border"></li>
+                        </ul>
+                    </div>
+                    <div class="special_row1 clearfix">
+                        <span class="f_fl">个人资源：</span>
+                        <ul class="special_labels f_fl" id="show_personal_source">
+                            <% if(slefLables.length!=0){
+                                    for(item in slefLables){
+                            %>
+                            <li><%=slefLables[item]%><a style="display: none;">×</a></li>
+                            <%}}%>
+                            <li class="dashed_border"></li>
+                        </ul>
+                    </div>
+                </div>
+                <!--End 显示标签组-->
+
+                <!--Begin 标签选项组-->
+                <div class="nl_tab_box clearfix">
+                    <span class="f_fl">能力专长标签：</span>
+                    <ul class="special_labels labels_box labels_select f_fl">
+                        <%labelsPower.forEach(function(item,index){%>
+                        <li><button><%=item.dataLabel%></button></li>
+                        <%})%>
+                    </ul>
+                </div>
+                <div class="nl_tab_box clearfix">
+                    <span class="f_fl">个人资源标签：</span>
+                    <ul class="special_labels labels_box personal_labels_select f_fl">
+
+                        <%labelsSelf.forEach(function(item,index){%>
+                        <li><button><%=item.dataLabel%></button></li>
+                        <%})%>
+                    </ul>
+                </div>
+                <!--End 标签选项组-->
+                <div class="modify_btn"><input type="submit" value="提交" class="btn_style" name="receive_address"></div>
+                </form>
+            </div>
+            <!--End 个性标签-->
+
+                 <h3>其他信息<span><em>（*选填项）</em></span></h3>
+                <form id="otherForm">
+                 <ul class="personal_infor receive_box other_infor">
+                 	<li id="gender">
+                        <span>性别：</span>
+                        <label class="label_1"><input type="radio" name="gender" checked="checked" value="0">保密</label>
+                        <label><input type="radio" name="gender" value="1">男</label>
+                        <label><input type="radio" name="gender" value="2">女</label>
+                    </li>
+                    <li>
+                        <span>爱好：</span>
+                        <input type="text" name="interest" id="interest" value="<%=userInfo.interest%>">
+                    </li>
+                    <li>
+                        <span>职业：</span>
+                        <input type="text" name="profession" id="profession" value="<%=userInfo.profession%>">
+                    </li>
+                    <li>
+                        <span>所在城市：</span>
+                        <select id="l_province" onchange=getCity(this.id,"l_city")>
+                        	<option value="请选择">请选择省份</option>
+                            <% provinces.forEach(function(item,index){ %>
+                            <option value=<%=item.id%>><%=item.areaName%></option>
+                            <% })%>
+                        </select>
+                        <select id="l_city" onchange=getCity(this.id,"l_area")>
+                            <option value="请选择">请选择城市</option>
+                        </select>
+                        <select id="l_area">
+                        	<option value="请选择">请选择地区</option>
+                        </select>
+                    </li>
+                 </ul>
+                <div class="modify_btn">
+                    <input type="submit" value="修改" class="btn_style" name="other_infor">
+                </div>
+                </form>
+        </div>
+    </div>
+</div>
+</div>
+<!--End 用户中心——完善资料-->
+
+<!--Begin修改用户名-->
+<div class="module_dialog" id="modifyName">
+    <div class="module_header">
+        <button class="module_close f_fr">×</button>
+        <h4 class="module_title">修改用户名</h4>
+    </div>
+    <div class="module_body">
+        <div class="dialog_form">
+            <form action="" id="updateNikeForm">
+                <div class="item"><span>旧用户名：</span><em><%=locals.user.nickName!=null?locals.user.nickName:locals.user.phoneNumber%></em></div>
+                <div class="item">
+                    <span>新用户名：</span><input type="text" name="newName" class="validate[required]">
+                </div>
+                <p>请注意：用户名只允许修改一次</p>
+                <div class="error"></div>
+                <button class="form_btn" type="submit">提交</button>
+            </form>
+        </div>
+    </div>
+</div>
+<!--End修改用户名-->
+
+<div class="module_dialog" id="tips_dialog">
+    <div class="module_header">
+        <button class="module_close f_fr">×</button>
+        <h4 class="module_title reminder">温馨提示</h4>
+    </div>
+    <div class="module_body register_txt">
+
+    </div>
+</div>
+<!--End弹框-->
+<script>
+    $(function(){
+        /*上传头像到文件文件服务器*/
+        uploadfile('uploadify',function(file,data,response){
+            var data=$.parseJSON(data);
+            var url={imageUrl:PahtReturn(data.url)};
+            ajaxFunc(url,'/usercenter/perfectData/updatePhoto',function(msg){
+                if(msg.success){
+                    ycrediect("1","/usercenter/perfectData")
+                }
+            });
+          });
+        $('#modifyName').validationEngine();//用户名验证
+        $('#addressForm').validationEngine();//收货地址验证
+        //点击修改，出现修改用户名弹框
+        $(".modify").click(function(){
+            $(".momblack").show();
+            $("#modifyName").fadeIn();
+        })
+
+
+
+        //Begin个性标签
+        //选择标签选项组里的标签，会贴到相应的“能力专长”，“个人资源”两个模块中
+        function tabs_box(selectLabels,showLabelBox){
+            $(selectLabels).children("li").find("button").click(function(e){
+                e.preventDefault()
+                $(this).attr("disabled","false");
+                $(this).parent("li").addClass("active_label");
+                var label_txt=$(this).text();
+                $(showLabelBox).prepend("<li>"+label_txt+"<a>×</a></li>");
+            })
+        }
+        //能力专长标签
+        tabs_box(".labels_select","#show_label");
+        //个人资源标签
+        tabs_box(".personal_labels_select","#show_personal_source");
+
+        //点击相应模块中的标签，将此标签删除
+        function deleteLabels(clickShowLabel,deleteLabel){
+            //鼠标经过相应“能力专长”，“个人资源”模块里的li标签时，出现关闭按钮；点击关闭按钮，删除该标签
+            $(clickShowLabel).delegate("li","mouseover",function(e){
+                $(this).find("a").show();
+            }).delegate("li","mouseout",function(e){
+                $(this).find("a").hide();
+            })
+            //点击“能力专长”，“个人资源”模块中，标签的“×”号，在该模块中删除此标签，并在标签选项组中移除被选的当前类
+            $(clickShowLabel).delegate("li a","click",function(e){
+                $(this).parent("li").remove();
+                var str=$(this).parent("li").text();
+                var newStr=str.substring(0,str.length-1);
+                var labelsL=$(deleteLabel).children("li").length;
+                for(var i=0;i<=labelsL-1;i++){
+                    var labelTxt=$(deleteLabel).children("li").eq(i).text();
+                    if(labelTxt==newStr){
+                        $(deleteLabel).children("li").eq(i).removeClass("active_label");
+                        $(deleteLabel).children("li").eq(i).children().removeAttr("disabled");
+                    }
+                }
+
+            })
+        }
+        //能力专长标签
+        deleteLabels("#show_label",".labels_select");
+        //个人资源标签
+        deleteLabels("#show_personal_source",".personal_labels_select");
+
+        //End个性标签
+
+
+        /**图片上传*/
+        function getFileUrl(sourceId) {
+            var url;
+            if (navigator.userAgent.indexOf("MSIE")>=1) { // IE
+                url = document.getElementById(sourceId).value;
+            } else if(navigator.userAgent.indexOf("Firefox")>0) { // Firefox
+                url = window.URL.createObjectURL(document.getElementById(sourceId).files.item(0));
+            } else if(navigator.userAgent.indexOf("Chrome")>0) { // Chrome
+                url = window.URL.createObjectURL(document.getElementById(sourceId).files.item(0));
+            }
+            return url;
+        }
+        // $("#uploadFile").change(function(){
+        //     var url = getFileUrl($(this).attr("id"));
+        //     $("#uploadTX").attr("src", url);
+        // })
+
+
+        /*性别显示*/
+        $("#gender label").each(function(){
+            if($(this).find("input").val()=='<%=userInfo.gender%>'){
+                $(this).find("input").attr("checked","true")
+            }
+        })
+        //初始省市
+        getCityBegin("<%=otherInfo.deliveryAddress.province%>","<%=otherInfo.deliveryAddress.city%>","r_city")
+        getCityBegin("<%=otherInfo.deliveryAddress.city%>","<%=otherInfo.deliveryAddress.county%>","r_area")
+        getCityBegin("<%=userInfo.province%>","<%=userInfo.city%>","l_city")
+        getCityBegin("<%=userInfo.city%>","<%=userInfo.county%>","l_area")
+        //收货地址
+        selectText("r_province",'<%=otherInfo.deliveryAddress.province%>');
+        //所在城市
+        selectText("l_province",'<%=userInfo.province%>');
+
+
+
+
+
+    })
+    //修改用户名
+    $("#modifyName").submit(function(e){
+        e.preventDefault();
+        if(!$(this).validationEngine("validate")){
+            return false;
+        }
+        var data={"nickName":$("input[name='newName']").val()}
+        ajaxFunc(data,"/usercenter/perfectData/updateNickName",function(data){
+            if(data.success){
+                ycrediect("1","/usercenter/perfectData")
+            }else{
+                $('.error').html("<font color='red'>"+data.msg+"</font>");
+            }
+        })
+    })
+    //修改个性标签
+    $("#labelsForm").submit(function(e){
+        e.preventDefault();
+        var personaLables="";//能力标签
+        var slefLables="";//个性标签
+
+        $("#show_label li:not([class='dashed_border'])").each(function(){
+            var str=$.trim($(this).text());
+            personaLables+=str.substring(0,str.length-1)+",";
+        })
+        $("#show_personal_source li:not([class='dashed_border'])").each(function(){
+            var str=$.trim($(this).text());
+            slefLables+=str.substring(0,str.length-1)+",";
+        })
+        personaLables=personaLables.substring(0,personaLables.length-1)
+        slefLables=slefLables.substring(0,slefLables.length-1)
+        var data={
+            "personaLables":personaLables,
+            "slefLables":slefLables
+        }
+
+        ajaxFunc(data,"/usercenter/perfectData/saveUserLabel",function(data){
+            if(data.success){
+                ycrediect("1","/usercenter/perfectData")
+            }else{
+                dialog(data.msg);
+            }
+        })
+    })
+
+    //修改收货地址
+    $("#addressForm").submit(function(e){
+        e.preventDefault();
+        var province=$("#r_province option:selected").val();
+        var city=$("#r_city option:selected").val();
+        var county=$("#r_area option:selected").val();
+        if(!$(this).validationEngine("validate")){
+            return false;
+        }
+        if(province=="请选择"){
+            province="";
+        }
+        if(city=="请选择"){
+            city="";
+        }
+        if(county=="请选择"){
+            county="";
+        }
+        var data={
+            "phone":$("#phone").val(),
+            "province":province,
+            "city":city,
+            "county":county,
+            "address":$("#address").val(),
+            "postcode":$("#postcode").val()
+        }
+        ajaxFunc(data,"/usercenter/perfectData/deliveryAddress",function(data){
+            if(data.success){
+                ycrediect("1","/usercenter/perfectData")
+            }else{
+                dialog(data.msg);
+            }
+        })
+    })
+
+    //修改其他信息
+    $("#otherForm").submit(function(e){
+        e.preventDefault();
+        var province=$("#l_province option:selected").val();
+        var city=$("#l_city option:selected").val();
+        var county=$("#l_area option:selected").val();
+
+        if($("#l_province option:selected").val()=="请选择"){
+            province="";
+        }
+        if($("#l_city option:selected").val()=="请选择"){
+            city="";
+        }
+        if($("#l_area option:selected").val()=="请选择"){
+            county="";
+        }
+        if(!$(this).validationEngine("validate")){
+            return false;
+        }
+
+        var data={
+            "gender":$("input[name='gender']:checked").val(),
+            "interest":$("#interest").val(),
+            "profession":$("#profession").val(),
+            "province":province,
+            "city":city,
+            "county":county,
+            "postcode":$("#postcode").val()
+        }
+        ajaxFunc(data,"/usercenter/perfectData/saveUserDetail",function(data){
+            if(data.success){
+                ycrediect("1","/usercenter/perfectData")
+            }else{
+                dialog(data.msg);
+            }
+        })
+    })
+
+
+
+</script>
+
+<% include ../layout/footer.ejs %>

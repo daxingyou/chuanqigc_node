@@ -1,0 +1,71 @@
+<% include ../layout/header.ejs %>
+<div class="usercenter_bg">
+    <div class="usercenter_bg2"></div>
+</div>
+<!--Begin 发布的项目-->
+<div class="usercenter_bgs">
+<div class="usercontent clearfix">
+    <% include left.ejs %>
+    <div class="right_bar f_fr publishedProject_right_bar">
+        <div class="user_title_box clearfix">
+            <div class="user_title f_fl">爱品牌</div>
+        </div>
+        <%if(projectList.length>0){%>
+        <div class="touBran_table">
+        
+            <table>
+                <thead>
+                    <tr>
+                        <th width="50%">投资人</th>
+                        <th width="50%">购买老板卡金额</th>
+                    </tr>
+                </thead>
+                <tbody id="TabFocus">
+                    <%projectList.forEach(function(item,index){%>
+                        <tr class="gray_bg">
+                            <td><%=item.userName%></td>
+                            <td><%=item.financialSupport%></td>
+                        </tr>
+                    <%})%>
+                    
+                </tbody>
+            </table>
+            
+        </div>   
+        <!--分页div-->
+        <div class="pages" id="paging">这里是分页</div>
+        <%}else{%>
+            <div class="nomsg"><font>没有数据</font></div>
+        <%}%>   
+    </div>
+</div>
+<!--End 发布的项目-->
+</div>
+<% include ../layout/footer.ejs %>
+
+<link rel="stylesheet" type="text/css" href="/css/fenye.css">
+<script type="text/javascript" src="/js/fenye.js"></script>
+<script type="text/javascript">
+     var totalRecords = '<%=count%>'; // 总共条数
+    var rowPerPage = 5; // 每页显示多少条
+    $("#paging").pagination({
+        items: totalRecords,
+        itemsOnPage: rowPerPage,
+        cssStyle: 'light-theme',
+        onPageClick: function(pageNumber) {
+            ajaxFunc({pageNo: pageNumber,projectId:'<%=projectId%>'}, '/usercenter/releaseproject/loveBrandconPage', function(data) {
+                if (data) {
+                    var str="";
+                    $.each(data.obj, function(index, item) {
+                        str+='<tr class="gray_bg">'
+                        str+='<td>'+item.userName+'</td>'
+                        str+='<td>'+item.financialSupport+'</td>'
+                        str+='</tr>'
+                    });
+                    $('#TabFocus').html(str);
+                }
+            });
+        }
+    });
+</script>
+

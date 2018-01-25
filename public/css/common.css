@@ -1,0 +1,347 @@
+@charset "utf-8";
+/* CSS Document */
+
+/*Begin header*/
+.top_header{
+	width:100%;
+	min-width:1200px;
+	height:80px;
+	line-height:80px;
+	/*background:url(../images/nav_bg_01.png) repeat-x;*/
+	background-color:#474747;
+}
+.header_content{
+	width:1200px;
+	margin:0 auto;
+}
+.logo{
+	background:url(../images/logo_03.png) no-repeat;
+	width:221px;
+	height:80px;
+	background-position:0 12px;
+	float:left;
+}
+.top_nav{
+	margin-left:160px;
+	float:left;
+	position:relative;
+}
+.top_nav li{
+	float:left;
+	color:#fff;
+	font-size:16px;
+	line-height:80px;
+	margin-right:30px;
+}
+.top_nav li.on > a{ color:#f2941a;}
+.top_nav li:hover > a{ color:#f2941a;}
+.nav_under{
+	position:absolute;
+	bottom:2px;
+	display:block;
+	border-bottom:4px solid #f2941a;
+	height:4px;
+	width:100px;
+}
+.top_nav li a{ 
+	color:#fff;
+	display:block;
+	width:100px;
+	text-align:center;
+}
+.rtop_wrap{ float:right;}
+.login_on div{
+	float:left;
+	line-height:80px;
+	padding:0 5px;
+	
+}
+.login_on div a{
+	color:#fff;
+	font-size:12px;
+}
+.login_on div a:hover{ color:#f2941a;}
+.login_on div span{
+	display:inline-block;
+	width:2px;
+	height:13px;
+	background-color:#fff;
+	float:right;
+	margin-top:34px;
+	margin-left:10px;
+}
+.login_off{
+	font-size:14px;
+	color:#fff;
+	width:215px;
+}
+.login_off img{ 
+	margin-top:30px;
+	margin-right:10px;
+}
+.login_off .usercener_list{
+	width:150px;
+	position:absolute;
+	z-index:1000000;
+	top:79px;
+	background:url(../images/nav_bg_01.png) repeat;
+}
+.login_off .usercener_list li{ 
+	line-height:36px;
+	padding-bottom:20px;
+	text-align:center;
+	font-size:14px;
+	width:150px;
+}
+.login_off .usercener_list li a{ 
+	color:#fff;
+	display:block;
+	width:150px;
+}
+.login_off .usercener_list li a:hover{ color:#f2941a;}
+.nav_box_bg{
+	width:100%;
+	height:80px;
+	background-color:#dadada;
+}
+.nav_box{ 
+	width:1200px;
+	margin:0 auto;
+}
+.nav_box span{ line-height:80px;}
+.nav_box span a{ color:#646464;}
+#find_chq{ position:relative;}
+#find_chq span{
+	position:absolute;
+	left:46px;
+	top:60px;
+	width:0px;
+	height:0px;
+	border-width:5px;
+	border-style:solid;
+	border-color:#fff transparent transparent transparent;
+}
+#find_chq span.red_span{ border-color:#f2941a transparent transparent transparent;}
+.find_chq_list{
+	width:160px;
+	position:absolute;
+	left:-30px;
+	top:79px;
+	background:url(../images/nav_bg_01.png) repeat;
+	z-index:100;
+	padding-bottom:20px;
+	padding-top:10px;
+}
+.find_chq_list p{
+	line-height:36px;
+	
+	padding:10px 0;
+	font-size:14px;
+	text-align:center;
+}
+.find_chq_list p a{ 
+	color:#fff;
+	width:160px;
+}
+.find_chq_list p.disable_li a{color:#b4b4b4;}
+.find_chq_list p:hover a{ color:#f2941a;}
+.find_chq_list p.disable_li:hover a{color:#b4b4b4;}
+.nav_box ul li.disable_li a{ color:#b4b4b4;}
+/*End header*/
+
+.btn_style{
+	display:inline-block;
+	padding:5px 30px;
+	background-color:#f2941a;
+	color:#fff;
+	text-align:center;
+	border:none;
+	border-radius:3px;
+}
+.btn_size{
+	width:120px;
+	height:40px;
+	line-height:40px;
+	padding:0;
+}
+.btn_style a{ color:#fff; display:block;}
+.btn_disable{
+	display:inline-block;
+	background-color:#ccc;
+	color:#fff;
+	text-align:center;
+	border:none;
+	border-radius:3px;
+}
+
+/*黑色透明层*/
+.momblack{
+	background-color:#000;
+	opacity:0.4;
+	filter:alpha(opacity=40);
+	display:none;
+	width:100%;
+	height:100%;
+	position:absolute;
+	position:fixed;
+	z-index:500;
+	left:0;
+	top:0;
+	right:0;
+	bottom:0;
+	
+}
+.modal{
+	position:fixed;
+	left:0;
+	right:0;
+	top:0;
+	bottom:0;
+	display:none;
+	   z-index:501;
+	   overflow-y:auto;
+}
+.modal_open{ overflow:hidden;}
+
+/*用户中心——背景图片*/
+.usercenter_bgs{
+	width:100%;
+	padding:30px 0;
+}
+.usercenter_bg11{
+	background:url(../images/usercenter_topBg_01.png) no-repeat;
+	width:100%;
+	background-size:100% 200%;
+	background-position:0 top;
+	height:80px;
+}
+.usercenter_bg22{
+	background:url(../images/usercenter_topBg_01.png) no-repeat;
+	width:100%;
+	background-size:100% 200%;
+	background-position:0 bottom;
+	height:80px;
+}
+/*发现传奇——背景图片*/
+.fxchq_bg{
+	width:100%;
+	min-width:1200px;
+	background:url(../images/fxchq_bg_02.png) no-repeat;
+	background-size:100% auto;
+	background-position:0 bottom;
+	position:absolute;
+	z-index:-1;
+}
+
+/*发现传奇——预热项目背景图片*/
+.prehotItem_bg{
+	width:100%;
+	background:url(../images/subProject_bg_02.png) no-repeat;
+	background-size:100% auto;
+	background-position:0 bottom;
+}
+
+/*Begin 传奇2.1————页脚*/
+.footer{
+	width:100%;
+	background-color:#474747;
+}
+.footer_wrap{
+	width:1200px;
+	margin:0 auto;
+	padding:40px 0 35px;
+}
+.footer_wrap>img{
+	width:220px;
+	margin-left:490px;
+}
+.footer_wrap .friend_links li{
+	font-size:14px;
+	float:left;
+}
+.footer_wrap .friend_links{ 
+	margin-left:331px;
+	margin-top:40px;
+}
+.footer_wrap .friend_links li a{ color:#fff;}
+.footer_wrap .friend_links li a:hover{ text-decoration:underline;}
+.footer_wrap .friend_links li span{
+	display:inline-block;
+	width:1px;
+	height:10px;
+	background-color:#909090;
+	margin:0 20px;
+}
+.footer_icon_group{ margin:30px 0 30px 202px;}
+.footer_icon_group li{
+	float:left;
+	height:31px;
+	margin:0 25px;
+	cursor:pointer;
+}
+.footer_icon_group .txt{
+	line-height:31px;
+	font-size:14px;
+	color:#999;
+}
+.footer_icon_group .ico_weixin{
+	display:inline-block;
+	width:34px;
+	height:31px;
+	margin-right:10px;
+	background:url(../images/footer_icons.png) no-repeat;
+	background-position:0 -42px;
+}
+.footer_icon_group .ico_sina{ background-position:-75px -42px;}
+.footer_icon_group .ico_txwb{ background-position:-151px -41px;}
+.footer_icon_group .ico_qq{ background-position:-217px -42px;}
+.footer_icon_group .ico_tel{ background-position:-283px -42px;}
+.footer_icon_group .wx_tips{ position:relative;}
+.footer_icon_group .wx_tips .tips_bd{
+	display:none;
+	padding:10px 10px 0;
+	position:absolute;
+	left:43px;
+	top:-106px;
+	background-color:#fff;
+}
+.footer_icon_group .wx_tips .tips_bd .arrow{
+	position:absolute;
+	left:-12px;
+	top:110px;
+	width:0px;
+	height:0px;
+	border-style:solid;
+	border-color:transparent #fff transparent transparent;
+	border-width:6px 6px 6px 6px;
+}
+.footer_icon_group .wx_tips .tips_bd img{ 
+	max-width:180px;
+	margin-bottom:0;
+}
+.footer_icon_group .wx_tips .tips_bd .wx_txt{
+	font-size:16px;
+	color:#3D9FE1;
+	text-align:center;
+	line-height:22px;
+	margin-bottom:10px;
+}
+.footer_icon_group .wx_tips:hover .ico_weixin{ background-position:0 0;}
+.footer_icon_group .sina_li:hover .ico_sina{ background-position:-75px 0;}
+.footer_icon_group .sina_li:hover span{ color:#da251c;}
+.footer_icon_group .txwb_li:hover .ico_txwb{ background-position:-151px 0;}
+.footer_icon_group .txwb_li:hover span{ color:#0d9ffa;}
+.footer_icon_group .qq_li:hover .ico_qq{ background-position:-217px 0;}
+.footer_icon_group .qq_li:hover span{ color:#fff;}
+.footer_icon_group .tel_li:hover .ico_tel{ background-position:-283px 0;}
+.footer_icon_group .tel_li:hover span{ color:#f5d52c;}
+.footer_icon_group .wx_tips:hover .tips_bd{ display:block;}
+.footer .footer_wrap .copyright{
+	font-size:12px;
+	color:#999;
+	line-height:22px;
+	text-align:center;
+}
+/*End 传奇2.1————页脚*/
+
+

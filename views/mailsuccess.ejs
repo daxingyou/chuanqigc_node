@@ -1,0 +1,29 @@
+<% include layout/header_o.ejs %>
+<div class="nav_box_bg">
+	<div class="nav_box help_title">
+    	邮箱验证
+    </div>
+</div>
+<!--End header-->
+<%if (isOk) {%>
+<!--Begin 邮箱认证成功-->
+<div class="mail_yzh_box clearfix">
+	<img src="/images/email_done.jpg" class="f_fl">
+	<div class="mail_done_txt f_fr">
+    	<h1>邮箱验证成功！</h1>
+        <a href="/usercenter/safeset">请点击这里</a>，进入用户中心
+    </div>
+</div>
+<!--Begin 邮箱认证成功-->
+<%}else{%>
+<!--Begin 邮箱认证失败-->
+<div class="mail_yzh_box clearfix mail_fail">
+	<img src="/images/email_fail.jpg" class="f_fl">
+	<div class="mail_done_txt f_fr">
+    	<h1>邮箱验证失败！</h1>
+        <p>链接已失效，请您重新申请</p>
+    </div>
+</div>
+<!--Begin 邮箱认证失败-->
+<%}%>
+<% include layout/footer.ejs %>

@@ -1,0 +1,84 @@
+<% include ../layout/header_o.ejs %>
+
+<div class="usercenter_bg">
+    <div class="usercenter_bg11"></div>
+    <div class="usercenter_bg22"></div>
+</div>
+<div class="nav_box_bg usercenter_bg22">
+    <div class="nav_box">
+        <span class="f_24"><a>传奇工场&nbsp;|&nbsp;</a></span>
+        <span class="f_18"><a>帮助中心</a></span>
+    </div>
+</div>
+ <div class="press-list-page loose">
+        <article>
+            <section>
+                <div class="container">
+                    <ul>
+                        <div class="t-zone tapestry-zone" id="pageZone">
+                        <% infoList.forEach(function (item,index){%>
+                             <li>
+                                <a shape="rect" class="content hover-shadow" href="/about/<%-item.id%>?maptype=INFODETAIL&TitleName=<%= titleName %>" >
+                                    <div class="thumb pull-right"></div>
+                                    <h4><%-item.title%></h4>
+                                    <hr class="m">
+                                    <p> </p>
+                                    <h5><span class="text-green"></span> <%-item.createTime%></h5></a>
+                            </li>
+                           <% })%>                            
+                      
+                        </div>
+                        <div id="paging">
+                               
+                        </div>
+                    </ul>
+                </div>
+            </section>
+        </article>
+    </div>
+        <!-- 分页 -->
+    <script type="text/javascript" src="/js/fenye.js"></script>
+
+    <script type="text/javascript">
+            var totalRecords = '<%= counts %>'; // 总共条数
+            var rowPerPage = '<%= rowPerPage %>'; // 每页显示多少条
+            var Guid= '<%= Guid %>';
+             $("#paging").pagination({
+                 items: totalRecords,
+                 itemsOnPage: rowPerPage,
+                 cssStyle: 'light-theme',
+                 onPageClick: function(pageNumber){
+                     $.ajax({
+                        url: "/about/conPage",
+                        type: "post",
+                        dataType: "json",
+                        data: {pageNum:pageNumber, maptype: 'INFOLIST',id:Guid},
+                        success: function (json) {
+                            if(json){
+                                console.log(json);
+                                var str="";
+                                $.each(json.attributes.infoList.modelList,function(index,item){
+                                str+='<li>'
+                                 str+='<a shape="rect" class="content hover-shadow" href="/about/proInfo/'+item.id+'?maptype=INFODETAIL&TitleName=<%= titleName %>" >'
+                                   str+='  <div class="thumb pull-right"></div>'
+                                   str+=' <h4>'+item.title+'</h4>'
+                                   str+='  <hr class="m">'
+                                    str+=' <p> </p>'
+                                    str+=' <h5><span class="text-green"></span>'+item.createTime+'</h5></a>'
+                                   str+=' </li>'
+                                });
+                                $("#pageZone").html(str);
+                             
+                            }else{
+                                alert("传递格式有误")
+                            }
+                        },
+                        error:function(){
+                            alert("加载失败");
+                        }
+                    });
+                 }
+             });
+    </script>
+        <link rel="stylesheet" type="text/css" href="/css/fenye.css">
+<% include ../layout/footer.ejs %>

@@ -1,0 +1,119 @@
+<% include ../layout/header.ejs %>
+<div class="usercenter_bg">
+    <div class="usercenter_bg2"></div>
+</div>
+
+<!--Begin 个人中心-->
+<div class="usercenter_bgs">
+<div class="usercontent clearfix">
+    <% include left.ejs %>
+    <div class="right_bar f_fr">
+    	<div class="user_infor_box border_c clearfix">
+            <div class="user_pic f_fl mr_50">
+                <div class="user_border"></div>
+              <%if(userInfo.imageUrl!=null){%>
+                    <img id="uploadTX" src="<%=picpath+userInfo.imageUrl%>">
+                    <%}else{%>
+                        <img id="uploadTX" src="/images/default.png">
+                <%}%>          
+            </div>
+            <div class="text_box f_fl">
+            	<div class="row_1">
+                	<span class="username">
+                        <%= userInfo.nickName!=null?userInfo.nickName:userInfo.userName%>
+                    </span>
+                    <a href="/usercenter/perfectData"><span class="edit f_fr"> 编辑</span></a>
+                </div>
+                <div class="row_2 mb_10">
+                    <% if(userInfo.gender!=null){%>
+                	性别：<span>
+                        <% if(userInfo.gender==0){%>
+                            保密
+                        <%}else if(userInfo.gender==1){%>
+                            男
+                        <%}else if(userInfo.gender==2){%>
+                            女
+                        <%}%>
+                    </span>
+                    <%}%>
+
+                    <% if(userInfo.province!=null){%>
+                    <span class="user_position"><%= userInfo.province%></span>
+                    <%}%>
+                </div>
+                <div class="row_2 mb_10">
+                    <% if(userInfo.interest!=null){%>
+                    爱好：<span><%= userInfo.interest%></span>
+                    <%}%>
+                    <% if(userInfo.profession!=null){%>
+                    职业：<span><%= userInfo.profession%></span>
+                    <%}%>
+                </div>
+                <div class="row_3 mb_10">
+                    <!--自定义标签-->
+                    <% if(slefLables.length!=0){
+                         for(item in slefLables){
+                    %>
+                    <a><%=slefLables[item]%></a>
+                    <%}}%>
+                    <!--个性化标签-->
+                    <% if(personaLables.length!=0){
+                            for(item in personaLables){
+                    %>
+                    <a><%=personaLables[item]%></a>
+                    <%}}%>
+                </div>
+                <div class="row_2 mt_20 mb_20 f_fl">
+                	资金总览：<span><%=balance%>元</span>可用资金：<span><%=activeBalance%>元</span>冻结资金：<span><%=freezeBalance%>元</span>
+                </div>
+                <div class="btn_style f_fl index_recharge"><a href="/usercenter/accountMoney?click=recharge" style="color: #fff; display: block"> 充值</a></div>
+                <ul class="row_4 clearfix">
+                	<li>
+                        <a href="/usercenter/safeSet">
+                        <%var phonerz;
+                        if(userInfo.phoneNumber!=null) {phonerz = "手机已认证"%>
+                        <%=phonerz%>
+                        <%}else{phonerz="手机未认证"%>
+                        <%=phonerz%>
+                        <%}%>
+                        </a>
+                    </li>
+                    <li class="mail">
+                        <a href="/usercenter/safeSet?click=email">
+                        <%var emailrz;
+                        if(userInfo.email!=null) {emailrz = "邮箱已认证"%>
+                        <%=emailrz%>
+                        <%}else{phonerz="邮箱未认证"%>
+                        <%=phonerz%>
+                        <%}%>
+                        </a>
+                    </li>
+                    <li class="yibao">
+                        <a href="/usercenter/safeSet?click=realName">
+                        <%var isCertified="";
+                        if(userInfo.isCertified!=2) {isCertified = "实名未认证"%>
+                        <%=isCertified%>
+                        <%}else{isCertified="实名已认证"%>
+                        <%=isCertified%>
+                        <%}%>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!--<div class="user_title_box clearfix">-->
+        	<!--<div class="user_title f_fl">最新动态</div>-->
+            <!--<ul class="more_box f_fr">-->
+            	<!--<li><a href="">更多>></a></li>-->
+            <!--</ul>-->
+        <!--</div>-->
+        <!--<div class="project_cont mt_20">-->
+        <!--</div>-->
+    </div>
+</div>
+</div>
+<!--Begin 个人中心-->
+
+<% include ../layout/footer.ejs %>
+
+

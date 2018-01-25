@@ -1,0 +1,138 @@
+<% include ../layout/header.ejs %>
+<div class="usercenter_bg">
+    <div class="usercenter_bg2"></div>
+</div>
+
+
+
+<!--Begin 用户中心——发布项目-->
+<div class="usercenter_bgs">
+<div class="usercontent clearfix ">
+    <% include left.ejs %>
+    <div class="right_bar f_fr">
+    	<div class="publish_box">
+            <div class="publish_step">
+                <ul class="publish_list publish_second">
+                    <li>基本资料</li>
+                    <li>股权设置</li>
+                    <li>草稿状态项目编辑</li>
+                    <li>相关协议</li>
+                    <li class="publish_list_last">传奇工场审核</li>
+                </ul>
+            </div>
+            <h3>股权设置</h3>
+            <form id="publishProject" action="/usercenter/publishProject/second" method="post">
+                <input type="hidden" name="projectId" value="<%=project.id%>">
+            	<ul class="personal_infor publish_baseSet">
+                	<li> 
+                    	<span>融资总额：</span>
+                        <input type="text" id="financialAmount" name="financialAmount" value="<%=project.financialAmount%>" class="validate[required,custom[number],min[1],custom[integer]]">&nbsp;元
+                    </li>
+                    <li>
+                    	<span>项目方出资：</span>
+                        <input type="text" id="projectAmount" name="projectAmount" class="validate[required,custom[number],min[1],custom[integer]]" value="<%=project.projectAmount%>">&nbsp;元
+                        <strong>（*出资金额应不低于融资金额的30%）</strong>
+                    </li>
+                    <li>
+                    	<span>认购份数：</span>
+                        <input type="text" id="subscriptionCopies" name="subscriptionCopies" class="validate[required,custom[number],,min[1],max[199]]" value="<%=project.subscriptionCopies%>" >&nbsp;份
+                        <strong>（*认购份数=投资人出资总额/最低投资金额 最多199份）</strong>
+                    </li>
+                    <li>
+                    	<span>单笔投资人最低投资金额：</span>
+                        <input type="text" id="lowAmount" name="lowAmount" class="validate[required,,custom[number],min[0]]" value="<%=project.lowAmount%>" readonly>&nbsp;元
+                        <strong>（*最低投资金额=投资人出资金额/认购份数）</strong>
+                    </li>
+                </ul>
+                <div class="earning">
+                	<span>项目方收益比例：<input type="text" id="projectRate" name="projectRate" class="validate[required,,custom[number],min[1],max[100]]" value="<%=project.projectRate%>">&nbsp;%</span>
+                    <span>投资方收益比例：<input type="text" id="investorRate" name="investorRate" class="validate[required,,custom[number],min[1],max[100]]" value="<%=project.investorRate%>">&nbsp;%</span>
+                </div>
+                <div class="step_btns clearfix">
+                    <!--
+                    <a href="javascript:history.back(-1);" class="step_btn f_fl">上一步</a>
+                    -->
+                    <a href="/usercenter/publishProject?projectId=<%=project.id%>" class="step_btn f_fl">上一步</a>
+                    <input type="submit" value="下一步" class="step_btn f_fl" />
+                </div>
+            </form>
+        </div>
+        <div class="h_300"></div>
+    </div>
+</div>
+</div>
+<!--End 用户中心——发布项目-->
+<script>
+    $(document).ready(function() {
+
+        $("#publishProject").validationEngine();
+        $("#financialAmount").blur(function(){
+            lowInvest();
+        });
+        $("#projectAmount").blur(function(){
+            lowInvest();
+        });
+        $("#subscriptionCopies").blur(function(){
+            lowInvest();
+        });
+        function lowInvest(){
+            var projectAmount=$('#projectAmount').val();
+            if(projectAmount==""||projectAmount==undefined){
+                return;
+            }
+            
+            var subscriptionCopies=$('#subscriptionCopies').val();
+            if (subscriptionCopies==0||subscriptionCopies=="") {
+                $("#lowAmount").val("");
+                return;
+            }
+            var totalAmount = $("#financialAmount").val();
+            var projectAmount = $("#projectAmount").val();
+            var subscriptionCopies = $("#subscriptionCopies").val();
+            $("#lowAmount").val(Math.round(((parseInt(totalAmount)-parseInt(projectAmount))/parseInt(subscriptionCopies))*100)/100);
+        }
+
+        $("#projectRate").blur(function(){
+            var projectRate = $("#projectRate").val();
+            if(projectRate=="" || projectRate==undefined){
+                $("#investorRate").val("");
+            }else{
+                $("#projectRate").val(parseFloat(projectRate).toFixed(2));
+                var investorRate = 100.00-parseFloat(projectRate).toFixed(2);
+                $("#investorRate").val(parseFloat(investorRate).toFixed(2));
+            }
+
+        });
+        $("#investorRate").blur(function(){
+            var investorRate = $("#investorRate").val();
+            if(investorRate=="" || investorRate==undefined){
+                $("#projectRate").val("");
+            }else{
+                $("#investorRate").val(parseFloat(investorRate).toFixed(2));
+                var investorRate = 100.00-parseFloat(investorRate).toFixed(2);
+                $("#projectRate").val(parseFloat(investorRate).toFixed(2));
+            }
+
+        });
+
+    });
+    $('#publishProject').submit(function(e) {
+        //阻止表单提交事件
+        e.preventDefault();
+        if(!$(this).validationEngine("validate")){
+            return false;
+        }
+        if(($("#projectAmount").val()/$("#financialAmount").val())<0.3){
+            dialog("出资金额应不低于融资金额的30%!");
+            return false;
+        }
+        if ($("#financialAmount").val()>=$('#projectAmount').val()) {
+                dialog("项目方出资金额不能大于等于融资金额！");
+                return false;
+        }
+        this.submit();
+    });
+
+</script>
+<% include ../layout/footer.ejs %>
+

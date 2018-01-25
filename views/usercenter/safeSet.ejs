@@ -1,0 +1,480 @@
+<% include ../layout/header.ejs %>
+<div class="usercenter_bg">
+    <div class="usercenter_bg2"></div>
+</div>
+
+<!--Begin 安全设置-->
+<div class="usercenter_bgs">
+<div class="usercontent clearfix">
+    <% include left.ejs %>
+    <div class="right_bar f_fr">
+    	<div class="user_title_box clearfix">
+        	<div class="user_title f_fl">安全设置</div>
+        </div>
+        <div class="safety_approve">
+        	<div class="check_safety clearfix">
+            	<h3 class="f_fl">登录密码</h3>
+                <p class="f_fl">安全强度高的登录密码可以使账号更安全，建议您设置一个包含数字和字母，并长度超过6位以上的登录密码。</p>
+                <h4 class="f_fr modify_password">修改密码</h4>
+            </div>
+            <div class="check_safety  clearfix">
+            	<h3 class="f_fl tel_certified">手机认证</h3>
+                <p class="f_fl">手机认证可提高账号的安全性和信任级别，同时也是找回密码等操作时验证您身份的途径之一。</p>
+                <h4 class="f_fr certified_success">认证手机</h4>
+            </div>
+            <div class="check_safety clearfix" id="emailcheck">
+            	<h3 class="f_fl mail_certified">邮箱认证</h3>
+                <p class="f_fl">邮箱认证可提高账号的安全性，同时也是找回密码等操作时验证您身份的途径之一。</p>
+                <%if(userinfo.email){%>
+                  <h4 class="f_fr mailCertify ">修改邮箱</h4>
+                <%}else{%>
+                 <h4 class="f_fr mailCertify ">认证邮箱</h4>
+                 <%}%>
+            </div>
+
+            <div class="check_safety clearfix" id="identitycheck">
+            	<h3 class="f_fl realName_certified">实名认证</h3>
+                <p class="f_fl">实名认证可提高账号的安全性和信任级别，也是验证您身份的重要途径之一。</p>
+                  <%if(userinfo.isCertified==1){%>
+                    <h4 class="f_fr certified_success">等待审核</h4>
+                 <%}else if(userinfo.isCertified==0 ||userinfo.isCertified==3){%>
+                    <h4 class="f_fr realName">实名认证</h4>
+                <%}else if(userinfo.isCertified==2){%>
+                  <h4 class="f_fr certified_success">实名认证</h4>
+                <%}%>
+            </div>
+            <div class="check_safety clearfix">
+            	<h3 class="f_fl bind_bankCard">绑定银行卡</h3>
+                <%if (bankCardNum) {%>
+                <div class="bank_infor">
+                        <div class="f_fl bank_infor_content">
+                            <div class="bank_row1 clearfix">
+                                <!-- <img src="../images/banklogo_03.png" class="f_fl"> -->
+                                <div class="bank_row1_bankname f_fl"><%-Bank.bankName%></div>
+                                <div class="f_fl last_number">尾号<span><%-number%></span></div>
+                                <div class="f_fl bank_type">储蓄卡</div>
+                            </div>
+                            <div class="bank_row2">持卡人姓名：<em><%-Bank.holderName%></em></div>
+                            <div class="bank_row2">手机号码：<em><%=phoneNo%></em></div>
+                        </div>
+                    </div>
+                    <div class="f_fr"><h4 class="modify_bank">修改</h4></div>
+                <%}else{%>
+                <%if(userinfo.isCertified==2){%>
+                 <p class="f_fl">绑定银行卡可提高账号的安全性和信任级别，只有绑定银行卡，才能提现。</p>
+                    <h5 class="f_fr add_bank_card">添加银行卡</h5>
+                <%}else{%>
+                 <p class="f_fl"><font color="red">您需要进行实名认证才可绑定银行卡</font></p>
+                 <h5 class="f_fr" >添加银行卡</h5>
+                    <%}%>
+                <%}%>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<!--End 安全设置-->
+<!--Begin 弹框-->
+
+	<!--Begin 修改密码-->
+    <div class="module_dialog" id="mimaModify">
+    	<div class="module_header">
+        	<button class="module_close f_fr">×</button>
+            <h4 class="module_title">修改密码</h4>
+        </div>
+        <div class="module_body">
+        	<div class="dialog_form">
+                <div id="error"></div>
+                <form id="updatePwdForm">
+                    <div class="item"><span>原密码：</span><input type="password" class="validate[required]" name="prePassword" id="prePassword"></div>
+                    <div class="item"><span>新密码：</span><input type="password" name="newPassword" id="newPassword" class="validate[required,minSize[6]]"></div>
+                    <div class="item"><span>确认新密码：</span><input type="password" name="rePassword" class="validate[required,equals[newPassword],minSize[6]]"></div>
+                     <div class="error"></div>
+                    <button class="form_btn">提交</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!--End 修改密码-->
+
+    <!--Begin 邮箱认证-->
+    <div class="module_dialog" id="mailCertify">
+        <div class="sub_momblack"  style="position:fixed;z-index:1000; top:130px; width:470px; height:500px; display:none" id="sub_momblack"></div>
+    	<div class="module_header">
+        	<button class="module_close f_fr">×</button>
+            <h4 class="module_title">认证邮箱</h4>
+        </div>
+        <div class="module_body">
+        	<div class="dialog_form">
+                <form id="bindEmailForm">
+                  <img src="/images/loading.gif" id="loading" style="display:none; position:absolute; left:50%; margin-left:-16px; z-index:10000;top:50%;margin-top:-16px;">
+                    <div class="item"><span>邮箱地址：</span><input type="email" name="main_address" class="validate[required,custom[Mail]]" value="<%=userinfo.email%>" ></div>
+                    <div class="error"></div>
+                    <button class="form_btn">提交</button>
+
+                </form>
+            </div>
+        </div>
+    </div>
+    <!--End 邮箱认证-->
+
+    <!--Begin 实名认证-->
+    <div class="module_dialog" id="realnameCerfify">
+    	<div class="module_header">
+        	<button class="module_close f_fr">×</button>
+            <h4 class="module_title">实名认证</h4>
+        </div>
+        <div class="module_body">
+        	<div class="dialog_form">
+                <form id="identityForm">
+                    <div class="item"><span>真实姓名：</span><input type="text" class="validate[required]" name="realName" value="<%=userinfo.realName%>"></div>
+                    <div class="item"><span>身份证号：</span><input type="text" class="validate[required,custom[identityNum]]" name="identityNum" value="<%=userinfo.identityNum%>"></div>
+                    <p>(*输入的姓名与身份证上的姓名保持一致，认证通过后将不能修改)</p>
+                     <div class="error"></div>
+                    <button class="form_btn" id="btnConfirm">认证</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!--End 实名认证-->
+    <%if (bankCardNum) {%>
+<!--Begin 修改绑定银行卡-->
+    <div class="module_dialog" id="modify_bindBankcard">
+        <div class="module_header clearfix">
+            <button class="module_close f_fr">×</button>
+            <h4 class="module_title">修改绑定银行卡</h4>
+        </div>
+        <div class="module_body">
+            <div class="dialog_form">
+                <form id="bindBankForm">
+                    <div class="item">
+                        <span>银行名称：</span>
+                       <select name="bankName" id="bank_name" class="bank_name validate[required]">
+                            <option>请选择</option>
+                                            <option value="中国工商银行">中国工商银行</option>
+                                            <option value="中国建设银行">中国建设银行</option>
+                                            <option value="中国银行">中国银行</option>
+                                            <option value="中国农业银行">中国农业银行</option>
+                                            <option value="交通银行">交通银行</option>
+                                            <option value="中国邮政储蓄银行">中国邮政储蓄银行</option>
+                                            <option value="华夏银行">招商银行</option>
+                                            <option value="中信银行">中信银行</option>
+                                            <option value="中国光大银行">中国光大银行</option>
+                                            <option value="兴业银行">兴业银行</option>
+                                            <option value="平安银行">平安银行</option>
+                                            <option value="中国民生银行">中国民生银行</option>
+                                          
+                        </select>
+                    </div>
+                    <div class="item clearfix">
+                        <span class="f_fl">开户所在地：</span>
+                       <select class="f_fl select_1 validate[required]" id="province" name="province">
+                            <option value="请选择">请选择</option>
+                            <% provinces.forEach(function(item,index){ %>
+                            <option  value=<%=item.id%>> <%=item.areaName%> </option>
+                            <% })%>
+                        </select>
+                        <select class="f_fr select_1 validate[required]" name="cityAreaId" id="city">
+                         <option value="">请选择</option>
+                        </select>
+                    </div>
+                    <div class="item"><span>开户支行：</span><input type="text" value="<%=Bank.nameOfBankDeposit%>" name="khSubbank"></div>
+                    <div class="item"><span>银行卡号：</span><input type="text" value="<%=bankCardNum%>" name="bankCard"  class="validate[required,custom[bank]]"></div>
+                    <div class="item bind_tel"><span>手机号：</span><em><%=phoneNo%></em></div>
+                    <div class="item clearfix">
+                        <span class="f_fl">验证码：</span>
+                        <input type="text" name="veriCodeBank" class="mail_yzm f_fl validate[required,ajax[ajaxBankVericode]]" id="veriCode">
+                        <button class="get_yzm form_btn f_fr " id="bsendCode">获取验证码</button>
+                    </div>
+                    <div class="error"></div>
+                    <button class="form_btn" id="bind_bank">绑定</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!--End 修改绑定银行卡-->
+
+        <%} else{%>
+    <!--Begin 绑定银行卡-->
+    <div class="module_dialog" id="bindBankcard">
+    	<div class="module_header clearfix">
+        	<button class="module_close f_fr">×</button>
+            <h4 class="module_title">绑定银行卡</h4>
+        </div>
+        <div class="module_body">
+        	<div class="dialog_form">
+                <form  id="bindBankForm">
+                    <div class="item"><span>银行名称：</span>
+                        <select name="bankName" id="bank_name" class="bank_name validate[required]">
+                            <option value="">请选择</option>
+                                            <option value="中国工商银行">中国工商银行</option>
+                                            <option value="中国建设银行">中国建设银行</option>
+                                            <option value="中国银行">中国银行</option>
+                                            <option value="中国农业银行">中国农业银行</option>
+                                            <option value="交通银行">交通银行</option>
+                                            <option value="中国邮政储蓄银行">中国邮政储蓄银行</option>
+                                            <option value="华夏银行">招商银行</option>
+                                            <option value="中信银行">中信银行</option>
+                                            <option value="中国光大银行">中国光大银行</option>
+                                            <option value="兴业银行">兴业银行</option>
+                                            <option value="平安银行">平安银行</option>
+                                            <option value="中国民生银行">中国民生银行</option>
+                        </select>
+                    </div>
+                    <div class="item clearfix">
+                    	<span class="f_fl">开户所在地：</span>
+                        <select class="f_fl select_1 validate[required]" id="province" name="province">
+                            <option value="请选择">请选择</option>
+                        	<% provinces.forEach(function(item,index){ %>
+                            <option  value=<%=item.id%>> <%=item.areaName%> </option>
+                            <% })%>
+                        </select>
+                        <select class="f_fr select_1 validate[required]" name="cityAreaId" id="city">
+                         <option value="">请选择</option>
+                        </select>
+                    </div>
+                    <div class="item"><span>开户支行：</span><input type="text" value="" name="khSubbank" class="validate[required]" ></div>
+                    <div class="item"><span>银行卡号：</span><input type="text" value=""  name="bankCard" class="validate[required,custom[bank]]"></div>
+                    <div class="item bind_tel"><span>手机号：</span><em><%=phoneNo%></em></div>
+                    <div class="item clearfix">
+                    	<span class="f_fl"  >验证码：</span>
+                        <input type="text" name="veriCodeBank" class="mail_yzm f_fl validate[required,ajax[ajaxBankVericode]]" id="veriCode">
+                        <button class="get_yzm form_btn f_fr " id="bsendCode">获取验证码</button>
+                    </div>
+                     <div class="error"></div>
+                    <button class="form_btn">绑定</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!--End 绑定银行卡-->
+<%}%>
+<!--End 弹框-->
+<div class="module_dialog" id="tips_dialog">
+    <div class="module_header">
+        <button class="module_close f_fr">×</button>
+        <h4 class="module_title reminder">温馨提示</h4>
+    </div>
+    <div class="module_body register_txt">
+
+    </div>
+</div>
+
+<% include ../layout/footer.ejs %>
+
+<script>
+$(function() {
+    if (GetQueryString("click") == "email") {
+        $(".momblack").show();
+        $("#mailCertify").fadeIn();
+    }
+    if (GetQueryString("click") == "realName") {
+        if('<%=userinfo.isCertified%>'!=1&&'<%=userinfo.isCertified%>'!=2){
+            $(".momblack").show();
+            $("#realnameCerfify").fadeIn();
+        }
+    }
+    if (GetQueryString("click") == "cardCode") {
+        $(".momblack").show();
+        $("#realnameCerfify").fadeIn();
+    }
+    selectText('province', '<%=Bank.province%>');
+    selectText('city', '<%=Bank.city%>');
+    selectText('bank_name', '<%=Bank.bankName%>');
+    $('#updatePwdForm').validationEngine(); //验证修改密码
+    $('#bindEmailForm').validationEngine(); //验证邮箱
+    $('#identityForm').validationEngine(); //验证实名认证
+    $('#bindBankForm').validationEngine(); //绑定银行卡
+    //绑定银行卡
+    $("#bindBankForm").submit(function(e) {
+        e.preventDefault();
+        var bankCardNum = $("input[name='bankCard']").val(); //卡号
+        var bankName = $("select[name='bankName'] option:selected").val(); //银行姓名
+        var nameOfBankDeposit = $("input[name='khSubbank']").val(); //开户支行
+        var provinceAreaId = $("select[name='province'] option:selected").val(); //开户行所在地
+        var cityAreaId = $("select[name='cityAreaId'] option:selected").val(); //开户行所在地
+        var veriCode = $("input[name='veriCodeBank']").val();
+        var holderName = '<%=locals.user.realName%>';
+        var data = {
+            bankCardNum: bankCardNum, //卡号
+            bankName: bankName, //银行姓名
+            nameOfBankDeposit: nameOfBankDeposit, //开户支行
+            provinceAreaId: provinceAreaId, //开户行所在地
+            cityAreaId: cityAreaId, //开户行所在地
+            veriCode: veriCode,
+            holderName: holderName
+        };
+        if (!$(this).validationEngine("validate")) {
+            return false;
+        }
+        ajaxFunc(data, '/usercenter/safeset/bindBank', function(data) {
+            if (data.success) {
+                dialog(data.msg);
+                ycrediect("1", "/usercenter/safeset")
+            } else {
+                dialog(data.msg);
+            }
+        });
+    });
+    $("#veriCode").on('change', function() {
+            var fieldValue = $(this).val();
+            var fieldId = $(this).attr("id");
+            $.ajax({
+                url: '/usercenter/safeset/veriCodeCheck',
+                type: 'get',
+                data: {
+                    fieldId: fieldId,
+                    fieldValue: fieldValue
+                },
+                datatype: 'json',
+                error: function(msg) {
+                    console.log('error' + msg)
+                },
+                success: function(msg) {
+                    console.log(msg);
+                }
+            });
+        })
+        //获取验证码
+    $("#bsendCode").on("click", function(e) {
+        var phone = '<%=Bank.phoneNo%>';
+        var data = {
+            "phone": phone
+        };
+        djs(".get_yzm", "yzmys", 60);
+        ajaxFunc(data, '/usercenter/safeset/telcheck', function(data) {
+            if (data.success) {
+                console.log(data.msg);
+            } else {
+                if (data.often) {
+                    dialog("请勿频繁提交");
+                    return;
+                }
+            }
+        });
+    });
+    //获取市/区县功能
+    $("#province").change(function() {
+        var provinceId = $(this).val();
+        if (provinceId == "请选择") {
+            $("select[name='cityAreaId']").empty();
+            $("select[name='cityAreaId']").append($("<option>").text("请选择"));
+        } else {
+            var data = {
+                "areaFatherId": provinceId
+            };
+            ajaxFunc(data, "/usercenter/safeset/getCity", function ajaxBack(data) {
+                if (data.success) {
+                    $("select[name='cityAreaId']").empty();
+                    var cityData = data.attributes.areas;
+                    for (var i = 0; i < cityData.length; i++) {
+                        var option = $("<option>").val(cityData[i].id).text(cityData[i].areaName);
+                        $("select[name='cityAreaId']").append(option);
+                    }
+                } else {
+                    dialog(data.msg);
+                }
+            });
+        }
+
+    });
+    //修改用户密码
+    $("#updatePwdForm").submit(function(event) {
+        event.preventDefault();
+        var data = {
+            oldPwd: $("#prePassword").val(), //旧密码
+            password: $("#newPassword").val()
+        };
+        if (!$(this).validationEngine("validate")) {
+            return false;
+        }
+        ajaxFunc(data, '/usercenter/safeset/updatePwd', function ajaxBack(data) {
+            if (data.success) {
+                dialog(data.msg);
+                ycrediect("1", "/");
+            } else {
+                dialog(data.msg);
+            }
+        });
+    });
+    //邮箱认证 bindMail
+    $('#bindEmailForm').submit(function(e) {
+        e.preventDefault();
+        var data = {
+            newEmail: $("input[name='main_address']").val()
+        };
+        if (!$(this).validationEngine("validate")) {
+            return false;
+        }
+         $.ajax({
+                        type: "post",
+                        url: "/usercenter/safeset/bindEmail",
+                        data:data,
+                        beforeSend: function () {
+                            $("#loading").show();
+                            $('#sub_momblack').show();
+                        },
+                        success: function (data) {
+                        if (data.success) {
+                              location.reload();
+                            }
+                            else {
+                            $('.error').html("<font color='red'>" + data.msg + "</font>");
+                            }
+                        },
+                        complete: function () {
+                            $("#loading").hide();
+                            $('#sub_momblack').hide();
+                        },
+                        error: function (data) {
+                            $('.error').html("<font color='red'>" + data.msg + "</font>");
+                        }
+                    });
+    });
+    //实名认证 authentication
+    $("#identityForm").submit(function(e) {
+        e.preventDefault();
+        var data = {
+            realName: $("input[name='realName']").val(),
+            identityNum: $("input[name='identityNum']").val()
+        };
+        if (!$(this).validationEngine("validate")) {
+            return false;
+        }
+        ajaxFunc(data, "/usercenter/safeset/authentication", function ajaxBack(data) {
+            if (data.success) {
+                dialog(data.msg);
+                ycrediect("3", "/usercenter/safeset")
+            } else {
+                dialog(data.msg);
+            }
+        });
+    });
+    //点击修改密码
+    $(".modify_password").click(function() {
+        $(".momblack").show();
+        $("#mimaModify").fadeIn();
+    });
+    //邮箱认证
+    $(".mailCertify").click(function() {
+        $(".momblack").show();
+        $("#mailCertify").fadeIn();
+    });
+
+    box_dialog(".modify_bank", "#modify_bindBankcard");
+    //实名认证
+    $(".realName").click(function() {
+        $(".momblack").show();
+        $("#realnameCerfify").fadeIn();
+    });
+    //绑定银行卡
+    $(".add_bank_card").click(function() {
+        $(".momblack").show();
+        $("#bindBankcard").fadeIn();
+
+    });
+});
+
+</script>

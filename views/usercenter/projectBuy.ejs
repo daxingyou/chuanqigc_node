@@ -1,0 +1,274 @@
+<% include ../layout/header.ejs %>
+<div class="usercenter_bg">
+    <div class="usercenter_bg2"></div>
+</div>
+
+<!--Begin 认购的项目-->
+<div class="usercenter_bgs">
+<div class="usercontent clearfix">
+    <% include left.ejs %>
+    <div class="right_bar f_fr publishedProject_right_bar">
+        <div class="my_project_title">
+            <ul class="myproject_title_bg">
+                <li><a href="/usercenter/projectBuy" class="current_brand">投品牌</a></li>
+                <li><a href="/usercenter/helpbrand">帮品牌</a></li>
+                <li><a href="/usercenter/likebrand">爱品牌</a></li>
+            </ul>
+        </div>
+<!--         <div class="user_title_box clearfix">
+            <div class="user_title f_fl">认购的项目</div>
+        </div> -->
+        <div id="ToList">
+            <%if(projectList!=null && projectList.length>0){%>
+            <%projectList.forEach(function(item,index){%>
+        <!--Begin项目概况-->
+        <div class="project_infor gray_bg mt_10 clearfix">
+            <!--项目图片-->
+            <div class="project_img f_fl">
+                <a href="#">
+                    <img src="<%=picpath%><%=item.bgImage%>"/>
+                </a>
+            </div>
+            <!--右侧，项目信息介绍-->
+            <div class="pro_infor_rightBox f_fr">
+                <div class="shop_name"><a href="javaScript:;"><%=item.projectName%></a></div>
+                <div class="pro_cont clearfix">
+                    <div class="pro_cont_div f_fl">
+                        <p>地区：<span><%=item.province%>、<%=item.city%>、<%=item.county%></span></p>
+                        <p>行业：<span><%=item.industryCategory%>、<%=item.industry%></span></p>
+                        <p>状态：<span><%=item.auditStatus%></span></p>
+                    </div>
+                    <div class="pro_cont_div f_fl">
+                        <p>融资金额：￥<span><%=parseFloat(item.financialAmount).toFixed(2)%></span>元</p>
+                        <p>融资完成率：<span><%-Math.round((item.buyProcess!=null?item.buyProcess:0)*100)%></span>%</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--Begin项目进行的步骤-->
+        <div class="project_step gray_bg">
+            <div class="dashed_line">
+                <ul>
+                    <li>
+                        <p>发布</p><span id="step1_<%=index%>"></span><p id="step11_<%=index%>"></p>
+                    </li>
+                    <li>
+                        <p>预约认购</p><span id="step2_<%=index%>"></span><p id="step22_<%=index%>"></p>
+                    </li>
+                    <li>
+                        <p>上线融资</p><span id="step3_<%=index%>"></span><p id="step33_<%=index%>"></p>
+                    </li>
+                    <li>
+                        <p>融资完成</p><span id="step4_<%=index%>"></span><p id="step44_<%=index%>"></p>
+                    </li>
+                    <li>
+                        <p>放款完成</p><span id="step5_<%=index%>"></span><p id="step55_<%=index%>"></p>
+                    </li>
+                    <li>
+                        <p>选址</p><span id="step6_<%=index%>"></span><p id="step66_<%=index%>"></p>
+                    </li>
+                    <li>
+                        <p>装修</p><span id="step7_<%=index%>"></span><p id="step77_<%=index%>"></p>
+                    </li>
+                    <li>
+                        <p>采购</p><span id="step8_<%=index%>"></span><p id="step88_<%=index%>"></p>
+                    </li>
+                    <li>
+                        <p>开业</p><span id="step9_<%=index%>"></span><p id="step99_<%=index%>"></p>
+                    </li>
+                    <li>
+                        <p>项目分红</p><span id="step10_<%=index%>"></span><p id="step10_<%=index%>"></p>
+                    </li>
+                </ul>
+
+                <%if(item.projectLog!=null && item.projectLog.length>0){%>
+                <%item.projectLog.forEach(function(itemObj,indexObj){%>
+                <%if(itemObj.auditstatus==0){%>
+                <script type="text/javascript">
+                    $("#step1_<%=index%>").addClass("current_pro");
+                    $("#step11_<%=index%>").text("<%=itemObj.auditortime%>");
+                </script>
+                <%}else if(itemObj.auditstatus==1){%>
+                <script type="text/javascript">
+                    $("#step2_<%=index%>").addClass("current_pro");
+                    $("#step22_<%=index%>").text("<%=itemObj.auditortime%>");
+                </script>
+                <%}else if(itemObj.auditstatus==2){%>
+                <script type="text/javascript">
+                    $("#step3_<%=index%>").addClass("current_pro");
+                    $("#step33_<%=index%>").text("<%=itemObj.auditortime%>");
+                </script>
+                <%}else if(itemObj.auditstatus==3){%>
+                <script type="text/javascript">
+                    $("#step4_<%=index%>").addClass("current_pro");
+                    $("#step44_<%=index%>").text("<%=itemObj.auditortime%>");
+                </script>
+                <%}else if(itemObj.auditstatus==4){%>
+                <script type="text/javascript">
+                    $("#step5_<%=index%>").addClass("current_pro");
+                    $("#step55_<%=index%>").text("<%=itemObj.auditortime%>");
+                </script>
+                <%}else if(itemObj.auditstatus==5){%>
+                <script type="text/javascript">
+                    $("#step6_<%=index%>").addClass("current_pro");
+                    $("#step66_<%=index%>").text("<%=itemObj.auditortime%>");
+                </script>
+                <%}else if(itemObj.auditstatus==6){%>
+                <script type="text/javascript">
+                    $("#step7_<%=index%>").addClass("current_pro");
+                    $("#step77_<%=index%>").text("<%=itemObj.auditortime%>");
+                </script>
+                <%}else if(itemObj.auditstatus==7){%>
+                <script type="text/javascript">
+                    $("#step8_<%=index%>").addClass("current_pro");
+                    $("#step88_<%=index%>").text("<%=itemObj.auditortime%>");
+                </script>
+                <%}else if(itemObj.auditstatus==8){%>
+                <script type="text/javascript">
+                    $("#step9_<%=index%>").addClass("current_pro");
+                    $("#step99_<%=index%>").text("<%=itemObj.auditortime%>");
+                </script>
+                <%}else if(itemObj.auditstatus==9){%>
+                <script type="text/javascript">
+                    $("#step10_<%=index%>").addClass("current_pro");
+                    $("#step10_<%=index%>").text("<%=itemObj.auditortime%>");
+                </script>
+                <%}%>
+
+                <%})}%>
+
+            </div>
+        </div>
+        <!--End 项目进行的步骤-->
+            <%})%>
+           
+            <%}else{%>
+            <div class="nomsg"><font>没有数据</font></div>
+            <%}%>
+        </div>    
+        <div class="pages" id="paging">这里是分页</div>
+    </div>
+</div>
+</div>
+<!--End 认购的项目-->
+<% include ../layout/footer.ejs %>
+
+<link rel="stylesheet" type="text/css" href="/css/fenye.css">
+<script type="text/javascript" src="/js/fenye.js"></script>
+<script type="text/javascript">
+    var totalRecords = '<%= count %>'; // 总共条数
+    var rowPerPage = 3; // 每页显示多少条
+    $("#paging").pagination({
+        items: totalRecords,
+        itemsOnPage: rowPerPage,
+        cssStyle: 'light-theme',
+        onPageClick: function(pageNumber) {
+            ajaxFunc({pageNo: pageNumber}, '/usercenter/projectBuy/conPage', function(data) {
+                if (data) {
+                    var str = "";
+                    $.each(data.attributes.projects, function(index, item) {
+                        str += '<div class="project_infor gray_bg mt_10 clearfix">'
+                        str += '<div class="project_img f_fl">'
+                        str += '<a href="#">'
+                        str += '<img src="<%=picpath%>'+item.bgImage+'"/>'
+                        str += '</a>'
+                        str += '</div>'
+                        str += '<div class="pro_infor_rightBox f_fr">'
+                        str += '<div class="shop_name"><a href="javaScript:;">'+item.projectName+'</a></div>'
+                        str += '<div class="pro_cont clearfix">'
+                        str += '<div class="pro_cont_div f_fl">'
+                        str += '<p>地区：<span>'+item.province+'、'+item.city+'、'+item.county+'</span></p>'
+                        str += '<p>行业：<span>'+item.industryCategory+'、'+item.industry+'</span></p>'
+                        str += '<p>状态：'
+                        str += '<span>'+item.auditStatus+'</span>'
+                        str += '</p>'
+                        str += '</div>'
+                        str += '<div class="pro_cont_div f_fl">'
+                        str += '<p>融资金额：￥<span>'+parseFloat(item.financialAmount).toFixed(2)+'</span>元</p>'
+                        str += '<p>融资完成率：<span>'+Math.round((item.buyProcess!=null?item.buyProcess:0)*100)+'</span>%</p>'
+                        str += '</div>'
+                        str += '</div>'
+                        str += '</div>'
+                        str += '</div>'
+                        str += '<div class="project_step gray_bg">'
+                        str += '<div class="dashed_line">'
+                        str += '<ul>'
+                        str += '<li>'
+                        str += '<p>发布</p><span id="step1_'+index+'"></span><p id="step11_'+index+'"></p>'
+                        str += '</li>'
+                        str += '<li>'
+                        str += '<p>预约认购</p><span id="step2_'+index+'"></span><p id="step22_'+index+'"></p>'
+                        str += '</li>'
+                        str += '<li>'
+                        str += '<p>上线融资</p><span id="step3_'+index+'"></span><p id="step33_'+index+'"></p>'
+                        str += '</li>'
+                        str += '<li>'
+                        str += '<p>融资完成</p><span id="step4_'+index+'"></span><p id="step44_'+index+'"></p>'
+                        str += '</li>'
+                        str += '<li>'
+                        str += '<p>放款完成</p><span id="step5_'+index+'"></span><p id="step55_'+index+'"></p>'
+                        str += '</li>'
+                        str += '<li>'
+                        str += '<p>选址</p><span id="step6_'+index+'"></span><p id="step66_'+index+'"></p>'
+                        str += '</li>'
+                        str += '<li>'
+                        str += '<p>装修</p><span id="step7_'+index+'"></span><p id="step77_'+index+'"></p>'
+                        str += '</li>'
+                        str += '<li>'
+                        str += '<p>采购</p><span id="step8_'+index+'"></span><p id="step88_'+index+'"></p>'
+                        str += '</li>'
+                        str += '<li>'
+                        str += '<p>开业</p><span id="step9_'+index+'"></span><p id="step99_'+index+'"></p>'
+                        str += '</li>'
+                        str += '<li>'
+                        str += '<p>项目分红</p><span id="step10_'+index+'"></span><p id="step10_'+index+'"></p>'
+                        str += '</li>'
+                        str += '</ul>'
+                        str += '</div>'
+                        str += '</div>';
+                    });
+                    $("#ToList").html(str);
+                    $.each(data.attributes.projects, function(index, item) {
+                        if(isArray(item.projectLog)){
+                            $.each(item.projectLog,function(indexObj,itemObj) {
+                                if(itemObj.auditstatus==0){
+                                    $("#step1_"+index).addClass("current_pro");
+                                    $("#step11_"+index).text(itemObj.auditortime);
+                                }else if(itemObj.auditstatus==1){
+                                    $("#step2_"+index).addClass("current_pro");
+                                    $("#step22_"+index).text(itemObj.auditortime);
+                                }else if(itemObj.auditstatus==2){
+                                    $("#step3_"+index).addClass("current_pro");
+                                    $("#step33_"+index).text(itemObj.auditortime);
+                                }else if(itemObj.auditstatus==3){
+                                    $("#step4_"+index).addClass("current_pro");
+                                    $("#step44_"+index).text(itemObj.auditortime);
+                                }else if(itemObj.auditstatus==4){
+                                    $("#step5_"+index).addClass("current_pro");
+                                    $("#step55_"+index).text(itemObj.auditortime);
+                                }else if(itemObj.auditstatus==5){
+                                    $("#step6_"+index).addClass("current_pro");
+                                    $("#step66_"+index).text(itemObj.auditortime);
+                                }else if(itemObj.auditstatus==6){
+                                    $("#step7_"+index).addClass("current_pro");
+                                    $("#step77_"+index).text(itemObj.auditortime);
+                                }else if(itemObj.auditstatus==7){
+                                    $("#step8_"+index).addClass("current_pro");
+                                    $("#step88_"+index).text(itemObj.auditortime);
+                                }else if(itemObj.auditstatus==8){
+                                    $("#step9_"+index).addClass("current_pro");
+                                    $("#step99_"+index).text(itemObj.auditortime);
+                                }else if(itemObj.auditstatus==9){
+                                    $("#step10_"+index).addClass("current_pro");
+                                    $("#step10_"+index).text(itemObj.auditortime);
+                                }
+                            });
+                           
+                        }
+                    })
+                }
+            });
+        }
+    });
+</script>
+

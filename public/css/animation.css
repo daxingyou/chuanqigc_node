@@ -1,0 +1,423 @@
+@charset "utf-8";
+/* CSS Document */
+
+/*Banner 轮播图动画*/
+/*banner1*/
+@keyframes banner1{
+	from{ left:-536px;}	
+	to{ left:0;}
+}
+@-webkit-keyframes banner1{
+	from{ left:-536px;}	
+	to{ left:0;}
+}
+@-moz-keyframes banner1{
+	from{ left:-536px;}	
+	to{ left:0;}
+}
+@-o-keyframes banner1{
+	from{ left:-536px;}	
+	to{ left:0;}
+}
+/*banner1*/
+
+/*banner11*/
+@keyframes banner11{
+	from{ right:-324px;}	
+	to{ right:0;}
+}
+@-webkit-keyframes banner11{
+	from{ right:-324px;}	
+	to{ right:0;}
+}
+@-moz-keyframes banner11{
+	from{ right:-324px;}	
+	to{ right:0;}
+}
+@-o-keyframes banner11{
+	from{ right:-324px;}	
+	to{ right:0;}
+}
+/*banner1*/
+/*banner12*/
+@keyframes banner12{
+	from{ bottom:-80px;}	
+	to{ bottom:80px;}
+}
+@-webkit-keyframes banner12{
+	from{ bottom:-80px;}	
+	to{ bottom:80px;}
+}
+@-moz-keyframes banner12{
+	from{ bottom:-80px;}	
+	to{ bottom:80px;}
+}
+@-o-keyframes banner12{
+	from{ bottom:-80px;}	
+	to{ bottom:80px;}
+}
+/*banner12*/
+/*banner2*/
+@keyframes banner2{
+	from{ top:-130px;}	
+	to{ top:75px;}
+}
+@-webkit-keyframes banner2{
+	from{ top:-130px;}	
+	to{ top:75px;}
+}
+@-moz-keyframes banner2{
+	from{ top:-130px;}	
+	to{ top:75px;}
+}
+@-o-keyframes banner2{
+	from{ top:-130px;}	
+	to{ top:75px;}
+}
+/*banner2*/
+/*banner21*/
+@keyframes banner21{
+	from{ right:-220px;}	
+	to{ right:220px;}
+}
+@-webkit-keyframes banner21{
+	from{ right:-220px;}	
+	to{ right:220px;}
+}
+@-moz-keyframes banner21{
+	from{ right:-220px;}	
+	to{ right:220px;}
+}
+@-o-keyframes banner21{
+	from{ right:-280px;}	
+	to{ right:220px;}
+}
+/*banner21*/
+/*banner22*/
+@keyframes banner22{
+	from{ left:-39%;}	
+	to{ left:50%;}
+}
+@-webkit-keyframes banner22{
+	from{ left:-39%;}	
+	to{ left:50%;}
+}
+@-moz-keyframes banner22{
+	from{ left:-39%;}	
+	to{ left:50%;}
+}
+@-o-keyframes banner22{
+	from{ left:-39%;}	
+	to{ left:50%;}
+}
+/*banner22*/
+/*banner23*/
+@keyframes banner23{
+	from{ bottom:-443px;}	
+	to{ bottom:0;}
+}
+@-webkit-keyframes banner23{
+	from{ bottom:-443px;}	
+	to{ bottom:0;}
+}
+@-moz-keyframes banner22{
+	from{ bottom:-443px;}	
+	to{ bottom:0;}
+}
+@-o-keyframes banner23{
+	from{ bottom:-443px;}	
+	to{ bottom:0;}
+}
+/*banner23*/
+/*banner3*/
+@keyframes banner3{
+	from{ bottom:-68px;}	
+	to{ bottom:150px;}
+}
+@-webkit-keyframes banner3{
+	from{ bottom:-68px;}	
+	to{ bottom:150px;}
+}
+@-moz-keyframes banner3{
+	from{ bottom:-68px;}	
+	to{ bottom:150px;}
+}
+@-o-keyframes banner3{
+	from{ bottom:-68px;}	
+	to{ bottom:150px;}
+}
+/*banner3*/
+/*banner31*/
+@keyframes banner31{
+	from{ top:-305px;}	
+	to{ top:50px;}
+}
+@-webkit-keyframes banner31{
+	from{ top:-305px;}	
+	to{ top:50px;}
+}
+@-moz-keyframes banner31{
+	from{ top:-305px;}	
+	to{ top:50px;}
+}
+@-o-keyframes banner31{
+	from{ top:-305px;}	
+	to{ top:50px;}
+}
+/*banner31*/
+
+/*Banner 轮播图动画*/
+
+/*帮助中心，菜单方块，左右消失*/
+@keyframes helpmenu_squarel{
+	from{ left:0px;}
+	to{ left:-148px;}	
+}
+@-moz-keyframes helpmenu_squarel{
+	from{ left:0px;}
+	to{ left:-148px;}	
+}
+@-webkit-keyframes helpmenu_squarel{
+	from{ left:0px;}
+	to{ left:-148px;}	
+}
+@-o-keyframes helpmenu_squarel{
+	from{ left:0px;}
+	to{ left:-148px;}	
+}
+
+@keyframes helpmenu_squarer{
+	from{ right:0px;}
+	to{ right:-146px;}	
+}
+@-moz-keyframes helpmenu_squarer{
+	from{ right:0px;}
+	to{ right:-146px;}	
+}
+@-webkit-keyframes helpmenu_squarer{
+	from{ right:0px;}
+	to{ right:-146px;}	
+}
+@-o-keyframes helpmenu_squarer{
+	from{ right:0px;}
+	to{ right:-146px;}	
+}
+
+.helpCenter_leftBar li.help_change_li:hover u.square_lb{
+	animation:helpmenu_squarel 0.5s;
+	-webkit-animation:helpmenu_squarel 0.5s;
+	-moz-animation:helpmenu_squarel 0.5s;
+	-o-animation:helpmenu_squarel 0.5s;
+	left:-148px;
+}
+.helpCenter_leftBar li.help_change_li:hover u.square_rt{
+	animation:helpmenu_squarer 0.5s;
+	-webkit-animation:helpmenu_squarer 0.5s;
+	-moz-animation:helpmenu_squarer 0.5s;
+	-o-animation:helpmenu_squarer 0.5s;
+	right:-146px;
+}
+
+/*帮助中心菜单蓝色背景图片*/
+@keyframes blue_img{
+	from{ display:none;}
+	to{ display:block;}	
+}
+@-moz-keyframes blue_img{
+	from{ display:none;}
+	to{ display:block;}	
+}
+@-webkit-keyframes blue_img{
+	from{ display:none;}
+	to{ display:block;}	
+}
+@-o-keyframes blue_img{
+	from{ display:none;}
+	to{ display:block;}	
+}
+.helpCenter_leftBar li.help_change_li:hover .help_arrow{
+	animation:blue_img 0.5s;
+	-webkit-animation:blue_img 0.5s;
+	-moz-animation:blue_img 0.5s;
+	-o-animation:blue_img 0.5s;
+	display:block;
+}*/
+
+
+/*鼠标经过，一级菜单字体变白色*/
+@keyframes f_colorf{
+	from{ color:#646464;}
+	to{ color:#fff;}	
+}
+@-moz-keyframes f_colorf{
+	from{ color:#646464;}
+	to{ color:#fff;}	
+}
+@-webkit-keyframes f_colorf{
+	from{ color:#646464;}
+	to{ color:#fff;}
+}
+@-o-keyframes f_colorf{
+	from{ color:#646464;}
+	to{ color:#fff;}
+}
+.helpCenter_leftBar li.help_change_li:hover > a{
+	animation:f_colorf 0.5s;
+	-webkit-animation:f_colorf 0.5s;
+	-moz-animation:f_colorf 0.5s;
+	-o-animation:f_colorf 0.5s;
+	color:#fff;
+}
+
+/*下拉菜单，鼠标滑过，字体变蓝色*/
+@keyframes f_colorblue{
+	from{ color:#909090;}
+	to{ color:#5ac8da;}	
+}
+@-moz-keyframes f_colorblue{
+	from{ color:#646464;}
+	to{ color:#5ac8da;}	
+}
+@-webkit-keyframes f_colorblue{
+	from{ color:#646464;}
+	to{ color:#5ac8da;}
+}
+@-o-keyframes f_colorblue{
+	from{ color:#646464;}
+	to{ color:#5ac8da;}
+}
+.helpCenter_leftSubBar li.help_change_li:hover > a{
+	animation:f_colorblue 0.5s;
+	-webkit-animation:f_colorblue 0.5s;
+	-moz-animation:f_colorblue 0.5s;
+	-o-animation:f_colorblue 0.5s;
+	color:#5ac8da;
+}
+
+/*用户中心，左侧导航，鼠标经过变成白色图标*/
+.usercenter_leftBar li.help_change_li:hover span{ background:url(../images/usercent_whiteIcon.png) no-repeat;}
+.usercenter_leftBar li.help_change_li:hover span.left_img1{ background-position:0 0px;}
+.usercenter_leftBar li.help_change_li:hover span.left_img2{ background-position:0 -128px;}
+.usercenter_leftBar li.help_change_li:hover span.left_img3{ background-position:-2px -258px;}
+.usercenter_leftBar li.help_change_li:hover span.left_img4{ background-position:0 -304px;}
+.usercenter_leftBar li.help_change_li:hover span.left_img5{ background-position:0 -354px;}
+
+/*众创基地——获取收益动画*/
+@keyframes li_cl{
+	from{ clip:rect(0,156px,156px,78px);}
+	to{ clip:rect(0,156px,-10px,78px);}	
+}
+@-moz-keyframes li_cl{
+	from{ clip:rect(0,156px,156px,78px);}
+	to{ clip:rect(0,156px,-10px,78px);}	
+}
+@-webkit-keyframes li_cl{
+	from{ clip:rect(0,156px,156px,78px);}
+	to{ clip:rect(0,156px,-10px,78px);}	
+}
+@-o-keyframes li_cl{
+	from{ clip:rect(0,156px,156px,78px);}
+	to{ clip:rect(0,156px,-10px,78px);}	
+}
+@keyframes li_cr{
+	from{ clip:rect(0,156px,156px,78px);}
+	to{ clip:rect(156px,78px,156px,0px);}	
+}
+@-moz-keyframes li_cr{
+	from{ clip:rect(0,78px,156px,0);}
+	to{ clip:rect(156px,78px,156px,0px);}	
+}
+@-webkit-keyframes li_cr{
+	from{ clip:rect(0,78px,156px,0);}
+	to{ clip:rect(156px,78px,156px,0px);}	
+}
+@-o-keyframes li_cr{
+	from{ clip:rect(0,78px,156px,0);}
+	to{ clip:rect(156px,78px,156px,0px);}	
+}
+.zhch_circle li.start_animate u.cl_hover{
+	animation: li_cl 0.4s ease-out;
+	-webkit-animation: li_cl 0.4s ease-out;
+	-moz-animation: li_cl 0.4s ease-out;
+	-o-animation: li_cl 0.4s ease-out;
+}
+.zhch_circle li.start_animate u.cr_hover{
+	animation: li_cr 0.4s ease-out;
+	-webkit-animation: li_cr 0.4s ease-out;
+	-moz-animation: li_cr 0.4s ease-out;
+	-o-animation: li_cr 0.4s ease-out;
+}
+@keyframes li_strong{
+	from{ color:#f2941a;}
+	to{ color:#fff;}	
+}
+@-moz-keyframes li_strong{
+	from{ color:#f2941a;}
+	to{ color:#fff;}	
+}
+@-webkit-keyframes li_strong{
+	from{ color:#f2941a;}
+	to{ color:#fff;}	
+}
+@-o-keyframes li_strong{
+	from{ color:#f2941a;}
+	to{ color:#fff;}	
+}
+/*.zhch_circle li.start_animate strong.strong_hover{ color:#fff;}*/
+.zhch_circle li.start_animate strong.strong_hover{
+	animation: li_strong 1s ease-out;
+	-webkit-animation: li_strong 1s ease-out;
+	-moz-animation: li_strong 1s ease-out;
+	-o-animation: li_strong 1s ease-out;
+}
+@keyframes li_profitDiv{
+	from{ width:0;}
+	to{ 
+		left:0;
+		width:1000px;
+		padding-left:180px;
+	}
+	/*from{ display:none;}
+	to{ display:block;}*/
+}
+@-moz-keyframes li_profitDiv{
+	from{ width:0;}
+	to{ 
+		left:0;
+		width:1000px;
+		padding-left:180px;
+	}
+}
+@-webkit-keyframes li_profitDiv{
+	from{ width:0;}
+	to{ 
+		left:0;
+		width:1000px;
+		padding-left:180px;
+	}
+}
+@-o-keyframes li_profitDiv{
+	from{ width:0;}
+	to{ 
+		left:0;
+		width:1000px;
+		padding-left:180px;
+	}
+}
+/*.zhch_circle li.start_animate .profitDiv_hover{ width:1000px; padding-left:180px;}*/
+.zhch_circle li.start_animate .profitDiv_hover{
+	animation: li_profitDiv 0.6s ease-out;
+	-webkit-animation: li_profitDiv 0.6s ease-out;
+	-moz-animation: li_profitDiv 0.6s ease-out;
+	-o-animation: li_profitDiv 0.6s ease-out;
+}
+
+
+
+
+
+
+
+
+
+

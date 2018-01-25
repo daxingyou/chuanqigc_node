@@ -1,0 +1,54 @@
+<!--Begin header-->
+<div class="header_content clearfix">
+    <a href="/"><div class="logo"></div></a>
+    <ul class="top_nav">
+        <li class="on"><a href="/index">首页</a></li>
+        <li id="find_chq">
+            <a href="/findlegend" class="find_chq_title">发现传奇</a>
+            <span></span>
+            <div class="find_chq_list hide">
+                <p><a href="/projectwarmup">预热项目</a></p>
+                <p><a href="/projectfinance">融资项目</a></p>
+                <p class="disable_li"><a>运营项目</a></p>
+            </div>
+        </li>
+        <li><a href="/singlepage/safetyset">安全保障</a></li>
+        <li><a href="/singlepage/zhongchuang">众创基地</a></li>
+    </ul>
+    <div class="rtop_wrap">
+        <!-- 登录前 -->
+        <% if(!locals.user){ %>
+        <div class="login_on">
+            <div><a href="javaScript:;" class="click_register">注册</a><span></span></div>
+            <div><a href="javaScript:;" class="click_login">登录</a></div>
+        </div>
+        <% } else {%>
+        <!-- 登录后 -->
+        <div class="login_off">
+            <div class="login_off">
+                <div class="user_infor clearfix">
+                    <%if(locals.user.imageUrl!=undefined&&locals.user.imageUrl!=null){%>
+                    <img src="<%=locals.path%><%=locals.user.imageUrl%>" style=" width:20px; height:18px;"  class="f_fl">
+                    <%}else{%>
+                    <img src="/images/user_icon_03.png" class="f_fl">
+                    <%}%>
+                    <div class="f_fl">欢迎您：<em><%=locals.user.nickName!=null?locals.user.nickName:(locals.user.userName!=null?locals.user.userName:locals.user.phone)%></em></div>
+                </div>
+                <!--Begin 用户中心子菜单-->
+                <ol class="usercener_list hide">
+                    <div class="ie_touming">
+                        <li><a href="/usercenter">个人中心</a></li>
+                        <li><a href="/usercenter/publishProject">发布项目</a></li>
+                        <li><a href="/usercenter/projectBuy">我的项目</a></li>
+                        <li><a href="/usercenter/accountmoney">账户资金</a></li>
+                        <li><a href="/usercenter/message">消息动态</a></li>
+                        <li><a href="/logout">安全退出</a></li>
+                    </div>
+                </ol>
+                <!--End 用户中心子菜单-->
+            </div>
+        </div>
+        <% } %>
+    </div>
+</div>
+<!--End header-->

@@ -1,0 +1,351 @@
+﻿
+<% include layout/header_index.ejs %>
+<!--Begin banner-->
+<div class="banner">
+    <ul class="banner_list">
+        <li class="banner3">
+            <a href="/singlepage/newknow">
+            <div class="banner_con">
+                <p class="text1"><img src="images/bannerImg3-1_03.png"></p>
+                <p class="text2"><img src="images/bannerImg3-2_03.png"></p>
+            </div>
+            </a>
+        </li>
+        <li class="banner1 hide">
+            <a href="/singlepage/zhongchuang">
+            <div class="banner_con">
+                <p class="text1"><img src="images/bannerImg1-1_03.png"></p>
+                <p class="text2"><img src="images/bannerImg1-2_03.png"></p>
+                <p class="text3"><img src="images/bannerImg1-3_03.png"></p>
+            </div>
+            </a>
+        </li>
+        <li class="banner2 hide">
+            <div class="banner_con">
+                <p class="text1"><img src="images/bannerImg2-1_03.png"></p>
+                <p class="text2"><img src="images/bannerImg2-2_03.png"></p>
+                <p class="text3"><img src="images/bannerImg2-3_03.png"></p>
+                <p class="text4"><img src="images/bannerImg2-4_03.png"></p>
+            </div>
+        </li>
+        <!--<li class="banner4 hide">-->
+            <!--<a href="javascript:void(0)">-->
+                <!--<img src="images/banner4.png">-->
+            <!--</a>-->
+        <!--</li>-->
+    </ul>
+    <ul class="banner_btn">
+        <li class="ba_btn_on"></li>
+        <li></li>
+        <li></li>
+        <!--<li></li>-->
+    </ul>
+</div>
+<!--End banner-->
+<!--Begin 焦作众创-->
+<ul class="zhch_chl">
+    <li><a href="/singlepage/zhongchuang#touBrand" class="btn_style btn_size">加速器Ⅰ</a></li>
+    <li class="jsq2"><a href="/singlepage/zhongchuang#helpBrand" class="btn_style btn_size">加速器Ⅱ</a></li>
+</ul>
+<!--Begin 焦作众创-->
+
+<!--Begin 热门项目-->
+<div class="hotItems_wrap">
+    <div class="hot_items">
+        <div class="hot_items_title">
+            <img src="images/hotItems_icon_03.png">
+            <h2>热门项目</h2>
+        </div>
+        <!--Begin 融资项目1-->
+        <% if(hotProject.length>0){%>
+        <%hotProject.forEach(function(item,index){%>
+        <div class="hot_items_content">
+            <a href="/proInfo/<%-item.id%>">
+            <div class="hot_items_cont_left f_fl">
+                <img src="<%-picpath%><%-item.bgImage%>">
+                <% if(item.projectStatus == 1){ %>
+                <div class="financintItems_icon prehotItems_icon"></div>
+                <%}else if(item.projectStatus == 2){%>
+                <div class="financintItems_icon"></div>
+                <%}%>
+                <ul class="hot_items_b clearfix">
+                    <!--Begin ie8支持透明-->
+                    <div class="ie_touming">
+                        <li class="f_fl">
+                            <div>项目方出资比例：<em><%-item.projectInvestScale%>%</em></div>
+                            <div>投资人出资比例：<em><%-item.investorScale%>%</em></div>
+                        </li>
+                        <li class="f_fr">
+                            <div>项目方收益比例：<em><%-item.projectRate%>%</em></div>
+                            <div>投资人收益比例：<em><%-item.investorRate%>%</em></div>
+                        </li>
+                    </div>
+                    <!--End ie8支持透明-->
+                </ul>
+            </div>
+            </a>
+            <div class="hot_items_cont_right f_fr">
+
+                <div class="items_title">
+                    <%-item.projectName%>
+                    <% if(item.projectStatus == 1){ %>
+                    <em class="f_fr">倒计时：<span class="timeDJS" timeCha="<%-new Date(item.preheatEndTime).getTime()/1000-locals.nowTime%>"></span></em>
+                    <%}%>
+                </div>
+                <div class="items_describe"><%-item.shortIntroduce%>...</div>
+                <div class="items_infor_box">
+                    <ul class="items_infor clearfix">
+                        <% if(item.projectStatus == 1){ %>
+                        <li class="f_fl">
+                            <div>
+                                <h6><%-(item.preheatStartTime!=null?item.preheatStartTime:"").substring(0,10)%></h6>上线时间
+                            </div>
+                        </li>
+                        <li class="f_fl">
+                            <span class="f_fl"></span>
+                            <div class="f_fl center_div">
+                                <h6 class="formdatamoney"><%-item.lowAmount%></h6>单笔投资
+                            </div>
+                            <span class="f_fr"></span>
+                        </li>
+                        <li class="f_fl">
+                            <div>
+                                <h6 class="formdatamoney"><%-item.investorAmount%></h6>融资金额
+                            </div>
+                        </li>
+                        <%}else if(item.projectStatus == 2){%>
+                        <li class="f_fl">
+                            <div>
+                                <h6><%-item.remainDay%>天</h6>剩余时间
+                            </div>
+                        </li>
+                        <li class="f_fl">
+                            <span class="f_fl"></span>
+                            <div class="f_fl center_div">
+                                <h6 class="formdatamoney"><%-item.lowAmount%></h6>单笔投资
+                            </div>
+                            <span class="f_fr"></span>
+                        </li>
+                        <li class="f_fl">
+                            <div>
+                                <h6 class="formdatamoney"><%-item.investorAmount%></h6>融资金额
+                            </div>
+                        </li>
+                        <%}%>
+                    </ul>
+                    <div class="project_row4 clearfix">
+                        <div class="progress f_fl">
+                            <% if(item.projectStatus == 1){ %>
+                            <div class="progress_title f_fl">预热进度：<span><%= Math.round(item.buyProcess*100) %>%</span></div>
+                            <%}else if(item.projectStatus == 2){%>
+                            <div class="progress_title f_fl">融资进度：<span><%= Math.round(item.buyProcess*100) %>%</span></div>
+                            <%}%>
+                            <div class="gray_progress f_fl">
+                                <div class="progressing" style="width: <%= item.buyProcess*100 %>%"></div>
+                            </div>
+                        </div>
+                        <a href="/proInfo/<%-item.id%>" class="btn_style look_itemsDetail f_fr">查看详情</a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <!--End 融资项目1-->
+        <div class="h_30"></div>
+        <%})}%>
+    </div>
+</div>
+<!--End 热门项目-->
+
+<!--Begin 三众-->
+<div class="sanzh_bg">
+    <div class="sanzh clearfix">
+        <div class="s_zh1 f_fl">
+            <h3>98人</h3>
+            <p>机构&amp;投资人</p>
+        </div>
+        <div class="s_zh1 s_zh2 f_fl">
+            <h3>98人</h3>
+            <p>品牌创始人</p>
+        </div>
+        <div class="s_zh1 s_zh3 f_fl">
+            <h3>98人</h3>
+            <p>服务机构</p>
+        </div>
+    </div>
+</div>
+<!--End 三众-->
+
+<!--Begin 投资梦想，创造传奇-->
+<div class="hotItems_wrap">
+    <div class="hot_items investDream_box">
+        <div class="hot_items_title">
+            <img src="images/investDream_icon_03.png">
+            <h2>信息导航</h2>
+        </div>
+        <!--Begin 外层框架-->
+        <div class="swiper_container clearfix">
+            <!--Begin 最新活动-->
+            <div class="swiper_slide f_fl newest_activity_border">
+                <a href="/singlepage/foodperson">
+                    <div class="newest_t_bg">
+                        <span></span>
+                    </div>
+                    <img src="images/brand_leader_trance.png">
+                    <div class="newest_activity"></div>
+                    <div class="newest_binfor">
+                        寻找品牌达人
+                        <p>有丰富的奖品，好玩的游戏，还有你感兴趣同时有高额奖金</p>
+                    </div>
+                    <div class="newest_b_bg">
+                        <div class="newest_activity_bg"></div>
+                    </div>
+                </a>
+            </div>
+            <!--End 最新活动-->
+
+            <!--Begin 最新项目-->
+            <div class="swiper_slide f_fl">
+                <a href="/proInfo/<%-newProject.id%>">
+                    <div class="newest_t_bg">
+                        <span></span>
+                    </div>
+                    <img src="<%-picpath%><%-newProject.bgImage%>">
+                    <div class="newest_activity newest_item"></div>
+                    <div class="newest_binfor">
+                        <%-newProject.projectName%>
+                        <p><%-newProject.shortIntroduce%></p>
+                    </div>
+                    <div class="newest_b_bg">
+                        <div></div>
+                    </div>
+                </a>
+            </div>
+            <!--Begin 最新项目-->
+
+            <!--Begin 最热推荐-->
+            <div class="swiper_slide f_fl newest_rec_border">
+                <a href="/singlepage/leadinvest">
+                    <div class="newest_t_bg">
+                        <span></span>
+                    </div>
+                    <img src="images/jy_leader_entrance.png">
+                    <div class="newest_activity hotest_recommend"></div>
+                    <div class="newest_binfor">
+                        精英领投人
+                        <p>有丰富的奖品，好玩的游戏，还有你感兴趣同时有高额奖金</p>
+                    </div>
+                    <div class="newest_b_bg">
+                        <div class="newest_rec_bg"></div>
+                    </div>
+                </a>
+            </div>
+            <!--Begin 最热推荐-->
+        </div>
+        <!--End 外层框架-->
+
+    </div>
+</div>
+<!--End 投资梦想，创造传奇-->
+
+<!--Begin 新手专区-->
+<div class="hotItems_wrap">
+    <div class="hot_items investDream_box">
+        <div class="hot_items_title">
+            <img src="images/beginnerArea_icon_03.png">
+            <h2>新手专区</h2>
+        </div>
+        <!--Begin 新手专区图片轮播-->
+        <div id="posterTvGrid1" style="margin:40px auto 0 auto;"></div>
+        <!--End 新手专区图片轮播-->
+
+        <!--Begin 新闻列表-->
+        <div class="news_slide">
+            <div class="bd">
+                <%if (zcdt.length!=0) {%>
+                <%zcdt.forEach(function(item,index){%>
+                <div class="news_box">
+                    <img src="<%=picpath+item.imageUrl%>" class="f_fl">
+                    <dl class="news_dynamic f_fr">
+                        <dt class="clearfix">
+                            <a href="/index/msgdefail?id=<%-item.id%>">
+                            <em class="f_fl"><%=item.title%></em>
+                            <span class="f_fl"><%=item.publishDate%></span>
+                            </a>
+                            <a href="index/zcdt" class="f_fr">更多</a>
+                        </dt>
+                        <dd><%=item.summary==null?item.summary:item.summary.substring(0,200)%>...</dd>
+                    </dl>
+                </div>
+                <%})}%>
+            </div>
+            <div class="news_arrow clearfix">
+                <a class="prev f_fl" href="javascript:;"></a>
+                <a class="next f_fr" href="javascript:;"></a>
+            </div>
+        </div>
+        <!--End 新闻列表-->
+    </div>
+</div>
+<!--End 新手专区-->
+<script>
+
+    $(function(){
+
+        //banner图左右切换
+        //$(".slideBox").slide({ mainCell:".bd ul",effect:"leftLoop", autoPlay:true, delayTime:800, interTime:5000});
+
+        //banner图css3轮播
+        var n=0;
+        function news(){
+            if(n<$(".banner_list").find("li").length-1){
+                n++;
+            }else{
+                n=0;
+            }
+            $(".banner_list").find("li").eq(n).fadeIn(500).siblings().fadeOut(500);
+            $(".banner_list li").find("p").addClass("txt_hover");
+            $(".banner_btn").find("li").eq(n).addClass("ba_btn_on").siblings().removeClass("ba_btn_on");
+        }
+        var news_clear=setInterval(news,4000);
+
+        //鼠标经过轮播图，和下方当前列表项时，定时器停止，鼠标经过哪个列表项哪个banner图显示
+        function news_fadeImage(list_item){
+            $(list_item).mouseover(function(){
+                clearInterval(news_clear);
+                var m=$(this).index();
+
+                $(".banner_btn").find("li").eq(m).addClass("ba_btn_on").siblings().removeClass("ba_btn_on");
+                $(".banner_list ").find("li").eq(m).fadeIn(500).siblings().fadeOut(500);
+                $(".banner_list li").find("p").addClass("txt_hover");
+            })
+            $(list_item).mouseout(function(){
+                news_clear=setInterval(news,4000);
+            })
+        }
+        news_fadeImage(".banner_list li");
+        news_fadeImage(".banner_btn li");
+        //banner图css3轮播
+
+        //新手专区，新闻列表切换
+        $(".news_slide").slide({mainCell:".bd",autoPage:true,effect:"leftLoop",autoPlay:true, interTime:5000});
+
+        //新手专区，图片360度切换
+        var posterTvGrid1 = new posterTvGrid('posterTvGrid1',{className: "posterTvGrid"},[
+                    {"img":"images/new_user1.jpg","url":"javascript:location.href=encodeURI('/about/00000003001?maptype=INFODETAIL&TitleName=传奇简介')"},
+                    {"img":"images/new_user2.jpg","url":"/singlepage/newknow"},
+                    {"img":"images/new_user3.jpg","url":"/singlepage/safetyset"},
+                    {"img":"images/new_user4.jpg","url":"javascript:location.href=encodeURI('/about/00000004002?maptype=INFODETAIL&TitleName=投资流程')"},
+                    {"img":"images/new_user5.jpg","url":"javascript:location.href=encodeURI('/about/00000004003?maptype=INFODETAIL&TitleName=融资流程')"},
+                ]
+        );
+        //新手专区，图片360度切换
+
+    })
+
+
+
+
+</script>
+
+<% include layout/footer.ejs %>

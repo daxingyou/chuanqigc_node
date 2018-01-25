@@ -1,0 +1,325 @@
+<!--Begin header-->
+<% include ../layout/header.ejs %>
+<!--End header-->
+<!--Begin 账户资金-->
+<div class="usercenter_bg">
+    <div class="usercenter_bg2"></div>
+</div>
+
+<div class="usercenter_bgs">
+<div class="usercontent clearfix">
+    <% include left.ejs %>
+    <div class="right_bar f_fr">
+    	<div class="user_title_box clearfix">
+        	<div class="user_title f_fl">账户资金</div>
+        </div>
+        
+    </div>
+    <div class="right_bar f_fr account_infor">
+    	<div class="user_infor_box border_c clearfix">
+            <div class="account_user f_fl">
+                <div class="user_pic ml_25">
+                    <div class="user_border"></div>
+                    <%if(userInfo.imageUrl!=null){%>
+                        <img id="uploadTXs" src="<%=picpath+userInfo.imageUrl%>">
+                        <%}else{%>
+                        <img id="uploadTX" src="/images/default.png">
+                    <%}%>
+                </div>
+                <h4>账户总金额<br>
+                <strong><%-myaccount.obj.balance%></strong>
+                元
+                </h4>
+            </div>
+            <div class="text_box f_fl">
+                <div class="row_1">
+                    <span class="username"><%=locals.user.nickName!=null?locals.user.nickName:locals.user.userName%></span>
+                </div>
+                <ul class="row2 clearfix">
+                	<li>
+                    	<div>可提现金额：<em><%-myaccount.obj.activeBalance%></em>&nbsp;元</div>
+                        <div>冻结金额：<em><%-myaccount.obj.freezeBalance%></em>&nbsp;元</div>
+                    </li>
+                    <li>
+                    	<div>累计提现：<em><%-myaccount.attributes.withdrawalLog %></em>&nbsp;元</div>
+                        <div>累计投资：<em><%-myaccount.obj.accumulatedInvestAmount%></em>&nbsp;元</div>
+                    </li>
+                    <li>
+                    	<div>累计充值：<em><%-myaccount.attributes.charge%></em>&nbsp;元</div>
+                    </li>
+                </ul>
+                 <div class="row3">
+                    <a class="recharge btn_style">充值</a>
+                    <a class="tixian btn_style">提现</a>
+                </div>
+        	</div>
+        </div>
+    </div>
+    <!--Begin 账户资金明细-->
+    <div class="f_fr account_detail">
+    	<div class="account_datail_tit clearfix">
+        	<span class="f_fl">账户资金明细</span>
+            <form  id="selectListForm">
+            	<div class="query f_fr"><input type="submit" class="btn_style" value="查询"></div>
+            	<div class="select_date f_fr">
+                    <label>日期选择：</label>
+                    <input type="text" class="" style="width:100px;" name="startTime" id="startTime" onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" >
+                    <label>--</label>
+                    <input type="text" class=""  name="endTime" id="endTime" onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" >
+                </div>
+            </form>
+        </div>
+        <div class="account_data">
+        	<table>
+            	<thead>
+                	<tr>
+                	<th width="17%">交易时间</th>
+                    <th width="16%">收支</th>
+                    <th width="17%">金额</th>
+                    <th width="17%">账户金额</th>
+                    <th width="16%">冻结金额</th>
+                    <th width="17%">备注</th>
+                    </tr>
+                </thead>
+                <tbody id="toTab">
+                  <%if(infoList.attributes.detailList.length!=0){%>
+                        <%infoList.attributes.detailList.forEach(function(item,index){%>
+                        <tr>
+                            <td ><%=item.chargeTime.substring(0,19)%></td>
+                            <td><%=item.incomeExpendType==1?"收入":"支出"%></td>
+                            <td><%=item.amount%></td>
+                            <td ><%=item.activeBalance%></td>
+                            <td ><%=item.freezeBalance%></td>
+                            <td ><%=item.expendDesc%></td>
+                        </tr>
+                        <%})%>
+                    <%}else{%>
+                        <tr>
+                            <td colspan="6" class="no_record">
+                                <div>
+                                    <img src="/images/tishi_03.png" class="f_fl">您尚未有消费记录。<a href="/findlegend">去看看最新项目吧》</a>
+                                </div>
+                            </td>
+                        </tr>
+                    <%}%>                  
+                </tbody>
+            </table>         
+        </div>
+         <%if(infoList.attributes.detailList.length!=0){%>
+                <div class="pages" id="paging"></div>
+         <%}%>
+    </div>
+	<!--End 账户资金明细-->
+    
+</div>
+<!--Begin 账户资金-->
+</div>
+<!--Begin footer-->
+<% include ../layout/footer.ejs %>
+<!--End footer-->
+<!--Begin弹框-->
+    
+    <!--Begin 充值-->
+    <div class="module_dialog status_dialog" id="accountRecharge_dialog">
+        <div class="module_header">
+            <button class="module_close f_fr">×</button>
+            <h4 class="module_title">账户充值</h4>
+        </div>
+        <div class="module_body">
+          <div id="error"></div>
+            <div class="dialog_form account_form">
+                <form id="RechargeForm">
+                    <div class="item basic_item"><span>可提现金额：</span><strong><%-myaccount.obj.activeBalance%></strong>元</div>
+                    <div class="item basic_item"><span>充值金额：</span><input type="text" name="recharge_account" class="validate[custom[number],min[2],required]">&nbsp;元</div>
+                    <p>注：充值最低 2 元</p>
+                    <div class="error"></div>
+                    <div class="dia_btns">
+                        <button class="dia_submit" name="check_ok">充值</button>
+                        <button class="cancel" id="sub_OK" >快捷充值</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!--End 充值-->
+    
+    <!--Begin 账户提现-->
+    <div class="module_dialog status_dialog" id="accountTixain_dialog">
+        <div class="module_header">
+            <button class="module_close f_fr">×</button>
+            <h4 class="module_title">账户提现</h4>
+        </div>
+        <div class="module_body">
+          <div id="error"></div>
+            <div class="dialog_form account_form">
+                <form id="chargeForm">
+                    <div class="item basic_item"><span>可提现金额：</span><strong><%-myaccount.obj.activeBalance%></strong>元</div>
+                    <div class="item basic_item"><span>提现金额：</span><input type="text" name="tixian_account" class="validate[custom[number],min[2],required]">&nbsp;元</div>
+                    <p>当日充值的金额需要24小时之后才能提现</p>
+                    <p>提现手续费：3元/笔</p>
+                    <div class="error"></div>
+                    <div class="dia_btns">
+                        <button class="dia_submit" name="check_ok">提交</button>
+                        <button class="cancel account_gray_btn">取消</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!--End 账户提现-->
+    
+<!--End弹框-->
+
+<link rel="stylesheet" type="text/css" href="/css/fenye.css">
+<script type="text/javascript" src="/js/fenye.js"></script>
+<script type="text/javascript">
+  var  totalRecords = '<%= totalRecords %>'; // 总共条数
+  var rowPerPage = '<%= pageNum %>'; // 每页显示多少条
+pageControl(totalRecords,rowPerPage); //调用控件
+function pageControl(totalRecords,rowPerPage){
+    var  totalRecords = totalRecords; // 总共条数
+    var rowPerPage = rowPerPage; // 每页显示多少条
+    $("#paging").pagination({
+        items: totalRecords,
+        itemsOnPage: rowPerPage,
+        cssStyle: 'light-theme',
+        onPageClick: function(pageNumber) {
+            var data = {
+                startTime: $('#startTime').val(),
+                endTime: $('#endTime').val(),
+                pageNo: pageNumber
+            }
+            ajaxFunc(data, '/usercenter/accountmoney/conPage', binddata);
+        }
+    });
+}
+
+function binddata(data){
+        if (data.success) {
+                var str = "";
+                $("#toTab").html("");
+                $.each(data.attributes.detailList, function(index, item) {
+                    var desc,type,time;
+                    if (item.expendDesc === undefined) {
+                        desc = "";
+                    } else {
+                        desc = item.expendDesc
+                    }
+
+                    if (item.incomeExpendType==1) {
+                        type="收入"
+                    }
+                    else{
+                        type="支出"
+                    }
+                    str += '<tr>'
+                    str += ' <td >' + item.chargeTime.substring(0,19) + '</td>'
+                    str += ' <td>' + type + '</td>'
+                    str += ' <td>' + item.amount + '</td>'
+                    str += '<td >' + item.activeBalance + '</td>'
+                    str += ' <td >' + item.freezeBalance + '</td>'
+                    str += ' <td>' + desc + '</td>'
+                    str += '</tr>';
+                });
+                $("#toTab").html(str);
+            }
+}
+
+$(function() {
+    if(GetQueryString("click")=="recharge"){
+        $(".momblack").show();
+        $("#accountRecharge_dialog").fadeIn();
+    }
+    var date = new Date(); //.转换成毫秒 date.getSeconds()
+    var startTime = date.getFullYear() + "-" + (date.getMonth() < 10 ? '0' + (date.getMonth()) : (date.getMonth())) + "-" + (date.getDate() < 10 ? '0' + date.getDate() : date.getDate())+" "+(date.getHours() < 10 ? '0' + (date.getHours()) : (date.getHours()))+":"+(date.getMinutes() < 10 ? '0' + (date.getMinutes()) : (date.getMinutes()))+":"+(date.getSeconds() < 10 ? '0' + (date.getSeconds()) : (date.getSeconds()));
+    var endTime = date.getFullYear() + "-" + (date.getMonth() < 9 ? '0' + (date.getMonth() + 1) : (date.getMonth() + 1)) + "-" + (date.getDate() < 10 ? '0' + date.getDate() : date.getDate())+" "+(date.getHours() < 10 ? '0' + (date.getHours()) : (date.getHours()))+":"+(date.getMinutes() < 10 ? '0' + (date.getMinutes()) : (date.getMinutes()))+":"+(date.getSeconds() < 10 ? '0' + (date.getSeconds()) : (date.getSeconds()));
+    $('#startTime').val(startTime);
+    $('#endTime').val(endTime);
+    $('#chargeForm').validationEngine(); //提现金额  
+    $('#RechargeForm').validationEngine(); //充值金额    
+    $('#selectListForm').validationEngine();
+    //充值
+    box_dialog(".recharge", "#accountRecharge_dialog");
+    //充值
+    box_dialog(".tixian", "#accountTixain_dialog");
+    /* 提现*/
+    $("#chargeForm").submit(function(e) {
+            e.preventDefault();
+            var chargeAmount = $("input[name='tixian_account']").val();
+            var data = {
+                "applicationAmount": chargeAmount
+            }
+            if (!$(this).validationEngine("validate")) {
+                return false;
+            }
+            $(".dia_submit").attr("disabled","true");
+            ajaxFunc(data, '/usercenter/accountmoney/chargemoney', function(data) {
+                if (data.success) {
+                    $('.error').html("<font color='red'>" + data.msg + "</font>");
+                    ycrediect("2", "/usercenter/accountmoney")
+                } else {
+                    $(".dia_submit").removeAttr("disabled");
+                    $('.error').html("<font color='red'>" + data.msg + "</font>");
+                }
+            })
+
+        });
+    /*充值*/
+    $("#RechargeForm").submit(function(e) {
+        e.preventDefault();
+        var chargeAmount = $("input[name='recharge_account']").val();
+        var data = {
+            "chargeAmount": chargeAmount
+        }
+        if (!$(this).validationEngine("validate")) {
+            return false;
+        }
+        ajaxFunc(data, '/usercenter/accountmoney/Rechargemoney', chargeFunc)
+    });
+    /*查询*/
+    $('#selectListForm').submit(function(e) {
+        e.preventDefault();
+        var data = {
+            startTime: $('#startTime').val(),
+            endTime: $('#endTime').val()
+        }
+        if (!$(this).validationEngine("validate")) {
+            return false;
+        }
+        ajaxFunc(data, '/usercenter/accountmoney/conPage', function(data) {
+            if (data.success) {
+                console.log(data.attributes.count);
+               pageControl(data.attributes.count,data.attributes.pageNum);
+               binddata(data);
+            }
+        });
+    });
+    /*快捷支付*/
+    $('#sub_OK').click(function(event) {
+        event.preventDefault();
+        window.location.href='/usercenter/recharge';
+    });
+})
+//充值回调函数
+function chargeFunc(data) {
+    if (data.success) {
+        var params = data.attributes;
+        var url = data.obj;
+        var str = "";
+        str += "<form class='hide' target='_blank' id='rongbaoForm' action='" + url + "'>";
+        for (var key in params) {
+            str += "<input type='text' name='" + key + "' value='" + params[key] + "'>"
+        }
+        str += "</form>"
+        $("body").append(str);
+        $("#rongbaoForm").submit();
+        ycrediect("1", "/usercenter/accountmoney");
+    } else {
+        $('.error').html("<font color='red'>" + data.msg + "</font>");
+    }
+}
+
+
+
+
+</script>

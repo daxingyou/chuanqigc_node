@@ -1,0 +1,1195 @@
+<% include ../layout/header.ejs %>
+    <div class="usercenter_bg">
+        <div class="usercenter_bg2"></div>
+    </div>
+    <!--Begin 用户中心——发布项目-->
+<div class="usercenter_bgs">
+    <div class="usercontent clearfix ">
+        <% include left.ejs %>
+            <div class="right_bar f_fr">
+                <div class="publish_box">
+                    <!-- <input type="hidden" name="projectId" id="projectId" value="<%=projectId%>"> -->
+                    <div class="publish_step">
+                        <ul class="publish_list publish_third">
+                         <li>基本资料</li>
+                        <li>股权设置</li>
+                        <li>草稿状态项目编辑</li>
+                        <li>相关协议</li>
+                        <li class="publish_list_last">传奇工场审核</li>
+                        </ul>
+                    </div>
+                    <div class="edit_subTitle"><span>店铺简介</span></div>
+                    <div class="infor_list">
+                        <div><span>背景图宣传图</span><em class="modify_bgImg">修改</em></div>
+                        <div><span>项目展示封面</span><em class="modify_homeImg">修改</em></div>
+                        <div><span>店铺基本信息</span><em class="modify_shop">修改</em></div>
+                        <div>
+                            <span>项目视频展示</span>
+                            <div class="f_fl vedio_show">
+                            <%if (videoList.length>0) {%>
+                                <% videoList.forEach(function(item,index){ %>
+                                    <div class="show_item">
+                                        <input type="radio" value="<%=item.id%>" name="videoClass" ><%=item.dataLabel%></div>    
+                                <%})%>
+                            <%}%>
+                                
+                            </div>
+                            <em class="modify_video">修改</em>
+                        </div>
+                        <div><span>编辑项目介绍</span><em class="modify_editProject">修改</em></div>
+                        <div><span>证件提交</span><em class="modify_zhj">修改</em></div>
+                        <div><span>修改融资需求</span><em class="modify_trade">修改</em></div>
+                    </div>
+                    <div class="edit_subTitle"><span>预算及退出</span></div>
+                    <div class="infor_list">
+                        <div><span>现有店铺概括</span><em class="modify_existShop">修改</em></div>
+                        <div><span>开店计划</span><em class="modify_openShopPlan">修改</em></div>
+                        <div><span>退出机制</span><em class="modify_quitJzh">修改</em></div>
+                    </div>
+                    <div class="step_btns clearfix">
+                        <a href="javascript:history.back(-1);" class="step_btn f_fl">上一步</a>
+                        <a href="/usercenter/publishProject/success/<%=projectId%>?type=false" class="step_btn f_fl">下一步</a>
+                    </div>
+                </div>
+                <div class="h_30"></div>
+            </div>
+    </div>
+    <!--End 用户中心——发布项目-->
+</div>
+    <!--Begin弹框-->
+    <!--Begin 修改背景展示图-->
+    <div class="module_dialog status_dialog" id="bg_showImg">
+        <div class="module_header">
+            <button class="module_close f_fr">×</button>
+            <h4 class="module_title">修改背景展示图</h4>
+        </div>
+        <div class="module_body status_body">
+            <div class="dialog_form cg_dialog">
+                <p class="show_shm">您可以选择一张最能展现您项目的一张图片作为背景图</p>
+                <form id="bg_showImg_form">
+                    <dl class="clearfix modify_head selectTxt">
+                        <dt class="f_fl">
+                         <%if(project.bgImage!=null){%>
+                        <img id="backProject" src="<%=picpath+project.bgImage%>">
+                        <%}else{%>
+                       <img id="backProject" src="/images/default.jpg">
+                        <%}%>
+                        </dt>
+                        <dd class="f_fr">
+                            <em>图片格式支持jpg,jpeg,png格式，大小不能超过2M</em>
+                            <span class="browser f_fl" id="uploadify">浏览</span>
+                        </dd>
+                    </dl>
+                    <div class="error"></div>
+                    <div class="dia_btns">
+                        <button class="dia_submit" type="button" id="btnSaveback">提交</button>
+                        <button class="cancel">取消</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!--End 修改背景展示图-->
+    <!--Begin 修改封面展示图-->
+    <div class="module_dialog status_dialog" id="home_showImg">
+        <div class="module_header">
+            <button class="module_close f_fr">×</button>
+            <h4 class="module_title">修改封面展示图</h4>
+        </div>
+        <div class="module_body status_body">
+            <div class="dialog_form cg_dialog">
+                <p class="show_shm">您可以选择一张最能展现您项目的一张图片作为封面图</p>
+                <form action="" id="home_showImg_form">
+                    <dl class="clearfix modify_head selectTxt">
+                        <dt class="f_fl">
+                        <%if(project.coverImage!=undefined){%>
+                        <img id="coverimage" src="<%=picpath+project.coverImage%>">
+                        <%}else{%>
+                        <img id="coverimage" src="/images/default.jpg">
+                        <%}%>
+                        </dt>
+                        <dd class="f_fr">
+                            <em>图片格式支持jpg,jpeg,png格式，大小不能超过2M</em>
+                            <span class="browser f_fl" id="uploadCover">
+                            </span>
+                        </dd>
+                    </dl>
+                    <div class="error"></div>
+                    <div class="dia_btns">
+                        <button class="dia_submit" type="button" id="btnSaveCover">提交</button>
+                        <button class="cancel">取消</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!--End 修改封面展示图-->
+    <!--Begin 项目基本信息修改-->
+    <div class="module_dialog status_dialog" id="basic_infor">
+        <div class="module_header">
+            <button class="module_close f_fr">×</button>
+            <h4 class="module_title">项目基本信息修改</h4>
+        </div>
+        <div class="module_body status_body">
+            <div class="dialog_form cg_dialog">
+                <form id="basic_infor_form">
+                    <div class="item basic_item"><span>项目名称：</span>
+                        <input type="text" class="validate[required]" name="projectName" id="projectName" value="<%-project.projectName!=null?project.projectName:'' %>">
+
+                    </div>
+                    <div class="item basic_item"><span>一句话介绍：</span>
+                        <input type="text" class="validate[required]" name="shortIntroduce" id="shortIntroduce" value="<%-project.shortIntroduce!=null?project.shortIntroduce:''%>">
+                    </div>
+                    <div class="item basic_item clearfix">
+                        <span class="f_fl">行业：</span>
+                        <select id="industryCategory" name="industryCategory" class="validate[required] select_1 basic_select" onchange=getIndustry(this.id,"industry")>
+                            <option value="">请选择</option>
+                            <% industryList.forEach(function(item,index){ %>
+                            <option  value=<%=item.sortId%> <%if(item.sortId==project.industryCategory){%>selected="selected"<%}%> > <%=item.industryName%> </option>
+                            <% })%>
+                        </select>
+                        <select name="industry" class="validate[required] select_1 basic_select" id="industry">
+                            <option value="">请选择</option>
+                            <% industry.forEach(function(item,index){ %>
+                            <option  value=<%=item.sortId%> <%if(item.sortId==project.industry){%>selected="selected"<%}%> > <%=item.industryName%> </option>
+                            <% })%>
+                        </select>
+                    </div>
+                    <div class="item basic_item clearfix">
+                        <span class="f_fl">所在地：</span>
+                         <select  name="province" id="province" class="select_1 basic_select validate[required]" onchange=getCity(this.id,"city")>
+                            <option value="请选择">请选择</option>
+                            <% provinces.forEach(function(item,index){ %>
+                            <option  value=<%=item.id%> <%if(item.id==project.province){%>selected="selected"<%}%> > <%=item.areaName%> </option>
+                            <% })%>
+                        </select>
+                        <select name="city" id="city" class="select_1 basic_select validate[required]" onchange=getCity(this.id,"county")>
+                            <option value="请选择">请选择</option>
+                            <% city.forEach(function(item,index){ %>
+                            <option  value=<%=item.id%> <%if(item.id==project.city){%>selected="selected"<%}%> > <%=item.areaName%> </option>
+                            <% })%>
+                        </select>
+                        <select name="county" id="county" class="select_1 basic_select validate[required]">
+                            <option value="请选择">请选择</option>
+                            <% county.forEach(function(item,index){ %>
+                            <option  value=<%=item.id%> <%if(item.id==project.county){%>selected="selected"<%}%> > <%=item.areaName%> </option>
+                            <% })%>
+                        </select>
+                    </div>
+                    <div class="item basic_item"><span></span>
+                        <!-- <%=project.projectname%> -->
+                        <input type="text" name="address" class="validate[required]" id="address" value="<%-project.address!=null?project.address:''%>"><em>街道地址</em> </div>
+                    <div class="error"></div>
+                    <div class="dia_btns">
+                        <button class="dia_submit" type="submit">提交</button>
+                        <button class="cancel">取消</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!--End 项目基本信息修改-->
+    <!--Begin 添加修改视频-->
+    <div class="module_dialog status_dialog" id="add_modifyVideo">
+        <div class="module_header">
+            <button class="module_close f_fr">×</button>
+            <h4 class="module_title">添加修改视频</h4>
+        </div>
+        <div class="module_body status_body">
+            <div class="dialog_form cg_dialog">
+                <p class="show_shm">请输入视频地址：（支持优酷、土豆、酷六等视频网站视频，只能是html的视频代码） 如：上传优酷视频，找到视频下方的“分享”，点击向下的箭头，复制html代码即可</p>
+                <form id="saveVideoUrl">
+                    <textarea id="videoUrl"><%=project.videoUrl!=null?project.videoUrl:""%></textarea>
+                    <div class="error"></div>
+                    <div class="dia_btns">
+                        <button class="dia_submit" type="submit">提交</button>
+                        <button class="cancel">取消</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!--End 添加修改视频-->
+    <!--Begin 编辑项目介绍-->
+    <div class="module_dialog edit_box" id="editProject_infor">
+        <div class="module_header">
+            <button class="module_close f_fr">×</button>
+            <h4 class="module_title">编辑项目介绍</h4>
+        </div>
+        <div class="module_body status_body">
+            <div class="dialog_form cg_dialog">
+                <form action="" id="saveProjectDescForm">
+                <div class="edit_wrap"> <script id="editor" type="text/plain"></script></div>
+                   
+                    <div class="error"></div>
+                    <div class="dia_btns">
+                        <button class="dia_submit" type="submit">提交</button>
+                        <button class="cancel">取消</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!--End 编辑项目介绍-->
+    <!--Begin 证件提交-->
+    
+    <div class="module_dialog status_dialog" id="zhj_submit">
+    <div class="sub_momblack"  style="position:fixed;z-index:1000; top:130px; width:470px; height:500px; display:none" id="sub_momblack"></div>
+        <div class="module_header">
+            <button class="module_close f_fr">×</button>
+            <h4 class="module_title">证件提交</h4>
+        </div>
+        <div class="module_body exist_shop_body padd_rl">
+            <div class="dialog_form zhj_dialog">
+                <div class="certificate_form">
+                    <form id="savePapersForm">
+                     <img src="/images/loading.gif" id="loading" style="display:none; position:absolute; left:50%; margin-left:-16px; z-index:10000;top:50%;
+                     margin-top:-16px;">
+                        <ul class="zhj_submit">
+                            <li>
+                                <h2>法定代表人</h2>
+                                <span class="select_file" id="uploadlegalperson"></span>
+                                <%if (projectImage.legalperson!=null) {%>
+                                    <em >上传成功</em>  
+                                <%}else{%>
+                                    <em id="legalpersonNSub" >还未提交</em> 
+                                <%}%>
+                            </li>
+                            <li>
+                                <h2>法定代表个人信用报告</h2>
+                                <span class="select_file" id="uploadlegalcreditreprot"></span>
+                                <%if (projectImage.legalcreditreprot!=null) {%>
+                                      <em>上传成功</em>  
+                                <%}else{%>
+                                    <em id="legalcreditreprotNSub">还未提交</em> 
+                                <%}%>
+                            </li>
+                            <li>
+                                <h2>营业执照</h2>
+                                <span class="select_file" id="uploadbusinesslicense"></span>
+                                <%if (projectImage.businesslicense!=null) {%>
+                                      <em>上传成功</em>  
+                                <%}else{%>
+                                    <em id="businesslicenseNSub">还未提交</em> 
+                                <%}%>
+                            </li>
+                            <li>
+                                <h2>营业执照副本</h2>
+                                <span class="select_file" id="uploadbusinesslicensecopy">
+                                </span>
+                                <%if (projectImage.businesslicensecopy!=null) {%>
+                                      <em>上传成功</em>  
+                                <%}else{%>
+                                    <em id="businesslicensecopyNSub">还未提交</em> 
+                                <%}%>
+                            </li>
+                            <li>
+                                <h2>税务登记证</h2>
+                                <span class="select_file" id="uploadtaxenrolcertificate"></span>
+                                 <%if (projectImage.taxenrolcertificate!=null) {%>
+                                      <em>上传成功</em>  
+                                <%}else{%>
+                                    <em id="taxenrolcertificateNSub">还未提交</em> 
+                                <%}%>
+                            </li>
+                            <li>
+                                <h2>税务登记证副本</h2>
+                                <span class="select_file" id="uploadtaxenrolcertificatecopy"></span>
+                                <%if (projectImage.taxenrolcertificatecopy!=null) {%>
+                                      <em>上传成功</em>  
+                                <%}else{%>
+                                    <em id="taxenrolcertificatecopyNSub">还未提交</em> 
+                                <%}%>
+                            </li>
+                            <li>
+                                <h2>组织机构代码证</h2>
+                                <span class="select_file" id="uploadorganizationcode"></span>
+                               <%if (projectImage.organizationcode!=null) {%>
+                                      <em>上传成功</em>  
+                                <%}else{%>
+                                    <em id="organizationcodeNSub">还未提交</em> 
+                                <%}%>
+                            </li>
+                            <li>
+                                <h2>组织机构代码证副本</h2>
+                                <span class="select_file" id="uploadorganizationcodecopy"></span>
+                                <%if (projectImage.organizationcodecopy!=null) {%>
+                                      <em>上传成功</em>  
+                                <%}else{%>
+                                    <em id="organizationcodecopyNSub">还未提交</em> 
+                                <%}%>
+                            </li>
+                            <li>
+                                <h2>公司照片</h2>
+                                <span class="select_file" id="uploadcompanyphoto"></span>
+                                <%if (projectImage.companyphoto!=null) {%>
+                                      <em>上传成功</em>  
+                                <%}else{%>
+                                    <em id="companyphotoNSub">还未提交</em> 
+                                <%}%>
+                                <input type="hidden" id="companyphoto">
+                            </li>
+                            <li>
+                                <h2>场地租凭合同</h2>
+                                <span class="select_file" id="uploadvenuerentalcontract"></span>
+                                <%if (projectImage.venuerentalcontract!=null) {%>
+                                      <em >上传成功</em>  
+                                <%}else{%>
+                                    <em id="venuerentalcontractNSub">还未提交</em> 
+                                <%}%>
+                            </li>
+                            <li>
+                                <h2>财务报表</h2>
+                                <span class="select_file" id="uploadfinancialstatement"></span>
+                                <%if (projectImage.financialstatement!=null) {%>
+                                      <em>上传成功</em>  
+                                <%}else{%>
+                                    <em id="financialstatementNSub">还未提交</em> 
+                                <%}%>
+                            </li>
+                            <li>
+                                <h2>卫生许可证</h2>
+                                <span class="select_file" id="uploadhealthlicense"></span>
+                                <%if (projectImage.healthlicense!=null) {%>
+                                      <em>上传成功</em>  
+                                <%}else{%>
+                                    <em id="healthlicenseNSub">还未提交</em> 
+                                <%}%>
+                            </li>
+                        </ul>
+                        <div class="error"></div>
+                        <div class="dia_btns">
+                            <button class="dia_submit" id="btnSavePapers" type="submit">提交</button>
+                            <button class="cancel">取消</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--End 证件提交-->
+    <!--Begin 融资需求修改-->
+    <div class="module_dialog trade_dialog" id="tradeRequire">
+        <div class="module_header">
+            <button class="module_close f_fr">×</button>
+            <h4 class="module_title">融资需求修改</h4>
+        </div>
+        <div class="module_body status_body">
+            <div class="dialog_form cg_dialog tradeRequire_dialog">
+                <p class="trade_infor">带<strong>*</strong>为必填项，其他为自动计算</p>
+                <form  id="editFinancingform">
+                    <ul class="trade_list clearfix">
+                        <li class="item open_shop red_f"><span><strong>*</strong>开店融资金额：</span>
+                            <input type="text" id="financialAmount" class="validate[required,custom[number]]" name="financialAmount" value="<%=project.financialAmount%>">&nbsp;元</li>
+                        <li class="item red_f"><span><strong>*</strong>项目方出资金额：</span>
+                            <input type="text" class="validate[required,custom[number]]" name="projectAmount" id="projectAmount" value="<%=project.projectAmount%>">&nbsp;元</li>
+                        <li class="item red_f"><span>投资人出资金额：</span>
+                            <input type="text" id="investorAmount" readonly class="validate[custom[number]]" name="investorAmount" value="<%=project.investorAmount%>">&nbsp;元</li>
+                        <li class="item red_f"><span><strong>*</strong>认购份数：</span>
+                            <input type="text" class="validate[required,custom[number],max[199]]" name="subscriptionCopies" id="subscriptionCopies" value="<%=project.subscriptionCopies%>">&nbsp;份</li>
+                        <li class="item red_f"><span>个人最低投资金额：</span>
+                            <input type="text" name="lowAmount" readonly id="lowAmount" value="<%=project.lowAmount%>" class="validate[custom[number]]">&nbsp;元</li>
+                        <li class="item"><span>项目方出资所占比例：</span>
+                            <input type="text" name="projectInvestScale" readonly value="<%=project.projectInvestScale.toFixed(2)%>" id="projectInvestScale" class="validate[custom[number],min[30],max[100]]">&nbsp;%</li>
+                        <li class="item"><span>投资人出资比例：</span>
+                            <input type="text" name="investorScale" readonly  value="<%=project.investorScale.toFixed(2)%>" id="investorScale" class="validate[custom[number],max[100]]">&nbsp;%</li>
+                        <li class="item"><span><strong>*</strong>项目方收益所占比例：</span>
+                            <input type="text" class="validate[required,custom[number],max[100]]" name="projectRate" value="<%=project.projectRate.toFixed(2)%>" id="projectRate">&nbsp;%</li>
+                        <li class="item"><span>投资人收益比例：</span>
+                            <input type="text" name="investorRate" id="investorRate" class="validate[custom[number],max[100]]" value="<%=project.investorRate.toFixed(2)%>">&nbsp;%</li>
+                    </ul>
+                    <div class="error"></div>
+                    <div class="dia_btns trade_btns">
+                        <button class="dia_submit" type="submit">提交</button>
+                        <button class="cancel">取消</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!--End 融资需求修改-->
+    <!--Begin 现有店铺概括-->
+    <div class="module_dialog status_dialog" id="exist_shop">
+        <div class="module_header">
+            <button class="module_close f_fr">×</button>
+            <h4 class="module_title">现有店铺概括</h4>
+        </div>
+        <div class="module_body exist_shop_body">
+            <div class="dialog_form cg_dialog">
+                <form id="saveShopsForm">
+                   <%if (Shops.length!=0) {%>
+                    <%Shops.forEach(function(item,index){%> 
+                    <%if (index==0) {%>
+                        <h1>第一家店铺：</h1>
+                        <input type="hidden" value="<%=item.id%>" id="id_1">
+                    <%}else if(index==1){%>
+                         <h1>第二家店铺：</h1>
+                         <input type="hidden" value="<%=item.id%>" id="id_2">
+                    <%}else if(index==2){%>
+                    <h1>第三家店铺：</h1>
+                    <input type="hidden" value="<%=item.id%>" id="id_3">
+                    <%}%>
+                    <div class="item basic_item exist_item"><span>店铺名称：</span>
+                        <input type="text" value="<%=item.shopname%>" name="shopname" id="shopname_<%=index+1%>" >
+                    </div>                 
+                    <div class="item basic_item exist_item"><span>店铺地址：</span>
+                        <input type="text" name="shopaddress" value="<%=item.shopaddress%>" id="shopaddress_<%=index+1%>">
+                    </div>
+                    <div class="item basic_item exist_item"><span>店铺筹备总投资：</span>
+                        <input type="text" value="<%=item.totalInvestment%>" class="validate[custom[number]]"  name="totalInvestment" id="totalInvestment_<%=index+1%>">&nbsp;元</div>
+                    <div class="item basic_item exist_item"><span>从筹备到运营周期：</span>
+                        <input type="text" value="<%=item.sumDays%>" class="validate[custom[number]]"  name="sumDays" >&nbsp;天</div>
+                    <div class="item basic_item exist_item"><span>盈利可分红时间：</span>
+                        <input type="text" value="<%=item.interestDays%>" class="validate[custom[number]]"  name="interestDays" id="interestDays_<%=index+1%>">&nbsp;天</div>
+                    <div class="item basic_item exist_item"><span>店铺营业面积：</span>
+                        <input type="text" value="<%=item.businessArea%>"  class="validate[custom[number]]"  name="businessArea" id="businessArea_<%=index+1%>" >&nbsp;平米</div>
+                    <div class="item basic_item exist_item"><span>客流量：</span>
+                        <input type="text" value="<%=item.clientFlow%>"  class="validate[custom[number]]" id="clientFlow_<%=index+1%>"  name="clientFlow">&nbsp;位/日</div>
+                    <div class="item basic_item exist_item"><span>人均消费：</span>
+                        <input type="text" id="averageSpend_<%=index+1%>"  value="<%=item.averageSpend%>" class="validate[custom[number]]"  name="averageSpend" >&nbsp;元</div>
+                    <div class="item basic_item exist_item"><span>上年度营业收入：</span>
+                        <input type="text" value="<%=item.lastyearIncome%>" class="validate[custom[number]]"  name="lastyearIncome" id="lastyearIncome_<%=index+1%>" >&nbsp;元</div>
+                    <div class="item basic_item exist_item"><span>上年度净利润：</span>
+                        <input type="text" value="<%=item.lastyearProfit%>" class="validate[custom[number]]"  name="lastyearProfit"  id="lastyearProfit_<%=index+1%>">&nbsp;元</div>
+                    <div class="item basic_item exist_item"><span>上季度营业收入：</span>
+                        <input type="text" value="<%=item.lastquarterIncome%>" class="validate[custom[number]]"  name="lastquarterIncome" id="lastquarterIncome_<%=index+1%>">&nbsp;元</div>
+                    <div class="item basic_item exist_item"><span>上季度净利润：</span>
+                        <input type="text" value="<%=item.lastquarterProfit%>" class="validate[custom[number]]"  name="lastquarterProfit" id="lastquarterProfit_<%=index+1%>" >&nbsp;元</div>
+                      <%})%> 
+                      <%}else{%>
+                      <h1>第一家店铺：</h1>
+                    <div class="item basic_item exist_item"><span>店铺名称：</span>
+                        <input type="text"  name="shopname" value="" id="shopname_1">
+                    </div>                 
+                    <div class="item basic_item exist_item"><span>店铺地址：</span>
+                        <input type="text" name="shopaddress"  id="shopaddress_1">
+                    </div>
+                    <div class="item basic_item exist_item"><span>店铺筹备总投资：</span>
+                        <input type="text"  class="validate[custom[number]]"  name="totalInvestment" id="totalInvestment_1">&nbsp;元</div>
+                    <div class="item basic_item exist_item"><span>从筹备到运营周期：</span>
+                        <input type="text"  class="validate[custom[number]]"  name="sumDays" id="sumDays_1">&nbsp;天</div>
+                    <div class="item basic_item exist_item"><span>盈利可分红时间：</span>
+                        <input type="text"  class="validate[custom[number]]"  name="interestDays" id="interestDays_1">&nbsp;天</div>
+                    <div class="item basic_item exist_item"><span>店铺营业面积：</span>
+                        <input type="text"  class="validate[custom[number]]"  name="businessArea" id="businessArea_1">&nbsp;平米</div>
+                    <div class="item basic_item exist_item"><span>客流量：</span>
+                        <input type="text"  class="validate[custom[number]]" id="clientFlow_1"  name="customers_1">&nbsp;位/日</div>
+                    <div class="item basic_item exist_item"><span>人均消费：</span>
+                        <input type="text"  class="validate[custom[number]]"  name="averageSpend" id="averageSpend_1">&nbsp;元</div>
+                    <div class="item basic_item exist_item"><span>上年度营业收入：</span>
+                        <input type="text"  class="validate[custom[number]]"  name="lastyearIncome" id="lastyearIncome_1">&nbsp;元</div>
+                    <div class="item basic_item exist_item"><span>上年度净利润：</span>
+                        <input type="text"  class="validate[custom[number]]"  name="lastyearProfit" id="lastyearProfit_1">&nbsp;元</div>
+                    <div class="item basic_item exist_item"><span>上季度营业收入：</span>
+                        <input type="text"  class="validate[custom[number]]"  name="lastquarterIncome" id="lastquarterIncome_1">&nbsp;元</div>
+                    <div class="item basic_item exist_item"><span>上季度净利润：</span>
+                        <input type="text"  class="validate[custom[number]]"  name="lastquarterProfit" id="lastquarterProfit_1">&nbsp;元</div>
+                    <h1>第二家店铺：</h1>
+                    <div class="item basic_item exist_item"><span>店铺名称：</span>
+                        <input type="text"  name="shopname" value=" " id="shopname_2">
+                    </div>                 
+                    <div class="item basic_item exist_item"><span>店铺地址：</span>
+                        <input type="text" name="shopaddress"  id="shopaddress_2">
+                    </div>
+                    <div class="item basic_item exist_item"><span>店铺筹备总投资：</span>
+                        <input type="text"  class="validate[custom[number]]"  name="totalInvestment" id="totalInvestment_2">&nbsp;元</div>
+                    <div class="item basic_item exist_item"><span>从筹备到运营周期：</span>
+                        <input type="text"  class="validate[custom[number]]"  name="sumDays" id="sumDays_2">&nbsp;天</div>
+                    <div class="item basic_item exist_item"><span>盈利可分红时间：</span>
+                        <input type="text"  class="validate[custom[number]]"  name="interestDays" id="interestDays_2">&nbsp;天</div>
+                    <div class="item basic_item exist_item"><span>店铺营业面积：</span>
+                        <input type="text"  class="validate[custom[number]]"  name="businessArea" id="businessArea_2">&nbsp;平米</div>
+                    <div class="item basic_item exist_item"><span>客流量：</span>
+                        <input type="text"  class="validate[custom[number]]" id="clientFlow_2"  name="customers">&nbsp;位/日</div>
+                    <div class="item basic_item exist_item"><span>人均消费：</span>
+                        <input type="text"  class="validate[custom[number]]"  name="averageSpend" id="averageSpend_2">&nbsp;元</div>
+                    <div class="item basic_item exist_item"><span>上年度营业收入：</span>
+                        <input type="text"  class="validate[custom[number]]"  name="lastyearIncome" id="lastyearIncome_2">&nbsp;元</div>
+                    <div class="item basic_item exist_item"><span>上年度净利润：</span>
+                        <input type="text"  class="validate[custom[number]]"  name="lastyearProfit" id="lastyearProfit_2">&nbsp;元</div>
+                    <div class="item basic_item exist_item"><span>上季度营业收入：</span>
+                        <input type="text"  class="validate[custom[number]]"  name="lastquarterIncome" id="lastquarterIncome_2">&nbsp;元</div>
+                    <div class="item basic_item exist_item"><span>上季度净利润：</span>
+                        <input type="text"  class="validate[custom[number]]"  name="lastquarterProfit" id="lastquarterProfit_2">&nbsp;元</div>
+                        <h1>第三家店铺：</h1>
+                    <div class="item basic_item exist_item"><span>店铺名称：</span>
+                        <input type="text"  name="shopname" value=" " id="shopname_3">
+                    </div>                 
+                    <div class="item basic_item exist_item"><span>店铺地址：</span>
+                        <input type="text" name="shopaddress"  id="shopaddress_3">
+                    </div>
+                    <div class="item basic_item exist_item"><span>店铺筹备总投资：</span>
+                        <input type="text"  class="validate[custom[number]]"  name="totalInvestment" id="totalInvestment_3">&nbsp;元</div>
+                    <div class="item basic_item exist_item"><span>从筹备到运营周期：</span>
+                        <input type="text"  class="validate[custom[number]]"  name="sumDays" id="sumDays_3">&nbsp;天</div>
+                    <div class="item basic_item exist_item"><span>盈利可分红时间：</span>
+                        <input type="text"  class="validate[custom[number]]"  name="interestDays" id="interestDays_3">&nbsp;天</div>
+                    <div class="item basic_item exist_item"><span>店铺营业面积：</span>
+                        <input type="text"  class="validate[custom[number]]"  name="businessArea" id="businessArea_3">&nbsp;平米</div>
+                    <div class="item basic_item exist_item"><span>客流量：</span>
+                        <input type="text"  class="validate[custom[number]]" id="clientFlow_3"  name="customers">&nbsp;位/日</div>
+                    <div class="item basic_item exist_item"><span>人均消费：</span>
+                        <input type="text"  class="validate[custom[number]]"  name="averageSpend" id="averageSpend_3">&nbsp;元</div>
+                    <div class="item basic_item exist_item"><span>上年度营业收入：</span>
+                        <input type="text"  class="validate[custom[number]]"  name="lastyearIncome" id="lastyearIncome_3">&nbsp;元</div>
+                    <div class="item basic_item exist_item"><span>上年度净利润：</span>
+                        <input type="text"  class="validate[custom[number]]"  name="lastyearProfit" id="lastyearProfit_3">&nbsp;元</div>
+                    <div class="item basic_item exist_item"><span>上季度营业收入：</span>
+                        <input type="text"  class="validate[custom[number]]"  name="lastquarterIncome" id="lastquarterIncome_3">&nbsp;元</div>
+                    <div class="item basic_item exist_item"><span>上季度净利润：</span>
+                        <input type="text"  class="validate[custom[number]]"  name="lastquarterProfit" id="lastquarterProfit_3">&nbsp;元</div>
+                      <%}%>
+                    <div class="error"></div>
+                    <div class="dia_btns">
+                        <button class="dia_submit" type="submit">提交</button>
+                        <button class="cancel">取消</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!--End 现有店铺概括-->
+    <!--Begin 开店计划-->
+    <div class="module_dialog openShop_dialog" id="openShop_plan">
+        <div class="module_header">
+            <button class="module_close f_fr">×</button>
+            <h4 class="module_title">开店计划</h4>
+        </div>
+        <div class="module_body openShop_body">
+            <div class="dialog_form openShop_form">
+                <form id="saveShopsPlan">
+                    <div class="item basic_item exist_item"><span>预期融资开店数量：</span>
+                        <input type="text" class="validate[custom[number]]" name="expectShops" id="expectShops" value="<%=ShopsPlan.expectShops!=null?ShopsPlan.expectShops:''%>">&nbsp;家</div>
+                    <div class="item basic_item exist_item"><span>开店筹备时间周期：</span>
+                        <input type="text" class="validate[custom[number]]" name="prepareDaysk" id="prepareDaysk" value="<%=ShopsPlan.prepareDays!=null?ShopsPlan.prepareDays:''%>">&nbsp;天</div>
+                    <div class="item basic_item exist_item"><span>预期店面地址：</span>
+                        <input type="text" value="<%=ShopsPlan.prepareAddr!=null?ShopsPlan.prepareAddr:''%>" name="prepareAddr" id="prepareAddr">
+                    </div>
+                    <div class="item basic_item exist_item"><span>预期开业时间：</span>
+                        <input type="text" class="validate[custom[number]]" name="setupDays" id="setupDays" value="<%=ShopsPlan.setupDays!=null?ShopsPlan.setupDays:''%>">天（*融资成功后）</div>
+                    <div class="item basic_item exist_item"><span>预期分红时间：</span>
+                        <input type="text" class="validate[custom[number]]"  name="bonusDays" id="bonusDays" value="<%=ShopsPlan.bonusDays!=null?ShopsPlan.bonusDays:''%>">天（*融资成功后）</div>
+                    <div class="item basic_item exist_item"><span>第一年预计盈利：</span>
+                        <input type="text" class="validate[custom[number]]" name="profitFirstyear" value="<%=ShopsPlan.profitFirstyear!=null?ShopsPlan.profitFirstyear:''%>" id="profitFirstyear">&nbsp;元</div>
+                    <div class="item basic_item exist_item txt_area"><span>其他计划：</span>
+                        <textarea name="other_plan" id="otherPlan"><%=ShopsPlan.otherPlan!=null?ShopsPlan.otherPlan:''%></textarea>
+                    </div>
+                    <div class="error"></div>
+                    <div class="dia_btns">
+                        <button class="dia_submit" type="submit">提交</button>
+                        <button class="cancel">取消</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!--End 开店计划-->
+    <!--Begin 退出机制-->
+    <div class="module_dialog" id="quit_jzh">
+        <div class="module_header">
+            <button class="module_close f_fr">×</button>
+            <h4 class="module_title">退出机制</h4>
+        </div>
+        <div class="module_body">
+            <div class="dialog_form quitJzh_form">
+                <form id="saveTrategyForm">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th class="table_t1">提出方发生条件与解决机制状况类型</th>
+                                <th class="table_t2">份额股转让</th>
+                                <th class="table_t2">份额股回购</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="txt_center">有限合伙人</td>
+                                <td class="td_hei">
+                                    <div>
+                                        <em>如：我想卖出股份</em>
+                                        <br>
+                                        <label>解决方案：</label>
+                                        <textarea id="shareTransfer"><%=projectExitTrategy.sharetransfer!=null?projectExitTrategy.sharetransfer:''%></textarea>
+                                    </div>
+                                </td>
+                                <td class="td_hei">
+                                    <div>
+                                        <em>如：我想收购股份</em>
+                                        <br>
+                                        <label>解决方案：</label>                     
+                                        <textarea id="shareRepurchase"><%=projectExitTrategy.sharerepurchase!=null?projectExitTrategy.sharerepurchase:''%></textarea>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="error"></div>
+                    <div class="dia_btns">
+                        <button class="dia_submit" type="submit">提交</button>
+                        <button class="cancel">取消</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!--End 退出机制-->
+    <!--End弹框-->
+    <!--Begin footer-->
+    <% include ../layout/footer.ejs %>
+        <!--End footer-->
+        <div style="display:none">
+            <!-- hidden -->
+            <input type="hidden" id="legalperson">
+            <input type="hidden" id="legalcreditreprot">
+            <input type="hidden" id="businesslicense">
+            <input type="hidden" id="businesslicensecopy">
+            <input type="hidden" id="taxenrolcertificate">
+            <input type="hidden" id="taxenrolcertificatecopy">
+            <input type="hidden" id="organizationcode">
+            <input type="hidden" id="organizationcodecopy">
+            <input type="hidden" id="venuerentalcontract">
+            <input type="hidden" id="financialstatement">
+            <input type="hidden" id="healthlicense">
+           
+        </div>
+<script type="text/javascript" charset="utf-8" src="/js/ueditor/ueditor.config.js"></script>
+<script type="text/javascript" charset="utf-8" src="/js/ueditor/ueditor.all.min.js"> </script>
+<script type="text/javascript" charset="utf-8" src="/js/ueditor/lang/zh-cn/zh-cn.js"></script>
+
+<script type="text/javascript">
+    $(function() {
+        $("input[type='radio'][name='videoClass']").each(function(index, el) {
+            if ($(this).val()=='<%=project.videoType%>') {
+                $(this).attr("checked", 'checked');
+            }        
+            console.log($(this).val());
+        });
+       $('#editFinancingform').validationEngine(); //验证融资需求修改
+       $('#basic_infor_form').validationEngine(); //店铺基本信息
+       //begin 上传证件
+       //1
+       uploadfile('uploadlegalperson', function(file, data, response) {
+           var data = $.parseJSON(data);
+           var url = {
+               imageUrl: data.url
+           };
+           $('#legalperson').val(PahtReturn(data.url));
+           $('#legalpersonNSub').text("上传成功");
+       });
+       //2
+       uploadfile('uploadlegalcreditreprot', function(file, data, response) {
+           var data = $.parseJSON(data);
+           var url = {
+               imageUrl: data.url
+           };
+           $('#legalcreditreprot').val(PahtReturn(data.url))
+           $('#legalcreditreprotNSub').text("上传成功");
+
+
+       });
+       //3
+       uploadfile('uploadbusinesslicense', function(file, data, response) {
+           var data = $.parseJSON(data);
+           var url = {
+               imageUrl: data.url
+           };
+           $('#businesslicense').val(PahtReturn(data.url))
+           $('#businesslicenseNSub').text("上传成功");
+       });
+       //4
+       uploadfile('uploadbusinesslicensecopy', function(file, data, response) {
+           var data = $.parseJSON(data);
+           var url = {
+               imageUrl: data.url
+           };
+           $('#businesslicensecopy').val(PahtReturn(data.url))
+           $('#businesslicensecopyNSub').text("上传成功");
+       });
+       //5
+       uploadfile('uploadtaxenrolcertificate', function(file, data, response) {
+           var data = $.parseJSON(data);
+           var url = {
+               imageUrl: data.url
+           };
+           $('#taxenrolcertificate').val(PahtReturn(data.url))
+           $('#taxenrolcertificateNSub').text("上传成功");
+       });
+       //6
+       uploadfile('uploadtaxenrolcertificatecopy', function(file, data, response) {
+           var data = $.parseJSON(data);
+           var url = {
+               imageUrl: data.url
+           };
+           $('#taxenrolcertificatecopy').val(PahtReturn(data.url))
+           $('#taxenrolcertificatecopyNSub').text("上传成功");
+       });
+       //7
+       uploadfile('uploadorganizationcode', function(file, data, response) {
+           var data = $.parseJSON(data);
+           var url = {
+               imageUrl: data.url
+           };
+           $('#organizationcode').val(PahtReturn(data.url))
+           $('#organizationcodeNSub').text("上传成功");
+       });
+       //8
+       uploadfile('uploadorganizationcodecopy', function(file, data, response) {
+           var data = $.parseJSON(data);
+           var url = {
+               imageUrl: data.url
+           };
+           $('#organizationcodecopy').val(PahtReturn(data.url))
+           $('#organizationcodecopyNSub').text("上传成功");
+       });
+       //9
+       uploadfile('uploadcompanyphoto', function(file, data, response) {
+           var data = $.parseJSON(data);
+           var url = {
+               imageUrl: data.url
+           };
+           $('#companyphoto').val(PahtReturn(data.url))
+           $('#companyphotoNSub').text("上传成功");
+       });
+       //10
+       uploadfile('uploadvenuerentalcontract', function(file, data, response) {
+           var data = $.parseJSON(data);
+           var url = {
+               imageUrl: data.url
+           };
+           $('#venuerentalcontract').val(PahtReturn(data.url))
+           $('#venuerentalcontractNSub').text("上传成功");
+       });
+       //11
+       uploadfile('uploadfinancialstatement', function(file, data, response) {
+           var data = $.parseJSON(data);
+           var url = {
+               imageUrl: data.url
+           };
+           $('#financialstatement').val(PahtReturn(data.url))
+           $('#financialstatementNSub').text("上传成功");
+       });
+       //12 uploadhealthlicense
+       uploadfile('uploadhealthlicense', function(file, data, response) {
+           var data = $.parseJSON(data);
+           var url = {
+               imageUrl: data.url
+           };
+           $('#healthlicense').val(PahtReturn(data.url))
+           $('#healthlicenseNSub').text("上传成功");
+
+       });
+
+
+
+       /*背景图宣传图*/
+       uploadfile('uploadify', function(file, data, response) {
+           var data = $.parseJSON(data);
+           var url = {
+               imageUrl: data.url
+           };
+           $('#backProject').attr('src', data.url);
+
+       });
+       var projectId = $("projectId").val();
+       //修改背景图宣传图
+       box_dialog(".modify_bgImg", "#bg_showImg");
+       //修改背景图宣传图
+       $('#btnSaveback').click(function() {
+           var imageUrl = $('#backProject').attr('src');
+           var data = {
+               'projectId': '<%=projectId%>',
+               'bgImage': PahtReturn(imageUrl)
+           }
+           ajaxFunc(data, '/usercenter/publishProject/saveback', function(msg) {
+               if (msg.success) {
+                   location.reload();
+               }
+           });
+       });
+
+
+       //修改封面展示图
+       box_dialog(".modify_homeImg", "#home_showImg");
+       uploadfile('uploadCover', function(file, data, response) {
+           var data = $.parseJSON(data);
+           $('#coverimage').attr('src', data.url);
+
+       });
+       $('#btnSaveCover').click(function() {
+           //http://192.168.0.47:8080/TngouFS/image/test/150911/1441937743980051213.jpg
+           var imageUrl = $('#coverimage').attr('src');
+           console.log(PahtReturn(imageUrl));
+           var data = {
+               'projectId': '<%=projectId%>',
+               'coverImage': PahtReturn(imageUrl)
+           }
+           ajaxFunc(data, '/usercenter/publishProject/saveOrUpdateCoverImage', function ajaxBack(msg) {
+               if (msg.success) {
+                   location.reload();
+               }
+           });
+       });
+
+       //修改店铺基本信息
+       box_dialog(".modify_shop", "#basic_infor");
+       $("#basic_infor_form").submit(function(e) {
+           e.preventDefault();
+           var data = {
+               "projectId": '<%=projectId%>',
+               "projectName": $("#projectName").val(),
+               "shortIntroduce": $("#shortIntroduce").val(),
+               "industryCategory": $("#industryCategory option:selected").val(),
+               "industry": $("#industry option:selected").val(),
+               "province": $("#province option:selected").val(),
+               "city": $("#city option:selected").val(),
+               "county": $("#county option:selected").val(),
+               "address": $("#address").val()
+           }
+           if (!$(this).validationEngine("validate")) {
+               return false;
+           }
+           ajaxFunc(data, '/usercenter/publishProject/saveBasicInfo', function ajaxBack(data) {
+               if (data.success) {
+                   location.reload();
+               } else {
+                   $('.error').html("<font color='red'>" + data.msg + "</font>");
+               }
+           });
+       })
+
+       //修改项目视频
+       box_dialog(".modify_video", "#add_modifyVideo");
+
+       $("#saveVideoUrl").submit(function(e) {
+           e.preventDefault();
+           var data = {
+               "projectId": '<%=projectId%>',
+               "videoType": $("input[type='radio'][name='videoClass']:checked").val(),
+               "videoUrl": $("#videoUrl").val()
+           }
+           ajaxFunc(data, '/usercenter/publishProject/saveVideoUrl', function ajaxBack(data) {
+               if (data.success) {
+                   location.reload();
+               } else {
+                   $('.error').html("<font color='red'>" + data.msg + "</font>");
+               }
+           });
+       })
+
+       //修改编辑项目信息
+       box_dialog(".modify_editProject", "#editProject_infor");
+       $("#saveProjectDescForm").submit(function(e) {
+           e.preventDefault();
+           var data = {
+               "projectId": '<%=projectId%>',
+               "projectIntroduce": editor.getContent()
+           }
+           ajaxFunc(data, '/usercenter/publishProject/saveProjectDesc', function ajaxBack(data) {
+               if (data.success) {
+                   location.reload();
+               } else {
+                   $('.error').html("<font color='red'>" + data.msg + "</font>");
+               }
+           });
+       })
+
+       //证件提交
+       box_dialog(".modify_zhj", "#zhj_submit");
+        $("#savePapersForm").submit(function(e) {
+            e.preventDefault();
+            var id = '<%=projectImage.id%>';
+            var data;
+            data = {
+                'projectId': '<%=projectId%>',
+                'legalperson': $('#legalperson').val(),
+                'legalcreditreprot': $('#legalcreditreprot').val(),
+                'businesslicense': $('#businesslicense').val(),
+                'businesslicensecopy': $('#businesslicensecopy').val(),
+                'taxenrolcertificate': $('#taxenrolcertificate').val(),
+                'taxenrolcertificatecopy': $('#taxenrolcertificatecopy').val(),
+                'organizationcode': $('#organizationcode').val(),
+                'organizationcodecopy': $('#organizationcodecopy').val(),
+                'companyphoto': $('#companyphoto').val(),
+                'venuerentalcontract': $('#venuerentalcontract').val(),
+                'financialstatement': $('#financialstatement').val(),
+                'healthlicense': $('#healthlicense').val()
+            }
+
+            if (id != "") {
+                data["id"] = id;
+            }
+            $.ajax({
+                url: "/usercenter/publishProject/savePapers",
+                type: "post",
+                data: data,
+                dataType: "json",
+                beforeSend: function() {
+                    $("#loading").show();
+                    $('#sub_momblack').show();
+                },
+                success: function(data) {
+                    if (data.success) {
+                        location.reload();
+                    } else {
+                        $('.error').html("<font color='red'>" + data.msg + "</font>");
+                    }
+                },
+                complete: function() {
+                    $("#loading").hide();
+                    $('#sub_momblack').hide();
+                },
+                error: function(data) {
+                    $('.error').html("<font color='red'>" + data.msg + "</font>");
+                }
+            });
+        });
+        //end 上传证件
+
+       //修改融资需求信息
+       box_dialog(".modify_trade", "#tradeRequire");
+       $("#subscriptionCopies").blur(function() {
+           var projectAmount = $('#projectAmount').val();
+           if (projectAmount == "" || projectAmount == undefined) {
+               return;
+           }
+           var subscriptionCopies = $('#subscriptionCopies').val();
+           if (subscriptionCopies == 0 || subscriptionCopies == "") {
+               $("#lowAmount").val("");
+               return;
+           }
+           var totalAmount = $("#financialAmount").val();
+           var projectAmount = $("#projectAmount").val();
+           var subscriptionCopies = $("#subscriptionCopies").val();
+           $("#lowAmount").val((parseInt(totalAmount) - parseInt(projectAmount)) / parseInt(subscriptionCopies));
+
+       });
+       $("#projectAmount").blur(function() {
+           var totalAmount = $("#financialAmount").val();
+           var projectAmount = $("#projectAmount").val();
+           $('#investorAmount').val(parseInt($('#financialAmount').val() - parseInt($('#projectAmount').val())));
+           $("#projectInvestScale").val((Math.round((parseInt(projectAmount)/parseInt(totalAmount))*10000)/100).toFixed(2));//项目方所占比例
+           $("#investorScale").val((Math.round(((parseInt(totalAmount)-parseInt(projectAmount))/parseInt(totalAmount))*10000)/100).toFixed(2))//投资方所占比例
+       })
+       if ($('#financialAmount').val() != '' && $('#projectAmount').val() != '') {
+           $('#investorAmount').val(parseInt($('#financialAmount').val() - parseInt($('#projectAmount').val())));
+
+       }
+       $("#projectRate").blur(function() {
+           var projectRate = $("#projectRate").val();
+           if (projectRate == "" || projectRate == undefined) {
+               $("#investorRate").val("");
+           } else {
+               $("#projectRate").val(parseFloat(projectRate).toFixed(2));
+               var investorRate = 100.00 - parseFloat(projectRate).toFixed(2);
+               $("#investorRate").val(parseFloat(investorRate).toFixed(2));
+           }
+
+       });
+       $("#projectInvestScale").blur(function() {
+           var projectRate = $("#projectInvestScale").val();
+           if (projectRate == "" || projectRate == undefined) {
+               $("#projectInvestScale").val("");
+           } else {
+               $("#projectInvestScale").val(parseFloat(projectRate).toFixed(2));
+               var investorRate = 100.00 - parseFloat(projectRate).toFixed(2);
+               $("#investorScale").val(parseFloat(investorRate).toFixed(2));
+           }
+
+       });
+       $("#investorScale").blur(function() {
+           var projectRate = $("#investorScale").val();
+           if (projectRate == "" || projectRate == undefined) {
+               $("#investorScale").val("");
+           } else {
+               $("#investorScale").val(parseFloat(projectRate).toFixed(2));
+               var investorRate = 100.00 - parseFloat(projectRate).toFixed(2);
+               $("#projectInvestScale").val(parseFloat(investorRate).toFixed(2));
+           }
+
+       });
+       $("#investorRate").blur(function() {
+           var investorRate = $("#investorRate").val();
+           if (investorRate == "" || investorRate == undefined) {
+               $("#projectRate").val("");
+           } else {
+               $("#investorRate").val(parseFloat(investorRate).toFixed(2));
+               var investorRate = 100.00 - parseFloat(investorRate).toFixed(2);
+               $("#projectRate").val(parseFloat(investorRate).toFixed(2));
+           }
+
+       });
+       $("#editFinancingform").submit(function(e) {
+           e.preventDefault();
+           var data = {
+               "projectId": '<%=projectId%>',
+               "projectAmount": $('#projectAmount').val(), //项目方出资金额
+               "subscriptionCopies": $('#subscriptionCopies').val(), //认购份数
+               "lowAmount": $('#lowAmount').val(), //最低投资金额
+               "projectRate": $('#projectRate').val(), //项目方收益
+               "investorRate": $('#investorRate').val(), //投资方收益
+               "financialAmount": $('#financialAmount').val(), //项目融资金额
+               "projectInvestScale": $('#projectInvestScale').val(), //项目方投资比例
+               "investorScale": $('#investorScale').val(), //投资方投资比例
+               "investorAmount": $('#investorAmount').val()
+           }
+           if (!$(this).validationEngine("validate")) {
+               return false;
+           }
+           ajaxFunc(data, '/usercenter/publishProject/saveFinancing', function ajaxBack(data) {
+               if (data.success) {
+                   location.reload();
+               } else {
+                   $('.error').html("<font color='red'>" + data.msg + "</font>");
+               }
+           });
+       })
+
+       //现有店铺概括
+       box_dialog(".modify_existShop", "#exist_shop");
+       $("#saveShopsForm").validationEngine();
+       $("#saveShopsForm").submit(function(e) {
+           e.preventDefault();
+           var shop = {
+               shopname: $("#shopname_1").val(),
+               shopaddress: $("#shopaddress_1").val(),
+               totalInvestment: $("#totalInvestment_1").val(),
+               sumDays: $("#sumDays_1").val(),
+               clientFlow: $('#clientFlow_1').val(),
+               interestDays: $("#interestDays_1").val(),
+               businessArea: $("#businessArea_1").val(),
+               averageSpend: $("#averageSpend_1").val(),
+               lastyearIncome: $("#lastyearIncome_1").val(),
+               lastyearProfit: $("#lastyearProfit_1").val(),
+               lastquarterIncome: $("#lastquarterIncome_1").val(),
+               lastquarterProfit: $("#lastquarterProfit_1").val(),
+               projectId: '<%=projectId%>',
+               createrId: '<%=locals.user.id%>'
+           }
+           var shop_2 = {
+               shopname: $("#shopname_2").val(),
+               shopaddress: $("#shopaddress_2").val(),
+               totalInvestment: $("#totalInvestment_2").val(),
+               sumDays: $("#sumDays_2").val(),
+               interestDays: $("#interestDays_2").val(),
+               clientFlow: $('#clientFlow_2').val(),
+               businessArea: $("#businessArea_2").val(),
+               averageSpend: $("#averageSpend_2").val(),
+               lastyearIncome: $("#lastyearIncome_2").val(),
+               lastyearProfit: $("#lastyearProfit_2").val(),
+               lastquarterIncome: $("#lastquarterIncome_2").val(),
+               lastquarterProfit: $("#lastquarterProfit_2").val(),
+               projectId: '<%=projectId%>',
+               createrId: '<%=locals.user.id%>'
+           }
+           var shop_3 = {
+               shopname: $("#shopname_3").val(),
+               shopaddress: $("#shopaddress_3").val(),
+               totalInvestment: $("#totalInvestment_3").val(),
+               sumDays: $("#sumDays_3").val(),
+               clientFlow: $('#clientFlow_3').val(),
+               interestDays: $("#interestDays_3").val(),
+               businessArea: $("#businessArea_3").val(),
+               averageSpend: $("#averageSpend_3").val(),
+               lastyearIncome: $("#lastyearIncome_3").val(),
+               lastyearProfit: $("#lastyearProfit_3").val(),
+               lastquarterIncome: $("#lastquarterIncome_3").val(),
+               lastquarterProfit: $("#lastquarterProfit_3").val(),
+               projectId: '<%=projectId%>',
+               createrId: '<%=locals.user.id%>'
+           }
+           var arryshop = [];
+           var shopid_1 = $('#id_1').val();
+           var shopid_2 = $('#id_2').val();
+           var shopid_3 = $('#id_3').val();
+           if (shopid_1 != "" && shopid_1 != undefined) {
+               shop["id"] = shopid_1
+           }
+           if (shopid_2 != "" && shopid_2 != undefined) {
+               shop["id"] = shopid_2
+           }
+           if (shopid_3 != "" && shopid_3 != undefined) {
+               shop_3["id"] = shopid_3
+           }
+           arryshop.push(shop);
+           arryshop.push(shop_2);
+           arryshop.push(shop_3);
+
+           console.log(arryshop)
+           var stringdata = JSON.stringify(arryshop);
+           var str = {
+               list: stringdata
+           }
+           if (!$(this).validationEngine("validate")) {
+               return false;
+           }
+
+           ajaxFunc(str, '/usercenter/publishProject/svaeShopList', function ajaxBack(data) {
+               if (data.success) {
+                   location.reload();
+               } else {
+                   $('.error').html("<font color='red'>" + data.msg + "</font>");
+               }
+           });
+       })
+
+       //开店计划
+       box_dialog(".modify_openShopPlan", "#openShop_plan");
+       $('#saveShopsPlan').validationEngine();
+       $("#saveShopsPlan").submit(function(e) {
+           e.preventDefault();
+           var data = {
+               "projectId": '<%=projectId%>',
+               "expectShops": $("#expectShops").val(), //预期融资开店数量
+               "prepareDays": $('#prepareDaysk').val(), //开店筹备时间周期(天)
+               "prepareAddr": $('#prepareAddr').val(), //预期店面地址
+               "setupDays": $('#setupDays').val(), //预期开业时间(天*融资
+               "bonusDays": $('#bonusDays').val(), //预期分红时间(天*融资成功后
+               "profitFirstyear": $('#profitFirstyear').val(), //第一年预期盈利(元)
+               "otherPlan": $('#otherPlan').val()
+           }
+           var id = '<%-ShopsPlan.id%>';
+           if (id) {
+               data["id"] = id;
+           }
+           if (!$(this).validationEngine("validate")) {
+               return false;
+           }
+           ajaxFunc(data, '/usercenter/publishProject/saveShops', function ajaxBack(data) {
+               if (data.success) {
+                   location.reload();
+               } else {
+                   $('.error').html("<font color='red'>" + data.msg + "</font>");
+               }
+           });
+       })
+
+       //退出机制
+       box_dialog(".modify_quitJzh", "#quit_jzh");
+       $("#saveTrategyForm").submit(function(e) {
+           e.preventDefault();
+           var data = {
+               "projectId": '<%=projectId%>',
+               "shareTransfer": $('#shareTransfer').val(),
+               "shareRepurchase": $('#shareRepurchase').val()
+           }
+           ajaxFunc(data, '/usercenter/publishProject/saveOrUpdateProjectExitTrategy', function ajaxBack(data) {
+               if (data.success) {
+                   location.reload();
+               } else {
+                   $('.error').html("<font color='red'>" + data.msg + "</font>");
+               }
+           });
+       })
+       var editor = new UE.ui.Editor();
+       //var editor = new UE.ui.Editor({initialFrameHeight:300,initialFrameWidth:900 });
+       editor.render("editor");
+       editor.autoHeightEnabled = false;
+        var projectIntroduce='<%-project.projectIntroduce%>';
+       editor.ready(function() {
+           editor.setContent(projectIntroduce);
+       })
+
+   });
+
+
+</script>

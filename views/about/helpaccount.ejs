@@ -1,0 +1,29 @@
+<% include ../layout/header_o.ejs %>
+<div class="nav_box_bg">
+    <div class="nav_box">
+        <span class="f_24"><a>传奇工场&nbsp;|&nbsp;</a></span>
+        <span class="f_18"><a>帮助中心</a></span>
+    </div>
+</div>
+<div class="usercenter_bg">
+    <div class="usercenter_bg1"></div>
+    <div class="usercenter_bg2"></div>
+</div>
+
+<!--Begin 帮助中心-->
+<div class="helpcontent mt_30 clearfix">
+
+    <% include aboutleft.ejs %>
+    <div class="helpCenter_right f_fr">
+        <div class="help_title_box">
+            <span class="help_name"><%- titleName %></span>
+        </div>
+        <div class="helpright_content">
+            <%-content %>
+        </div>
+
+    </div>
+</div>
+<!--End 帮助中心-->
+
+<% include ../layout/footer.ejs %>

@@ -1,0 +1,154 @@
+<% include ../layout/header.ejs %>
+<div class="usercenter_bg">
+    <div class="usercenter_bg2"></div>
+</div>
+
+
+
+<!--Begin 用户中心——发布项目-->
+<div class="usercenter_bgs">
+<div class="usercontent clearfix ">
+    <% include left.ejs %>
+    <div class="right_bar f_fr">
+    	<div class="publish_box">
+            <div class="publish_step">
+                <ul class="publish_list">
+                    <li>基本资料</li>
+                    <li>股权设置</li>
+                    <li>草稿状态项目编辑</li>
+                    <li>相关协议</li>
+                    <li class="publish_list_last">传奇工场审核</li>
+                </ul>
+            </div>
+            <h3>基本设置</h3>
+            <form id="publishProject" action="/usercenter/publishProject" method="post">
+            <%if(project!=null){%>
+                <input type="hidden" name="projectId" value="<%=project.id%>">
+                <ul class="personal_infor publish_baseSet">
+                    <li>
+                        <span>项目名称：</span>
+                        <input type="text" name="projectName" class="validate[required]" value="<%=project.projectName%>"/>
+                    </li>
+                    <li>
+                        <span>筹资金额：</span>
+                        <input type="text" name="financialAmount" class="validate[required,custom[number],custom[integer]]" value="<%=project.financialAmount%>"/>&nbsp;元
+                    </li>
+                    <li>
+                        <span>筹资天数：</span>
+                        <input type="hidden" name="financialDays" class="validate[required,custom[number]]"  value="30"/>
+                        <em>30天</em>
+                    </li>
+                    <li>
+                        <span>行业类别：</span>
+                        <select id="industryCategory" name="industryCategory" class="validate[required]" onchange=getIndustry(this.id,"industry")>
+                             <option value="0">请选择</option>
+                            <% industryList.forEach(function(item,index){ %>
+                            <option  value=<%=item.sortId%> <%if(item.sortId==project.industryCategory){%>selected="selected"<%}%> > <%=item.industryName%> </option>
+                            <% })%>
+                        </select>
+                        <select name="industry" class="validate[required]" id="industry">
+                            <option value="0">请选择</option>
+                            <% industry.forEach(function(item,index){ %>
+                            <option  value=<%=item.sortId%> <%if(item.sortId==project.industry){%>selected="selected"<%}%> > <%=item.industryName%> </option>
+                            <% })%>
+                        </select>
+                    </li>
+                    <li>
+                        <span>新店地址：</span>
+                        <select  name="province" id="province" class="validate[required]" onchange=getCity(this.id,"city")>
+                            <option value="0">请选择</option>
+                            <% provinces.forEach(function(item,index){ %>
+                            <option  value=<%=item.id%> <%if(item.id==project.province){%>selected="selected"<%}%> > <%=item.areaName%> </option>
+                            <% })%>
+                        </select>
+                        <select name="city" id="city" class="validate[required]" onchange=getCity(this.id,"county")>
+                            <option value="0">请选择</option>
+                            <% city.forEach(function(item,index){ %>
+                            <option  value=<%=item.id%> <%if(item.id==project.city){%>selected="selected"<%}%> > <%=item.areaName%> </option>
+                            <% })%>
+                        </select>
+                        <select name="county" id="county" class="validate[required]">
+                            <option value="0">请选择</option>
+                            <% county.forEach(function(item,index){ %>
+                            <option  value=<%=item.id%> <%if(item.id==project.county){%>selected="selected"<%}%> > <%=item.areaName%> </option>
+                            <% })%>
+                        </select>
+                    </li>
+                </ul>
+                <%}else{%>
+                <ul class="personal_infor publish_baseSet">
+                    <li>
+                        <span>项目名称：</span>
+                        <input type="text" name="projectName" class="validate[required]" />
+                    </li>
+                    <li>
+                        <span>筹资金额：</span>
+                        <input type="text" name="financialAmount" class="validate[required,custom[number],min[1],custom[integer]]"/>&nbsp;元
+                    </li>
+                    <li>
+                        <span>筹资天数：</span>
+                        <input type="hidden" name="financialDays"  class="validate[required,custom[number]]" value="30"/>
+                        <em>30天</em>
+                    </li>
+                <li>
+                    <span>行业类别：</span>
+                <select id="industryCategory" name="industryCategory" class="validate[required]" onchange=getIndustry(this.id,"industry")>
+                     <option value="0">请选择</option>
+                    <% industryList.forEach(function(item,index){ %>
+                    <option value='<%=item.sortId%>'> <%=item.industryName%> </option>
+                    <% })%>
+                </select>
+                 <select name="industry" id="industry" class="validate[required]">
+                        <option value="0">请选择</option>
+                </select>
+                </li>
+                <li>
+                    <span>新店地址：</span>
+                    <select name="province" id="province" class="validate[required]" onchange=getCity(this.id,"city")>
+                        <option value="0">请选择</option>
+                        <% provinces.forEach(function(item,index){ %>
+                        <option  value=<%=item.id%>> <%=item.areaName%> </option>
+                        <% })%>
+                    </select>
+                    <select name="city" id="city" class="validate[required]" onchange=getCity(this.id,"county")>
+                        <option value="0">请选择</option>
+                    </select>
+                    <select name="county" id="county" class="validate[required]">
+                        <option value="0">请选择</option>
+                    </select>
+                </li>
+                </ul>
+                <%}%>
+                <div class="trade_protocol">
+                	<input type="checkbox" class="validate[required]" name="agree_pro" checked>
+                    <a href="/agreement/帮助中心-委托融资服务协议.docx">我已阅读并同意《委托融资服务协议》</a>
+                </div>
+                <input type="submit" value="下一步" class="step_btn"/>
+            </form>
+        </div>
+        <div class="h_300"></div>
+    </div>
+</div>
+</div>
+<!--End 用户中心——发布项目-->
+<script>
+    $(document).ready(function() {
+        $("#publishProject").validationEngine();
+        //初始省市
+
+        $('#publishProject').submit(function(e) {
+            //阻止表单提交事件
+            e.preventDefault();
+            if(!$(this).validationEngine("validate")){
+                return false;
+            }
+            this.submit();
+        });
+
+
+
+
+    });
+
+</script>
+<% include ../layout/footer.ejs %>

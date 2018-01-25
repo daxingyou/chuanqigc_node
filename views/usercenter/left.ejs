@@ -1,0 +1,66 @@
+
+<div class="f_fl usercenter_left">
+    <ul class="helpCenter_leftBar active_square usercenter_leftBar" id="ucLeft">
+        <li class="help_change_li">
+            <u class="square_lb"></u>
+            <u class="square_rt"></u>
+            <span class="left_img1"></span>
+            <a href="/usercenter">个人中心</a>
+            <ul class="helpCenter_leftSubBar">
+                <li><a href="/usercenter/safeSet">安全设置</a></li>
+                <li><a href="/usercenter/perfectData">完善资料</a></li>
+            </ul>
+            <em class="help_arrow"></em>
+        </li>
+        <li class="help_change_li">
+            <u class="square_lb"></u>
+            <u class="square_rt"></u>
+            <span class="left_img2"></span>
+            <a href="/usercenter/myProject">我的项目</a>
+            <ul class="helpCenter_leftSubBar">
+                <li><a href="/usercenter/projectBuy">认购的项目</a></li>
+                <!-- 原来发布项目的连接 /usercenter/publishYet-->
+                <li><a href="/usercenter/releaseproject">发布的项目</a></li>   
+            </ul>
+            <em class="help_arrow"></em>
+        </li>
+        <li class="help_change_li">
+            <u class="square_lb"></u>
+            <u class="square_rt"></u>
+            <span class="left_img3"></span>
+            <a href="/usercenter/publishProject">发布项目</a>
+            <em class="help_arrow help_blue_bg"></em>
+        </li>
+        <li class="help_change_li">
+            <u class="square_lb"></u>
+            <u class="square_rt"></u>
+            <span class="left_img4"></span>
+            <a href="/usercenter/accountmoney">账户资金</a>
+            <em class="help_arrow help_blue_bg"></em>
+        </li>
+        <li class="help_change_li">
+            <u class="square_lb"></u>
+            <u class="square_rt"></u>
+            <span class="left_img5"></span>
+            <a href="/usercenter/message">消息动态</a>
+            <em class="help_arrow help_blue_bg"></em>
+        </li>
+    </ul>
+    <div class="tel_box">
+        <div class="tel_icon">联系我们</div>
+        <div class="tel_num">400-666-5412</div>
+        <div class="kf_time">周一至周五（09:00-17:30）</div>
+    </div>
+</div>
+
+<script>
+    $(function(){
+        //帮助中心，用户中心显示下拉子菜单，调用JS
+        $('#ucLeft').hoverAccordion({
+            //activateItem:1,	     //默认下设置第4个滑动门展开
+            //onClickOnly:false,   //点击或悬停触发"false"、"true"
+            speed:'fast'         //滑动门切换过渡效果"fast"、"slow"、"normal"
+        });
+    })
+
+</script>

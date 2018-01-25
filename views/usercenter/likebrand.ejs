@@ -1,0 +1,85 @@
+<% include ../layout/header.ejs %>
+<div class="usercenter_bg">
+    <div class="usercenter_bg2"></div>
+</div>
+
+<!--Begin 发布的项目-->
+<div class="usercenter_bgs">
+<div class="usercontent clearfix">
+    <% include left.ejs %>
+    <div class="right_bar f_fr publishedProject_right_bar">
+        <div class="my_project_title">
+            <ul class="myproject_title_bg myproject_title_bg2">
+            <li><a href="/usercenter/projectBuy" >投品牌</a></li>
+                <li><a href="/usercenter/helpbrand">帮品牌</a></li>
+                <li><a href="/usercenter/likebrand"  class="current_brand">爱品牌</a></li>
+            </ul>
+        </div>
+        <%if(projectFocus!=null && projectFocus.length>0){%>
+        <div class="touBran_table loveBrand_table">
+            <table>
+                <thead>
+                    <tr>
+                        <th width="25%">项目名称</th>
+                        <th width="25%">老板卡面值（元）</th>
+                        <th width="25%">购买时间</th>
+                        <th width="25%">查看项目详情</th>
+                    </tr>
+                </thead>
+                <tbody id="TabFocus">
+                
+                    <%projectFocus.forEach(function(item,index){%>
+                        <tr class="gray_bg">
+                            <td><%=item.projectName%></td>
+                            <td><%=item.cardNum%></td>
+                            <td><%=item.focustime%></td>
+                            <td><a href="/proInfo/<%=item.projectId%>">项目详情</a></td>
+                        </tr>
+                    <%})%>
+                           
+                </tbody>
+            </table>
+        </div> 
+                <!--分页div-->
+        <div class="pages" id="paging">这里是分页</div>
+         <%}else{%> 
+        <div class="nomsg"><font>没有数据</font></div>
+        <%}%> 
+    </div>
+</div>
+</div>
+<!--End 发布的项目-->
+<% include ../layout/footer.ejs %>
+
+<link rel="stylesheet" type="text/css" href="/css/fenye.css">
+<script type="text/javascript" src="/js/fenye.js"></script>
+<script type="text/javascript">
+    var totalRecords = '<%=count%>'; // 总共条数
+    var rowPerPage = 5; // 每页显示多少条
+    $("#paging").pagination({
+        items: totalRecords,
+        itemsOnPage: rowPerPage,
+        cssStyle: 'light-theme',
+        onPageClick: function(pageNumber) {
+            ajaxFunc({pageNo: pageNumber}, '/usercenter/likebrand/conPage', function(data) {
+                if (data) {
+                    var str="";
+                    var pname="";
+                    $.each(data.obj, function(index, item) {
+                        if (item.projectName!=null) {
+                            pname=item.projectName
+                        }
+                        str+='<tr class="gray_bg">'
+                        str+='<td>'+pname+'</td>'
+                        str+='<td>'+item.cardNum+'</td>'
+                        str+='<td>'+item.focustime+'</td>'
+                        str+='<td><a href="/proInfo/'+item.projectId+'">项目详情</a></td>'
+                        str+='</tr>'
+                    });
+                    $('#TabFocus').html(str);
+                }
+            });
+        }
+    });
+</script>
+
